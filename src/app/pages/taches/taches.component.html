@@ -1,0 +1,148 @@
+<div class="body">
+
+    <main role="main" class="container">
+         <div class="row">
+           <div class="col-md-8 col-xs-12">
+              <div class="my-3 p-3 bg-white rounded box-shadow">
+                  <h6 class="border-bottom border-gray pb-2 mb-0">Listes des taches </h6>
+                  <div class="media text-muted pt-3">
+                    <img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">
+                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                      <strong class="d-block text-gray-dark">@username</strong>
+                      Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+                    </p>
+                  </div>
+                  <div class="media text-muted pt-3">
+                    <img data-src="holder.js/32x32?theme=thumb&bg=e83e8c&fg=e83e8c&size=1" alt="" class="mr-2 rounded">
+                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                      <strong class="d-block text-gray-dark">@username</strong>
+                      Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+                    </p>
+                  </div>
+                  <div class="media text-muted pt-3">
+                    <img data-src="holder.js/32x32?theme=thumb&bg=6f42c1&fg=6f42c1&size=1" alt="" class="mr-2 rounded">
+                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                      <strong class="d-block text-gray-dark">@username</strong>
+                      Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+                    </p>
+                  </div>
+                  <small class="d-block text-right mt-3">
+                    <a href="#">All updates</a>
+                  </small>
+                </div>
+            
+    
+           </div>
+           <div class="col-md-4 col-xs-12">
+    
+              <div class="my-3 p-3 bg-white rounded box-shadow">
+                  <button [disabled]="!fo.form.valid" class="btn btn-md btn-outline-primary btn-block" data-toggle="modal" data-target="#exampleModal"  type="button">Créer une Tache </button>
+
+
+                  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Nouveaux Tache</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                              <form novalidate #fo="ngForm" class="form-signin" (ngSubmit)="saveUser(fo)">
+                                  <div class="form-group"> Nom du Tache :
+                                 <div class="form-label-group">
+                                     <input type="text" #nom="ngModel" [(ngModel)]="user.nom"   name="nom" class="form-control"   required   >
+                                  
+                                   </div>
+                                   </div>
+                                
+                                   
+                           <div class="form-group">
+                              <div class="form-label-group"> Assigner à :
+                                  <input type="text" #nom="ngModel" [(ngModel)]="user.nom"  name="nom" class="form-control"   required   >
+                             
+                              </div>
+                             </div>
+                             <div class="form-group">
+                                <div class="form-label-group"> Etat :
+                             <div class="input-group mb-3"> 
+                                 
+                                <select class="custom-select" id="inputGroupSelect01">
+                                  <option selected>Choisir...</option>
+                                  <option value="1">Non Commencé</option>
+                                  <option value="2">En cour</option>
+                                  <option value="3">Terminé</option>
+                                  
+                                </select>
+                              </div>
+                              </div>
+                            </div>
+                             <div class="form-group"> Date Debut :
+                                <div class="form-label-group">
+                                    <input type="date" #username="ngModel" [(ngModel)]="user.username" placeholder="Username " name="Username"  class="form-control"   required  >
+                                 
+                                  </div>
+                      </div>
+
+
+                           <div class="form-group"> Date D'echeance :
+                              <div class="form-label-group">
+                                  <input type="date" #username="ngModel" [(ngModel)]="user.username" placeholder="Username " name="Username"  class="form-control"   required  >
+                               
+                                </div>
+                    </div>
+                           <div class="form-group">
+                                 <div class="form-label-group"> Description :
+                                   <textarea  #email="ngModel" [(ngModel)]="user.email"  placeholder="Description " name="description"  class="form-control"   > </textarea>
+                                
+                                 </div>
+                                </div>
+                                
+                          
+                                
+                                
+                                <button type="submit" class="btn-md btn-block btn btn-primary">Créer</button>
+                                
+                   
+                               </form>
+                          </div>
+                      
+                          
+                           
+                        </div>
+                      </div>
+                    </div>
+
+
+                  <div class="  pt-3">
+                    
+                    
+                  </div>
+                  <div class="media text-muted pt-3">
+                    <img data-src="holder.js/32x32?theme=thumb&bg=e83e8c&fg=e83e8c&size=1" alt="" class="mr-2 rounded">
+                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                      <strong class="d-block text-gray-dark">@username</strong>
+                      Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+                    </p>
+                  </div>
+                  <div class="media text-muted pt-3">
+                    <img data-src="holder.js/32x32?theme=thumb&bg=6f42c1&fg=6f42c1&size=1" alt="" class="mr-2 rounded">
+                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                      <strong class="d-block text-gray-dark">@username</strong>
+                      Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+                    </p>
+                  </div>
+                  <small class="d-block text-right mt-3">
+                    <a href="#">All updates</a>
+                  </small>
+                </div>
+            
+           </div>
+    
+         </div>
+    
+     
+      
+      </main>
+    </div>

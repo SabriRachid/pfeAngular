@@ -1,0 +1,65 @@
+
+ 
+    <div class="container">
+      
+
+
+        <div class="body">
+            
+         
+            <form novalidate #fo="ngForm" class="form-signin" (ngSubmit)="saveUser(fo)">
+              
+            
+               <div class="text-center mb-4">
+                 <h3 class="display-4">Créer un Compte</h3>
+              </div>
+              <div class="alert alert-danger"   *ngIf="nom.errors?.required && prenom.touched" >
+                Nom obligatoire
+             </div>
+              <div class="alert alert-danger"   *ngIf="nom.errors?.required && prenom.touched" >
+                Nom obligatoire
+             </div>
+             <div class="alert alert-danger"   *ngIf="nom.errors?.minlength && prenom.touched" >
+              Nom doit etre superieur a 4 lettre
+           </div>
+              <div class="form-label-group">
+                  <input type="text" #nom="ngModel" [(ngModel)]="user.nom" placeholder="Votre Nom " minlength="4" name="nom" class="form-control"   required   >
+               
+                </div>
+                <div class="form-label-group">
+                    <input type="text"   #prenom="ngModel" [(ngModel)]="user.prenom" placeholder="Votre Prénom " name="prenom" class="form-control"   required  >
+                 
+                  </div>
+                  <div class="form-label-group">
+                      <input type="text" #username="ngModel" [(ngModel)]="user.username" placeholder="Username " name="Username"  class="form-control"   required  >
+                   
+                    </div>
+        
+              <div class="form-label-group">
+                <input type="email" #email="ngModel" [(ngModel)]="user.email"  placeholder="Address Email " name="email"  class="form-control"   required  >
+             
+              </div>
+        
+              <div class="form-label-group">
+                <input type="password" #mdp="ngModel" placeholder="Mot de passe" [(ngModel)]="user.mdp"  name="mdp"  class="form-control"   required>
+        
+              </div>
+        
+              
+              <button [disabled]="!fo.form.valid" class="btn btn-md btn-info btn-block" type="submit">Valider </button>
+             
+              <a href="" class="text-muted" routerLink="/">  J'ai déja un compte       </a>
+               
+             
+              <p class="mt-5 mb-3 text-muted text-center ">&copy;PFE   2017-2018</p>
+            
+             
+
+            </form>
+           
+               
+            
+        </div>
+  
+      </div>
+   
