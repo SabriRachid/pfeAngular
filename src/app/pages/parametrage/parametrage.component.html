@@ -1,111 +1,114 @@
 <div class="body">
 
   <main role="main" class="container-fluid">
-       <div class="row">
-           <div class="col-md-2 col-sm-12 col-xs-12"> 
-  
-              <div class="my-3 p-3 bg-white rounded box-shadow">
-                   <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-outline-primary btn-block">Ajouter un Gestionnaire</button> 
-                   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                      <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Nouveaux Gestionnaire</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                              <form novalidate #fo="ngForm" class="form-signin" (ngSubmit)="saveUser(fo)">
-                                  <div class="form-group">
-                                 <div class="form-label-group">
-                                     <input type="text"    placeholder="Nom " minlength="4" name="nom" class="form-control"   required   >
-                                  
-                                   </div>
-                                   </div>
-                                   <div class="form-group">
-                                      <div class="form-label-group">
-                                          <input type="text"    placeholder="Prenom " minlength="4" name="prenom" class="form-control"   required   >
-                                       
-                                        </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="form-label-group">
-                                                <input type="text"    placeholder="Email " minlength="4" name="email" class="form-control"   required   >
-                                             
-                                              </div>
-                                              </div>
-                                              <div class="form-group">
-                                                  <div class="form-label-group">
-                                                      <input type="text"    placeholder="mot de passe " minlength="4" name="mdp" class="form-control"   required   >
-                                                   
-                                                    </div>
-                                                    </div>
-                    
-                
-                     
-                                                    <button type="submit" class="btn-md btn-block btn btn-primary">Ajouter</button>
-                                
-                                
-                               
-                                
-                   
-                               </form>
-                          </div>
-                    
-                        </div>
+    <div class="row">
+      <div class="col-md-2 col-sm-12 col-xs-12">
+
+        <div class="my-3 p-3 bg-white rounded box-shadow">
+          <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-outline-primary btn-block">Ajouter un Gestionnaire</button>
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Nouveaux Gestionnaire</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form novalidate #fo="ngForm" class="form-signin" (ngSubmit)="saveUser(fo)">
+                    <div class="form-group">
+                      <div class="form-label-group">
+                        <input type="text" placeholder="Nom " minlength="4" name="nom" class="form-control" required>
+
                       </div>
                     </div>
-                  <div class="media text-muted pt-3">
-                    <img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">
-                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                      <strong class="d-block text-gray-dark">@username</strong>
-                      Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-                    </p>
-                  </div>
-                  
-                  
-                  <small class="d-block text-right mt-3">
-                    <a href="#">All updates</a>
-                  </small>
+                    <div class="form-group">
+                      <div class="form-label-group">
+                        <input type="text" placeholder="Prenom " minlength="4" name="prenom" class="form-control" required>
+
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="form-label-group">
+                        <input type="text" placeholder="Email " minlength="4" name="email" class="form-control" required>
+
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="form-label-group">
+                        <input type="text" placeholder="mot de passe " minlength="4" name="mdp" class="form-control" required>
+
+                      </div>
+                    </div>
+
+
+
+                    <button type="submit" class="btn-md btn-block btn btn-primary">Ajouter</button>
+
+
+
+
+
+                  </form>
                 </div>
-            
-           </div> 
-       
-           <div class="col-md-10 col-sm-12 col-xs-12">
-              <div class="my-3 p-3 bg-white rounded box-shadow">
-                  <h6 class="border-bottom border-gray pb-2 mb-0">Listes des Utilisateurs</h6>
-                  
-                      <table class="table table-sm table-striped">
-                          <thead>
-                            <tr>
-                              <th >Nom et Prenom</th>
-                              <th >Email</th>                             
-                              <th> satut du compte</th>
-                              <th>Date d'inscription</th>                            
-                              <th>Action</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr *ngFor="let user of users | paginate: { itemsPerPage: 5, currentPage: p } " >
-                              
-                              <td>{{ user.nom }} {{ user.prenom }}</td>
-                              <td>{{ user.email }} </td>    
-                              <td>{{ user.active == true ? 'Active':'non Active' }} </td>
-                              <td>{{ user.dateInscrit | date : 'dd/MM/yyyy à hh:mm' }} </td>
-                             
-                              <td><button  type="button" class="btn btn-outline-secondary btn-sm">Activer</button> </td>
-                              
-                            </tr>
-                             
-                          </tbody>
-                        </table>
-                       
-                         
-                            
-                           
-                         
-                  <!-- <div class="media text-muted pt-3">
+
+              </div>
+            </div>
+          </div>
+          <div class="media text-muted pt-3">
+            <img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">
+            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+              <strong class="d-block text-gray-dark">@username</strong>
+              Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
+              ut fermentum massa justo sit amet risus.
+            </p>
+          </div>
+
+
+          <small class="d-block text-right mt-3">
+            <a href="#">All updates</a>
+          </small>
+        </div>
+
+      </div>
+
+      <div class="col-md-10 col-sm-12 col-xs-12">
+        <div class="my-3 p-3 bg-white rounded box-shadow">
+          <h6 class="border-bottom border-gray pb-2 mb-0">Listes des Utilisateurs</h6>
+
+          <table class="table table-sm table-striped">
+            <thead>
+              <tr>
+                <th>Nom et Prenom</th>
+                <th>Email</th>
+                <th> satut du compte</th>
+                <th>Date d'inscription</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of users | paginate: { itemsPerPage: 5, currentPage: p } ">
+
+                <td>{{ user.nom }} {{ user.prenom }}</td>
+                <td>{{ user.email }} </td>
+                <td>{{ user.active == true ? 'Active':'non Active' }} </td>
+                <td>{{ user.dateInscrit | date : 'dd/MM/yyyy à hh:mm' }} </td>
+
+                <td>
+                  <button type="button" class="btn btn-outline-secondary btn-sm">Activer</button>
+                </td>
+
+              </tr>
+
+            </tbody>
+          </table>
+
+
+
+
+
+          <!-- <div class="media text-muted pt-3">
                     <img data-src="holder.js/32x32?theme=thumb&bg=e83e8c&fg=e83e8c&size=1" alt="" class="mr-2 rounded">
                     <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                       <strong class="d-block text-gray-dark">@username</strong>
@@ -119,47 +122,48 @@
                       Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
                     </p>
                   </div> -->
-                  
-                </div>
-                <small class="d-block text-right mt-3">
-                    <pagination-controls (pageChange)="p = $event"  previousLabel="Précedent"
-                    nextLabel="Next"></pagination-controls>
-                  </small>
-            
 
-                  <div class="col-md-12 col-sm-12 col-xs-12">
-              <div class="my-3 p-3 bg-white rounded box-shadow">
-                  <h6 class="border-bottom border-gray pb-2 mb-0">Listes des Gestionnaires</h6>
-                  
-                      <table class="table table-sm table-striped">
-                          <thead>
-                            <tr>
-                              <th >Nom et Prenom</th>
-                              <th >Email</th>
-                              <th >Username</th>                            
-                               
-                              <th>Action</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr   >
-                              
-                              <td> </td>
-                              <td>  </td>
-                              <td>  </td>
-                              
-                             
-                              <td><button  type="button" class="btn btn-outline-secondary btn-sm"> Modifier</button> </td>
-                            </tr>
-                             
-                          </tbody>
-                        </table>
-                       
-                         
-                            
-                           
-                         
-                  <!-- <div class="media text-muted pt-3">
+        </div>
+        <small class="d-block text-right mt-3">
+          <pagination-controls (pageChange)="p = $event" previousLabel="Précedent" nextLabel="Next"></pagination-controls>
+        </small>
+
+
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="my-3 p-3 bg-white rounded box-shadow">
+            <h6 class="border-bottom border-gray pb-2 mb-0">Listes des Gestionnaires</h6>
+
+            <table class="table table-sm table-striped">
+              <thead>
+                <tr>
+                  <th>Nom et Prenom</th>
+                  <th>Email</th>
+                  <th>Username</th>
+
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+
+                  <td> </td>
+                  <td> </td>
+                  <td> </td>
+
+
+                  <td>
+                    <button type="button" class="btn btn-outline-secondary btn-sm"> Modifier</button>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+
+
+
+
+
+            <!-- <div class="media text-muted pt-3">
                     <img data-src="holder.js/32x32?theme=thumb&bg=e83e8c&fg=e83e8c&size=1" alt="" class="mr-2 rounded">
                     <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                       <strong class="d-block text-gray-dark">@username</strong>
@@ -173,22 +177,21 @@
                       Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
                     </p>
                   </div> -->
-                  
-                </div>
-                <small class="d-block text-right mt-3">
-                    <pagination-controls (pageChange)="p = $event"  previousLabel="Précedent"
-                    nextLabel="Next"></pagination-controls>
-                  </small>
+
+          </div>
+          <small class="d-block text-right mt-3">
+            <pagination-controls (pageChange)="p = $event" previousLabel="Précedent" nextLabel="Next"></pagination-controls>
+          </small>
 
 
 
-    
-           </div>
-  
-       </div>
-  
-     
-  <!--     <div class="my-3 p-3 bg-white rounded box-shadow">
+
+        </div>
+
+      </div>
+
+
+      <!--     <div class="my-3 p-3 bg-white rounded box-shadow">
         <h6 class="border-bottom border-gray pb-2 mb-0">Suggestions</h6>
         <div class="media text-muted pt-3">
           <img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">
@@ -224,6 +227,6 @@
           <a href="#">All suggestions</a>
         </small>
       </div> -->
-      </div>
-    </main>
-  </div>
+    </div>
+  </main>
+</div>

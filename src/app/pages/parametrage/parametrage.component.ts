@@ -20,11 +20,8 @@ export class ParametrageComponent implements OnInit {
     this.userService.getAllUsers().subscribe(data => {
       this.users = data ;
       this.p = 10;
-      this.collection.push(data);
-
-    });
-
-  }
+      this.collection.push(data); });
+   }
 
 
 }
