@@ -36,7 +36,7 @@
            <div class="col-md-4 col-xs-12">
     
               <div class="my-3 p-3 bg-white rounded box-shadow">
-                  <button [disabled]="!fo.form.valid" class="btn btn-md btn-outline-primary btn-block" data-toggle="modal" data-target="#exampleModal"  type="button">Créer une Tache </button>
+                  <button [disabled]="!fo.form.valid" class="btn btn-md btn-outline-primary btn-block" *ngIf="isAdmin" data-toggle="modal" data-target="#exampleModal" (click)="onNewTask()" type="button">Créer une Tache </button>
 
 
                   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

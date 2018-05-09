@@ -16,6 +16,7 @@ import { TachesComponent } from './pages/taches/taches.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { EvenementComponent } from './pages/evenement/evenement.component';
 import { EventServiceService } from './service/event-service.service';
+import { AuthenticationServiceService } from './service/authentication-service.service';
 
 const appRoutes: Routes  = [
 { path : 'login' , component : LoginComponent },
@@ -49,7 +50,7 @@ const appRoutes: Routes  = [
     RouterModule.forRoot(appRoutes)
 
   ],
-  providers: [UserServiceService, EventServiceService],
+  providers: [UserServiceService, EventServiceService, AuthenticationServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
