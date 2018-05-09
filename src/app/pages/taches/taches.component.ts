@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationServiceService } from '../../service/authentication-service.service';
 import { Router } from '@angular/router';
+import { TaskServiceService } from '../../service/task-service.service';
+import { User } from '../../user';
+import { Task } from '../../task';
 
 @Component({
   selector: 'app-taches',
@@ -9,21 +12,35 @@ import { Router } from '@angular/router';
 })
 export class TachesComponent implements OnInit {
 isAdmin: boolean ;
-tasks;
-  constructor(private authService: AuthenticationServiceService, private router: Router) { }
+task: Task = new Task();
+users;
+  constructor(private authService: AuthenticationServiceService, private router: Router, private taskSerive: TaskServiceService) { }
 
   ngOnInit() {
-   this.isAdmin = this.authService.isAdmin();
-    this.authService.getTasks().subscribe(data => {
-      this.tasks = data;
-        this.router.navigateByUrl('/');
-    } , err => {
-
-    });
+  //  this.isAdmin = this.authService.isAdmin();
+  this.taskSerive.getAllUserByRoleUser().subscribe(data => {
+    this.users = data;
+    console.log(data);
+} , err => {
+  console.log(err);
+  this.authService.logout();
+  });
   }
 
-  onNewTask() {
-
+  onNewTask(valid: boolean) {
+     this.taskSerive.saveTask(this.task).subscribe(data => {
+     console.log(data);
+    }, err => {
+      console.log(err);
+    });
+  }
+  getAllUserRole() {
+   return  this.taskSerive.getAllUserByRoleUser().subscribe(data => {
+        this.users = data;
+        console.log(data);
+    } , err => {
+      console.log(err);
+    });
   }
 
 }

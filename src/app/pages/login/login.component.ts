@@ -9,8 +9,9 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   constructor(private authService: AuthenticationServiceService , private router: Router) { }
- mode = 0;
+  mode = 0;
   jwt: string;
+  loggedIn = false;
   ngOnInit() {
   }
   onLogin(user) {
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
        this.jwt = resp.headers.get('Authorization');
       console.log(resp.headers.get('Authorization'));
       this.authService.saveToken(this.jwt);
+      this.authService.isAuthenticated = true;
       this.router.navigateByUrl('/home');
   }, err => {
       this.mode = 1;

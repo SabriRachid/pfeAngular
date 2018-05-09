@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { JwtHelper } from 'angular2-jwt';
+import { Router } from '@angular/router';
 @Injectable()
 export class AuthenticationServiceService {
 
   private host = 'http://localhost:8080';
   private jwtToken = null;
   private roles: Array<any> ;
+  public isAuthenticated = false ;
   i: number;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   login(user) {
     return this.http.post(this.host + '/login' , user, { observe: 'response'});
@@ -37,12 +39,12 @@ export class AuthenticationServiceService {
     localStorage.removeItem('token');
   }
 
-  isAdmin() {
+/*   isAdmin() {
       for (const i of this.roles) {
         if ( i.authority === 'ROLE_ADMIN') {
           return true;
         }
       }
       return false;
-  }
+  } */
 }

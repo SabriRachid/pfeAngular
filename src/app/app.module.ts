@@ -17,7 +17,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { EvenementComponent } from './pages/evenement/evenement.component';
 import { EventServiceService } from './service/event-service.service';
 import { AuthenticationServiceService } from './service/authentication-service.service';
-
+import { TaskServiceService } from './service/task-service.service';
 const appRoutes: Routes  = [
 { path : 'login' , component : LoginComponent },
 { path : '' , redirectTo : 'login' ,  pathMatch: 'full' },
@@ -50,7 +50,7 @@ const appRoutes: Routes  = [
     RouterModule.forRoot(appRoutes)
 
   ],
-  providers: [UserServiceService, EventServiceService, AuthenticationServiceService],
+  providers: [UserServiceService, EventServiceService, AuthenticationServiceService, TaskServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
