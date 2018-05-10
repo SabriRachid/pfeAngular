@@ -16,10 +16,7 @@
               <div class="alert alert-danger"   *ngIf="nom.errors?.required && prenom.touched" >
                 Nom obligatoire
              </div>
-              <div class="alert alert-danger"   *ngIf="nom.errors?.required && prenom.touched" >
-                Nom obligatoire
-             </div>
-             <div class="alert alert-danger"   *ngIf="nom.errors?.minlength && prenom.touched" >
+              <div class="alert alert-danger"   *ngIf="nom.errors?.minlength && prenom.touched" >
               Nom doit etre superieur a 4 lettre
            </div>
               <div class="form-label-group">

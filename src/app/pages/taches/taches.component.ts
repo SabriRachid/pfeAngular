@@ -18,13 +18,7 @@ users;
 
   ngOnInit() {
   //  this.isAdmin = this.authService.isAdmin();
-  this.taskSerive.getAllUserByRoleUser().subscribe(data => {
-    this.users = data;
-    console.log(data);
-} , err => {
-  console.log(err);
-  this.authService.logout();
-  });
+this.getAllUserRole();
   }
 
   onNewTask(valid: boolean) {
