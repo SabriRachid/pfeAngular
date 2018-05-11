@@ -27,12 +27,7 @@ export class AuthenticationServiceService {
        this.jwtToken = localStorage.getItem('token');
   }
 
-  getTasks() {
-    if (this.jwtToken == null) {
-      this.loadToken();
-    }
-    return this.http.get( this.host + '/tasks', { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
-  }
+
 
   logout() {
     this.jwtToken = null;

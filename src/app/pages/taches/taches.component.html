@@ -5,29 +5,49 @@
            <div class="col-md-8 col-xs-12">
               <div class="my-3 p-3 bg-white rounded box-shadow">
                   <h6 class="border-bottom border-gray pb-2 mb-0">Listes des taches </h6>
-                  <div class="media text-muted pt-3">
-                    <img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">
-                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                      <strong class="d-block text-gray-dark">@username</strong>
-                      Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-                    </p>
+                  <div class="media text-muted pt-3" *ngFor="let task of tasks | paginate: { itemsPerPage: 5, currentPage: p }  ">
+                     <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                      <p><strong class="d-block text-gray-dark"> {{task.nomTache}}  </strong></p>
+                      <p class="text-muted "><strong>Date de Debut :</strong> {{task.dateDebut | date :'dd/MM/yyyy'}} <strong>Date d'écheance :</strong> {{ task.dateEcheance | date :'dd/MM/yyyy' }}</p>
+                      <p ><strong>Etat du Tache :</strong>{{task.etatTache}}</p>
+                      <strong>{{task.description}}</strong>
+                    <div class="text-right "> 
+                      <button class="btn btn-secondary btn-sm">Voir Details..</button>
+                      <button class="btn btn-success btn-sm"><i class="far fa-edit"></i>   </button> 
+                      <button class="btn btn-danger btn-sm" type="button" data-toggle="modal" data-target="#deleteModal" > <i class="fas fa-trash"></i> </button> 
+  <!-- Modal -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"   aria-hidden="true">
+      <div class="modal-dialog " role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+           <h5>Confirmation</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body ">
+            <p >vous voulez vraiment supprimer cette tache </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Annuler</button>
+            <button type="button" class="btn btn-sm btn-danger" (click)="onDeleteTask(task)">Supprimer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- End delete Modal-->
+                    
+                    </div>
+               
+                     </div>
+                  
                   </div>
-                  <div class="media text-muted pt-3">
-                    <img data-src="holder.js/32x32?theme=thumb&bg=e83e8c&fg=e83e8c&size=1" alt="" class="mr-2 rounded">
-                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                      <strong class="d-block text-gray-dark">@username</strong>
-                      Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-                    </p>
-                  </div>
-                  <div class="media text-muted pt-3">
-                    <img data-src="holder.js/32x32?theme=thumb&bg=6f42c1&fg=6f42c1&size=1" alt="" class="mr-2 rounded">
-                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                      <strong class="d-block text-gray-dark">@username</strong>
-                      Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-                    </p>
-                  </div>
+             
+               
                   <small class="d-block text-right mt-3">
-                    <a href="#">All updates</a>
+                      <pagination-controls (pageChange)="p = $event" previousLabel="Précedent" nextLabel="Next"></pagination-controls>
+
                   </small>
                 </div>
             
@@ -36,14 +56,16 @@
            <div class="col-md-4 col-xs-12">
     
               <div class="my-3 p-3 bg-white rounded box-shadow">
-                  <button   class="btn btn-md btn-outline-primary btn-block"  data-toggle="modal" data-target="#exampleModal" (click)="onNewTask()" type="button">Créer une Tache </button>
+                  <button   class="btn btn-md btn-outline-primary btn-block"  data-toggle="modal" data-target="#exampleModal" (click)="onNewTask()" type="button">
+
+                    Créer une Tache </button>
 
 
                   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Nouveaux Tache</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">  Nouveaux Tache</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
@@ -76,11 +98,10 @@
                              <div class="input-group mb-3"> 
                                  
                                 <select class="custom-select" id="inputGroupSelect01" name="etatTache" #etat="ngModel" [(ngModel)]="task.etatTache" required>
-                                  
-                                  <option value="noncommence" >Non Commencé</option>
-                                  <option value="encours">En cours</option>
-                                  <option value="termine">Terminé</option>
-                                  <option value="termine">Annulé</option>
+                                  <option value="Non Commence" >Non Commencé</option>
+                                  <option value="En Cours">En cours</option>
+                                  <option value="Termine">Terminé</option>
+                                  <option value="Annule">Annulé</option>
                                   
                                 </select>
                               </div>
@@ -106,11 +127,7 @@
                                 
                                  </div>
                                 </div>
-                                
-                          
-                                
-                                
-                                <button [disabled]="!fo.form.valid" type="submit" class="btn-md btn-block btn btn-primary">Créer</button>
+                                    <button [disabled]="!fo.form.valid" type="submit" class="btn-md btn-block btn btn-primary">Créer</button>
                                 
                    
                                </form>
@@ -127,22 +144,43 @@
                     
                     
                   </div>
+                
                   <div class="media text-muted pt-3">
-                    <img data-src="holder.js/32x32?theme=thumb&bg=e83e8c&fg=e83e8c&size=1" alt="" class="mr-2 rounded">
-                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                      <strong class="d-block text-gray-dark">@username</strong>
-                      Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-                    </p>
-                  </div>
-                  <div class="media text-muted pt-3">
-                    <img data-src="holder.js/32x32?theme=thumb&bg=6f42c1&fg=6f42c1&size=1" alt="" class="mr-2 rounded">
-                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                      <strong class="d-block text-gray-dark">@username</strong>
-                      Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-                    </p>
+                     <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                      <strong class="d-block text-gray-dark">@Tache </strong>
+                      <span *ngFor="let task of tasks">
+                        <span > {{task.dateAffectation | date :'dd/MM/yyyy à HH:mm'}}  {{ task.nomTache }} assigné à {{ task.utilisateur }}
+                           <span *ngIf="task.etatTache == 'encours'">
+
+                              [etat :  <span class="badge badge-warning" > {{ task.etatTache }}</span>]
+
+
+                        </span> 
+                        <span *ngIf="task.etatTache == 'termine'">
+
+                            [etat :  <span class="badge badge-success" > {{ task.etatTache }}</span>]
+
+
+                      </span> 
+                      <span *ngIf="task.etatTache == 'Non Commence'">
+
+                          [etat :   <span class="badge badge-danger" > {{ task.etatTache }}</span>]
+
+
+                    </span> 
+                    <span *ngIf="task.etatTache == 'Annule'">
+
+                        [etat :   <span class="badge badge-dark" > {{ task.etatTache }}</span>]
+
+
+                  </span> 
+                      </span><br>
+                       </span>
+                     </p>
+                    
                   </div>
                   <small class="d-block text-right mt-3">
-                    <a href="#">All updates</a>
+                    <a href="#">Notification</a>
                   </small>
                 </div>
             

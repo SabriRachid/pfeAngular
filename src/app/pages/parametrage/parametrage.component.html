@@ -16,35 +16,49 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form novalidate #fo="ngForm" class="form-signin" (ngSubmit)="saveUser(fo)">
+                  <form novalidate #fo="ngForm" class="form-signin" (ngSubmit)="saveManager(fo)">
+                      <div class="alert alert-danger"   *ngIf="username.errors?.required && nom.touched " >
+                          *  Veuillez Complétez le Champ Username
+                         </div>
+                         <div class="alert alert-danger"   *ngIf="nom.errors?.required && prenom.touched " >
+                            *  Veuillez Complétez le Champ Nom
+                           </div>
+                           <div class="alert alert-danger"   *ngIf="prenom.errors?.required && email.touched " >
+                              *  Veuillez Complétez le Champ Prenom
+                             </div>
+    
+                      <div class="form-group">
+                          <div class="form-label-group">
+                            <input type="text" placeholder="Username" [(ngModel)]="user.username" #username="ngModel"  name="username" class="form-control" required>
+    
+                          </div>
+                        </div>
                     <div class="form-group">
                       <div class="form-label-group">
-                        <input type="text" placeholder="Nom " minlength="4" name="nom" class="form-control" required>
+                        <input type="text" placeholder="Nom "  name="nom" [(ngModel)]="user.nom" #nom="ngModel" class="form-control" required>
 
                       </div>
                     </div>
                     <div class="form-group">
                       <div class="form-label-group">
-                        <input type="text" placeholder="Prenom " minlength="4" name="prenom" class="form-control" required>
+                        <input type="text" placeholder="Prenom " [(ngModel)]="user.prenom" #prenom="ngModel" name="prenom" class="form-control" required>
 
                       </div>
                     </div>
                     <div class="form-group">
                       <div class="form-label-group">
-                        <input type="text" placeholder="Email " minlength="4" name="email" class="form-control" required>
+                        <input type="text" placeholder="Email " [(ngModel)]="user.email" #email="ngModel"  name="email" class="form-control" required>
 
                       </div>
                     </div>
                     <div class="form-group">
-                      <div class="form-label-group">
-                        <input type="text" placeholder="mot de passe " minlength="4" name="mdp" class="form-control" required>
+                      <div class="form-label-group"> Mot de passe
+                        <input type="text" [(ngModel)]="password"  #passwordT="ngModel"  name="password" class="form-control" >
 
                       </div>
-                    </div>
+                    </div>                   
 
-
-
-                    <button type="submit" class="btn-md btn-block btn btn-primary">Ajouter</button>
+                    <button [disabled]="!fo.form.valid" type="submit" class="btn-md btn-block btn btn-primary">Créer</button>
 
 
 
@@ -135,20 +149,19 @@
 
             <table class="table table-sm table-striped">
               <thead>
-                <tr>
+                <tr >
                   <th>Nom et Prenom</th>
                   <th>Email</th>
                   <th>Username</th>
-
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr *ngFor="let manager of managers | paginate: { itemsPerPage: 5, currentPage: page }">
 
-                  <td> </td>
-                  <td> </td>
-                  <td> </td>
+                  <td> {{ manager.nom }} {{ manager.prenom }}</td>
+                  <td> {{ manager.email }}</td>
+                  <td> {{ manager.username }} </td>
 
 
                   <td>
@@ -180,7 +193,7 @@
 
           </div>
           <small class="d-block text-right mt-3">
-            <pagination-controls (pageChange)="p = $event" previousLabel="Précedent" nextLabel="Next"></pagination-controls>
+            <pagination-controls (pageChange)="page = $event" previousLabel="Précedent" nextLabel="Next"></pagination-controls>
           </small>
 
 

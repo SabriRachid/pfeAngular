@@ -4,41 +4,145 @@
     <div class="row">
       <div class="col-md-8 col-xs-12">
         <div class="my-3 p-3 bg-white rounded box-shadow" >
-          <h6 class="border-bottom border-gray pb-2 mb-0">Listes des Evenements </h6>
-          <div class="media text-muted pt-3" *ngFor=" let event of evenements">
-            <img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">
-            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-              <strong class="d-block text-gray-dark">{{ event.nomEvenement }} le {{ event.dateEvenement | date : 'dd/MM/yyyy'}} a {{ event.heureEvenement  }} :Créer par  </strong>
-              {{event.description}}
-       <!--        <form novalidate class="form-signin" >
-                <div class="form-group">
-                  <div class="form-label-group"> Laissez une Commentaire :
-                    <textarea name="description" [(ngModel)]="evenement.description" #description="ngModel" class="form-control"> </textarea>
-                    <button type="submit" class="btn-md btn-block btn btn-primary">Créer</button>
-                  </div>
-                </div>
-              </form> -->
-            </p>
-            
-          </div>
-          <div class="media text-muted pt-3">
-            <img data-src="holder.js/32x32?theme=thumb&bg=e83e8c&fg=e83e8c&size=1" alt="" class="mr-2 rounded">
-            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-              <strong class="d-block text-gray-dark">@username</strong>
-              Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
-              ut fermentum massa justo sit amet risus.
-            </p>
-          </div>
-          <div class="media text-muted pt-3">
-            <img data-src="holder.js/32x32?theme=thumb&bg=6f42c1&fg=6f42c1&size=1" alt="" class="mr-2 rounded">
-            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-              <strong class="d-block text-gray-dark">@username</strong>
-              Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
-              ut fermentum massa justo sit amet risus.
-            </p>
-          </div>
+            <h6 class="border-bottom border-gray pb-2 mb-0">Listes des Evenements </h6>
+          <div class="media text-muted pt-3" *ngFor="let event of evenements | paginate: { itemsPerPage: 5, currentPage: p }  ">
+            <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+             <p><strong class="d-block text-gray-dark"> {{event.nomEvenement}}  </strong></p>
+             <p class="text-muted "><strong>Date de l'évenement :</strong> {{event.dateEvenement | date :'dd/MM/yyyy'}} <strong>à:</strong> {{ event.heureEvenement}}</p>
+             <p ><strong>Responsable :</strong>{{event.utilisateur}}</p>
+             <p ><strong>Categorie :</strong>{{event.categorie}}</p>
+             <strong>{{event.description}}</strong>
+           <div class="text-right "> 
+             <button class="btn btn-secondary btn-sm">Voir Details..</button>
+             <button class="btn btn-success btn-sm" (click)="findEventById(event)" data-toggle="modal" data-target="#exampleModal3" type="button" ><i class="far fa-edit"></i> </button> 
+
+<!-- Modal Update -->
+<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modification d’un évènement</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form novalidate class="form-signin" #fo="ngForm" (ngSubmit)="onUpdateEvent()"  >
+              <div class="alert alert-danger"   *ngIf="nomEvenement.errors?.required && lieu.touched " >
+                  *  Veuillez saisir le nom de l'evenement
+                 </div>
+                 <div class="alert alert-danger"   *ngIf="lieu.errors?.required && dateEvenement.touched " >
+                    *  Veuillez saisir le lieu de l'evenement
+                   </div>
+                   <div class="alert alert-danger"   *ngIf="dateEvenement.errors?.required && heureEvenement.touched " >
+                      *  Veuillez saisir la date de l'evenement
+                     </div>
+                     <div class="alert alert-danger"   *ngIf="heureEvenement.errors?.required && categorie.touched " >
+                        *  Veuillez saisir l'heure' de l'evenement
+                       </div>
+            <div class="form-group"> Nom de L'evenement :
+              <div class="form-label-group">
+                <input [(ngModel)]="event.nomEvenement"  type="text" #nomEvenement="ngModel" name="nomEvenement" class="form-control"
+                  required>
+
+              </div>
+            </div>
+            <div class="form-group"> Lieu de L'evenement :
+              <div class="form-label-group">
+                <input type="text" name="lieu" class="form-control" #lieu="ngModel" [(ngModel)]="event.lieu"  required>
+
+              </div>
+            </div>
+
+
+            <div class="form-group"> Date :
+              <div class="form-label-group">
+                <input type="date" name="dateEvenement" [(ngModel)]="event.dateEvenement" #dateEvenement="ngModel"  class="form-control"
+                  required>
+
+              </div>
+            </div>
+          <div class="form-group"> Heure :
+              <div class="form-label-group">
+                <input type="time" name="heureEvenement" #heureEvenement="ngModel" [(ngModel)]="event.heureEvenement" class="form-control"
+                  required>
+
+              </div>
+            </div>  
+            <div class="form-group">Categorie :
+              <div class="input-group mb-3">
+
+                <select class="custom-select" id="inputGroupSelect01" name="categorie" [(ngModel)]="event.categorie" #categorie="ngModel"  required>
+                  
+                  <option value="Challenge sportif" >Challenge sportif</option>
+                  <option value="Voyage de motivation">Voyage de motivation</option>
+                  <option value="Team learning">Team learning</option>
+                  <option value="Séminaire">Séminaire </option>
+                  <option value="Marketing">Marketing </option>
+                  <option value="Congrès">Congrès</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form-label-group"> Déscription :
+                <textarea name="description" [(ngModel)]="event.description" #description="ngModel" class="form-control"> </textarea>
+
+              </div>
+            </div>
+
+
+
+
+            <button   type="submit" class="btn-md btn-block btn btn-primary"   >Modifier</button>
+
+
+          </form>
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+<!--END modal update -->
+
+
+
+             <button class="btn btn-danger btn-sm" type="button" data-toggle="modal" data-target="#exampleModal1" > <i class="fas fa-trash"></i> </button> 
+           <!-- Modal -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog"   aria-hidden="true">
+    <div class="modal-dialog " role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+         <h5>Confirmation</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body ">
+          <p >vous voulez vraiment supprimer cette Evenement </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Annuler</button>
+          <button type="button" class="btn btn-sm btn-warning" (click)="onDeleteEvent(event)">Oui</button>
+        </div>
+      </div>
+    </div>
+  </div>
+           </div>
+      
+            </div>
+         
+         </div>
+    
+ 
           <small class="d-block text-right mt-3">
-            <a href="#">All updates</a>
+              <pagination-controls (pageChange)="p = $event" previousLabel="Précedent" nextLabel="Next"></pagination-controls>
           </small>
         </div>
 
@@ -61,6 +165,18 @@
                 </div>
                 <div class="modal-body">
                   <form novalidate #fo="ngForm" class="form-signin" (ngSubmit)="saveEvent(fo)">
+                      <div class="alert alert-danger"   *ngIf="nomEvenement.errors?.required && lieu.touched " >
+                          *  Veuillez saisir le nom de l'evenement
+                         </div>
+                         <div class="alert alert-danger"   *ngIf="lieu.errors?.required && dateEvenement.touched " >
+                            *  Veuillez saisir le lieu de l'evenement
+                           </div>
+                           <div class="alert alert-danger"   *ngIf="dateEvenement.errors?.required && heureEvenement.touched " >
+                              *  Veuillez saisir la date de l'evenement
+                             </div>
+                             <div class="alert alert-danger"   *ngIf="heureEvenement.errors?.required && categorie.touched " >
+                                *  Veuillez saisir l'heure' de l'evenement
+                               </div>
                     <div class="form-group"> Nom de L'evenement :
                       <div class="form-label-group">
                         <input [(ngModel)]="evenement.nomEvenement" #nomEvenement="ngModel" type="text" name="nomEvenement" class="form-control"
@@ -93,7 +209,7 @@
                     <div class="form-group">Categorie :
                       <div class="input-group mb-3">
 
-                        <select class="custom-select" id="inputGroupSelect01" name="categorie" [(ngModel)]="evenement.categorie" #categorie="ngModel">
+                        <select class="custom-select" id="inputGroupSelect01" name="categorie" [(ngModel)]="evenement.categorie" #categorie="ngModel" required>
                           
                           <option value="Challenge sportif" >Challenge sportif</option>
                           <option value="Voyage de motivation">Voyage de motivation</option>
@@ -114,7 +230,7 @@
 
 
 
-                    <button type="submit" class="btn-md btn-block btn btn-primary">Créer</button>
+                    <button [disabled]="!fo.form.valid" type="submit" class="btn-md btn-block btn btn-primary">Créer</button>
 
 
                   </form>
@@ -134,21 +250,25 @@
           <div class="media text-muted pt-3">
             <img data-src="holder.js/32x32?theme=thumb&bg=e83e8c&fg=e83e8c&size=1" alt="" class="mr-2 rounded">
             <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-              <strong class="d-block text-gray-dark">@username</strong>
-              Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
-              ut fermentum massa justo sit amet risus.
+              <strong class="d-block text-gray-dark">@Evenement</strong>
+              <span *ngFor="let e of evenements">
+                  <span > {{e.dateCreation | date :'dd/MM/yyyy à HH:mm'}} : {{ e.nomEvenement }} Créer Par {{ e.utilisateur }}
+                     <span *ngIf="e.dateCreation ==  today ">
+
+                        <span class="badge badge-warning" > Nouveaux</span>
+
+
+                  </span> 
+                   
+                
+              
+                </span><br>
+                 </span>
             </p>
           </div>
-          <div class="media text-muted pt-3">
-            <img data-src="holder.js/32x32?theme=thumb&bg=6f42c1&fg=6f42c1&size=1" alt="" class="mr-2 rounded">
-            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-              <strong class="d-block text-gray-dark">@username</strong>
-              Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
-              ut fermentum massa justo sit amet risus.
-            </p>
-          </div>
+      
           <small class="d-block text-right mt-3">
-            <a href="#">All updates</a>
+            <a href="#">Notification</a>
           </small>
         </div>
 

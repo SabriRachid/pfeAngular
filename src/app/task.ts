@@ -8,4 +8,5 @@ export class Task  {
   dateEcheance: Date;
   description: string;
   utilisateur: User;
+  dateAffectation: Date;
 }

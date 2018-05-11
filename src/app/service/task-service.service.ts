@@ -20,7 +20,22 @@ export class TaskServiceService {
 }
 
 saveTask(task) {
+  if (this.jwtToken == null) {
+    this.loadToken();
+  }
 return this.http.post(this.hostTask + '/tasks', task , { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})} );
 }
+getAllTasks() {
+  if (this.jwtToken == null) {
+    this.loadToken();
+  }
+  return this.http.get( this.hostTask + '/tasks', { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+}
 
+deleteTask(id) {
+  if (this.jwtToken == null) {
+    this.loadToken();
+  }
+return  this.http.delete(this.hostTask + '/tasks/' + id , { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+}
 }
