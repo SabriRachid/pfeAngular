@@ -18,6 +18,10 @@ import { EvenementComponent } from './pages/evenement/evenement.component';
 import { EventServiceService } from './service/event-service.service';
 import { AuthenticationServiceService } from './service/authentication-service.service';
 import { TaskServiceService } from './service/task-service.service';
+import { DataChatServiceService } from './service/data-chat-service.service';
+import { ChartsModule } from 'ng2-charts';
+import { DocumentsComponent } from './pages/documents/documents.component';
+
 const appRoutes: Routes  = [
 { path : 'login' , component : LoginComponent },
 { path : '' , redirectTo : 'login' ,  pathMatch: 'full' },
@@ -26,7 +30,8 @@ const appRoutes: Routes  = [
 { path : 'parametrage', component : ParametrageComponent },
 { path : 'taches', component : TachesComponent },
 { path : 'profile', component : ProfileComponent },
-{ path : 'evenement', component : EvenementComponent }
+{ path : 'evenement', component : EvenementComponent },
+{ path : 'document', component : DocumentsComponent }
 ];
 
 @NgModule({
@@ -39,7 +44,8 @@ const appRoutes: Routes  = [
     ParametrageComponent,
     TachesComponent,
     ProfileComponent,
-    EvenementComponent
+    EvenementComponent,
+    DocumentsComponent
   ],
   imports: [
     BrowserModule,
@@ -47,10 +53,12 @@ const appRoutes: Routes  = [
     HttpModule,
     HttpClientModule,
     NgxPaginationModule,
+    ChartsModule,
     RouterModule.forRoot(appRoutes)
 
   ],
-  providers: [UserServiceService, EventServiceService, AuthenticationServiceService, TaskServiceService],
+  providers: [UserServiceService, EventServiceService, AuthenticationServiceService, TaskServiceService,
+    DataChatServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

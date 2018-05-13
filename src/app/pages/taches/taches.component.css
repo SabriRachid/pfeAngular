@@ -20,6 +20,7 @@
   }
 }
 
+
 .nav-scroller {
   position: relative;
   z-index: 2;
@@ -71,5 +72,7 @@
 .lh-150 { line-height: 1.5; }
 .body{
   padding-top: 56px;
+  background-color: #f1f4f5;
+  
 }
  

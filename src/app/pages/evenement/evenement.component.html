@@ -3,15 +3,17 @@
   <main role="main" class="container">
     <div class="row">
       <div class="col-md-8 col-xs-12">
+       
         <div class="my-3 p-3 bg-white rounded box-shadow" >
             <h6 class="border-bottom border-gray pb-2 mb-0">Listes des Evenements </h6>
           <div class="media text-muted pt-3" *ngFor="let event of evenements | paginate: { itemsPerPage: 5, currentPage: p }  ">
             <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-             <p><strong class="d-block text-gray-dark"> {{event.nomEvenement}}  </strong></p>
-             <p class="text-muted "><strong>Date de l'évenement :</strong> {{event.dateEvenement | date :'dd/MM/yyyy'}} <strong>à:</strong> {{ event.heureEvenement}}</p>
-             <p ><strong>Responsable :</strong>{{event.utilisateur}}</p>
-             <p ><strong>Categorie :</strong>{{event.categorie}}</p>
-             <strong>{{event.description}}</strong>
+             <p>
+               <strong class="d-block text-gray-dark"> {{event.nomEvenement}}  </strong>
+              <strong>Date de l'évenement :</strong> {{event.dateEvenement | date :'dd/MM/yyyy'}} <strong>à:</strong> {{ event.heureEvenement}}
+              <strong>Responsable :</strong>{{event.utilisateur}} 
+             
+            </p>
            <div class="text-right "> 
              <button class="btn btn-secondary btn-sm">Voir Details..</button>
              <button class="btn btn-success btn-sm" (click)="findEventById(event)" data-toggle="modal" data-target="#exampleModal3" type="button" ><i class="far fa-edit"></i> </button> 
