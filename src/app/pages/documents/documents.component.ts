@@ -1,15 +1,79 @@
 import { Component, OnInit } from '@angular/core';
-
+import { FileUploadServiceService } from '../../service/file-upload-service.service';
+import { HttpClient, HttpResponse, HttpEventType } from '@angular/common/http';
+import { Document } from '../../document';
+import {saveAs } from 'file-saver';
 @Component({
   selector: 'app-documents',
   templateUrl: './documents.component.html',
   styleUrls: ['./documents.component.css']
 })
 export class DocumentsComponent implements OnInit {
-
-  constructor() { }
+  selectedFiles: FileList;
+  currentFileUpload: File;
+  documents: any;
+  filename: any;
+  document: Document = new Document();
+  constructor(private fileUploadService: FileUploadServiceService) { }
 
   ngOnInit() {
+    this.getAllDocuments();
   }
+
+ selectFile(event) {
+   this.selectedFiles = event.target.files;
+ }
+ upload() {
+   this.currentFileUpload = this.selectedFiles.item(0);
+   this.fileUploadService.pushFileToStorage(this.currentFileUpload).subscribe(event => {
+    if (event instanceof HttpResponse) {
+       console.log('upload de fichier avec success!');
+     }
+   });
+   this.selectedFiles = undefined;
+ }
+ savedocument() {
+
+   this.fileUploadService.saveDocument(this.document).subscribe(data => {
+     console.log(data);
+   }, err => {
+     console.log(err);
+   });
+   this.document = new Document();
+ }
+ getAllDocuments() {
+   this.fileUploadService.getAllDocument().subscribe(data => {
+     this.documents = data;
+     console.log(data);
+   }, err => {
+     console.log(err);
+   });
+ }
+
+ onDownloadFile(document) {
+ // window.open(window.URL.createObjectURL(data));
+  this.fileUploadService.getDocumentByFileName(document.file).subscribe( data => {
+   // this.filename = data;
+   console.log(document.file);
+   this.downloadFile(data);
+  }, err => {
+    console.log(err + 'error telechargement fichier');
+    console.log(document.file);
+  }, () => {
+    console.log('ok');
+  });
+ }
+
+  downloadFile(response: any): void {
+  /* const blob = new Blob([data.blob()], { type: 'application/pdf' });
+  const url = window.URL.createObjectURL(blob);
+  window.open(url); */
+  const contentDispo: string = response.headers.get('Content-Disposition');
+  const parts: string[] = contentDispo.split('.');
+    const file = parts[1].split('=')[1];
+    const blob = new Blob([response.body], {type: 'application/pdf'});
+    saveAs(blob, file);
+
+}
 
 }

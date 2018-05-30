@@ -11,7 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { UserServiceService } from './service/user-service.service';
 import { ParametrageComponent } from './pages/parametrage/parametrage.component';
-import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxPaginationModule} from 'ngx-pagination';
 import { TachesComponent } from './pages/taches/taches.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { EvenementComponent } from './pages/evenement/evenement.component';
@@ -21,6 +21,7 @@ import { TaskServiceService } from './service/task-service.service';
 import { DataChatServiceService } from './service/data-chat-service.service';
 import { ChartsModule } from 'ng2-charts';
 import { DocumentsComponent } from './pages/documents/documents.component';
+import { FileUploadServiceService } from './service/file-upload-service.service';
 
 const appRoutes: Routes  = [
 { path : 'login' , component : LoginComponent },
@@ -58,7 +59,7 @@ const appRoutes: Routes  = [
 
   ],
   providers: [UserServiceService, EventServiceService, AuthenticationServiceService, TaskServiceService,
-    DataChatServiceService],
+    DataChatServiceService, FileUploadServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
