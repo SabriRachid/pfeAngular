@@ -17,10 +17,15 @@ export class LoginComponent implements OnInit {
   onLogin(user) {
   this.authService.login(user).subscribe(resp => {
        this.jwt = resp.headers.get('Authorization');
-      console.log(resp.headers.get('Authorization'));
-      this.authService.saveToken(this.jwt);
-      this.authService.isAuthenticated = true;
-      this.router.navigateByUrl('/home');
+       if (this.jwt != null) {
+        console.log(resp.headers.get('Authorization'));
+        this.authService.saveToken(this.jwt);
+        this.authService.isAuthenticated = true;
+        this.router.navigateByUrl('/home');
+       } else {
+        this.authService.isAuthenticated = false;
+        this.router.navigateByUrl('/login');
+       }
   }, err => {
       this.mode = 1;
   });

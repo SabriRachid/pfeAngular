@@ -1,0 +1,115 @@
+<app-nav-bar></app-nav-bar>
+<div class="body">
+
+  <main role="main" class="container">
+    <div class="row">
+
+      <div class="col-md-8">
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+           
+            <a class="nav-item nav-link active"   id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile"
+              aria-selected="false"> {{ user.nom }} {{ user.prenom }}  </a>
+            
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+          
+          <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+              Date d'inscription  :  <span style="color: green" >  {{user.dateInscrit | date : 'dd-MM-yyyy HH:mm'}}</span> 
+           
+           
+              <form novalidate #fo="ngForm" class="form-signin" (ngSubmit)="saveUser(fo)">
+              
+            
+                 
+                 <div class="alert alert-danger"   *ngIf="nom.errors?.required && prenom.touched" >
+                   Nom obligatoire
+                </div>
+                 <div class="alert alert-danger"   *ngIf="nom.errors?.minlength && prenom.touched" >
+                 Nom doit etre superieur a 4 lettre
+              </div>
+         
+              <div class="form-row">
+                  <div class="form-group col-md-4"> Nom :
+                      <div class="form-label-group"> 
+                          <input type="text" readonly name="prenom"  #prenom="ngModel" [(ngModel)]="user.prenom" class="form-control" >
+
+                        </div>
+
+                    </div>
+                    <div class="form-group col-md-4"> Prenom :
+                        <div class="form-label-group"> 
+                            <input type="text" readonly name="nom"  #nom="ngModel" [(ngModel)]="user.nom" class="form-control"  >
+  
+                          </div>
+  
+                      </div>
+                      <div class="form-group col-md-4"> Username :
+                          <div class="form-label-group">
+                              <input type="text" readonly #username="ngModel" [(ngModel)]="user.username"   name="Username"  class="form-control"      >
+                           
+                            </div>
+                            </div>
+                    
+                </div>
+                 
+
+    <div class="form-row">
+        <div class="form-group col-md-6"> Compte Active :
+            <div class="form-label-group">
+                <input type="text" readonly #active="ngModel" [(ngModel)]="user.active"    name="active"  class="form-control"      >
+             
+              </div>
+          </div>
+           
+          <div *ngIf="user.active == false" class="form-group col-md-6"> (*)
+              <div class="form-label-group"> 
+                  <button type="button" class="btn btn-block btn-outline-success" > Envoyer un Email d'activation </button>
+                </div>
+              
+
+            </div>
+
+    </div>
+             
+    
+                    
+                      <div class="form-group"> Email :
+                          <div class="form-label-group">
+                              <input type="email" #email="ngModel" [(ngModel)]="user.email"    name="email"  class="form-control"      >
+                           
+                            </div>
+                        </div>
+
+                  
+           
+                
+           
+                 
+           
+                 
+                 <button [disabled]="!fo.form.valid" class="btn btn-md btn-success " type="submit">Modifier </button>
+                 <button type="button" class="btn btn-default" (click)="retour()"> Retour </button>
+                
+                 
+                  
+                
+                 
+               
+                
+   
+               </form>
+          </div>
+          <!-- Details user -->
+ 
+        </div>
+      </div>
+      <!-- div col-md-8 -->
+ 
+
+    </div>
+    <!-- div row -->
+  </main>
+</div>
+<!-- div body -->

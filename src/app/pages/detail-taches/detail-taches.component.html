@@ -1,0 +1,92 @@
+<app-nav-bar></app-nav-bar>
+<div class="body">
+
+  <main role="main" class="container">
+    <div class="row">
+
+      <div class="col-md-8">
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+           
+            <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile"
+              aria-selected="false">{{ task.nomTache }}</a>
+            
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+          
+          <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+              <form novalidate #fo="ngForm" (ngSubmit)="onNewTask(fo)">
+                  <div class="alert alert-danger" *ngIf="nomTache.errors?.required && utilisateur.touched ">
+                    * Veuillez saisir un nom du tache Valid
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6"> Nom du Tache :
+                      <div class="form-label-group">
+                        <input  type="text" #nomTache="ngModel" [(ngModel)]="task.nomTache" name="nomTache" class="form-control" required>
+    
+                      </div>
+                    </div>
+    
+    
+                    
+                    <div class="form-group col-md-6">
+                      <div class="form-label-group"> Etat :
+                        <div class="input-group mb-3">
+    
+                          <select class="custom-select" id="inputGroupSelect01" name="etatTache" #etat="ngModel" [(ngModel)]="task.etatTache" required>
+                            <option value="Non Commence">Non Commencé</option>
+                            <option value="En Cours">En cours</option>
+                            <option value="Termine">Terminé</option>
+                            <option value="Annule">Annulé</option>
+    
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6"> Date Debut :
+                      <div class="form-label-group">
+                        <input type="date" #dateDebutTache="ngModel" [(ngModel)]="task.dateDebut  " name="dateDebut" class="form-control" required>
+    
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6"> Date D'echeance :
+                      <div class="form-label-group">
+                        <input type="date" #dateEcheanceTache="ngModel" [(ngModel)]="task.dateEcheance" name="dateEcheance" class="form-control"
+                          required>
+    
+                      </div>
+                    </div>
+    
+                  </div>
+    
+    
+    
+    
+    
+                  <div class="form-group">
+                    <div class="form-label-group"> Description :
+                      <textarea #description="ngModel" [(ngModel)]="task.description" placeholder="Description " name="description" class="form-control"> </textarea>
+    
+                    </div>
+                  </div>
+                  <button [disabled]="!fo.form.valid" type="submit" class="btn-md  btn btn-success">Modifier</button>
+                  <button type="button" class="btn btn-default" (click)="retour()"> Retour </button>
+    
+                </form>
+            
+          </div>
+          <!-- nouveaux tache -->
+ 
+        </div>
+      </div>
+      <!-- div col-md-8 -->
+ 
+
+    </div>
+    <!-- div row -->
+  </main>
+</div>
+<!-- div body -->

@@ -31,15 +31,16 @@ export class AuthenticationServiceService {
 
   logout() {
     this.jwtToken = null;
+    this.isAuthenticated = false;
     localStorage.removeItem('token');
   }
 
-/*   isAdmin() {
+   isAdmin() {
       for (const i of this.roles) {
         if ( i.authority === 'ROLE_ADMIN') {
           return true;
         }
       }
       return false;
-  } */
+  }
 }

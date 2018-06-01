@@ -22,6 +22,9 @@ import { DataChatServiceService } from './service/data-chat-service.service';
 import { ChartsModule } from 'ng2-charts';
 import { DocumentsComponent } from './pages/documents/documents.component';
 import { FileUploadServiceService } from './service/file-upload-service.service';
+import { DetailTachesComponent } from './pages/detail-taches/detail-taches.component';
+import { DetailEventComponent } from './pages/detail-event/detail-event.component';
+import { DetailUserComponent } from './pages/detail-user/detail-user.component';
 
 const appRoutes: Routes  = [
 { path : 'login' , component : LoginComponent },
@@ -32,6 +35,9 @@ const appRoutes: Routes  = [
 { path : 'taches', component : TachesComponent },
 { path : 'profile', component : ProfileComponent },
 { path : 'evenement', component : EvenementComponent },
+{ path : 'detailTache/:id', component : DetailTachesComponent },
+{ path : 'detailEvent/:id', component : DetailEventComponent },
+{ path : 'detailUser/:id', component : DetailUserComponent },
 { path : 'document', component : DocumentsComponent }
 ];
 
@@ -46,7 +52,10 @@ const appRoutes: Routes  = [
     TachesComponent,
     ProfileComponent,
     EvenementComponent,
-    DocumentsComponent
+    DocumentsComponent,
+    DetailTachesComponent,
+    DetailEventComponent,
+    DetailUserComponent
   ],
   imports: [
     BrowserModule,

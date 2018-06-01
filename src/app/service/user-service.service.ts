@@ -29,7 +29,7 @@ export class UserServiceService {
     if (this.jwtToken == null) {
       this.loadToken();
     }
-    return this.http.get(this.baseURLManager + '/AllByRole' , { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})} );
+    return this.http.get(this.baseURLManager + '/roleUser' , { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})} );
   }
 
   saveManager(user: User) {
@@ -42,6 +42,19 @@ export class UserServiceService {
     if (this.jwtToken == null) {
       this.loadToken();
     }
-    return this.http.get(this.baseURLManager + '/AllByRoleManager' , { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+    return this.http.get(this.baseURLManager + '/roleManager' , { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
   }
+  getTotalCompteNonActive() {
+    if (this.jwtToken == null) {
+      this.loadToken();
+    }
+    return this.http.get(this.baseURLManager + '/statistique', { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+  }
+  getUserById(id) {
+    if (this.jwtToken == null) {
+      this.loadToken();
+    }
+    return this.http.get(this.baseURL + '/users/' + id, { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+  }
+
 }

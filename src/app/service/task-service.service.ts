@@ -13,7 +13,7 @@ export class TaskServiceService {
     if (this.jwtToken == null) {
       this.loadToken();
     }
-    return this.http.get(this.host + '/AllByRole' , { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+    return this.http.get(this.host + '/roleUser' , { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
   }
   loadToken() {
     this.jwtToken = localStorage.getItem('token');
@@ -37,5 +37,12 @@ deleteTask(id) {
     this.loadToken();
   }
 return  this.http.delete(this.hostTask + '/tasks/' + id , { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+}
+
+getTaskById(id) {
+  if (this.jwtToken == null) {
+    this.loadToken();
+  }
+  return this.http.get(this.hostTask + '/tasks/' + id, { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
 }
 }

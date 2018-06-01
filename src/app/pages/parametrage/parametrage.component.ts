@@ -18,6 +18,7 @@ export class ParametrageComponent implements OnInit {
   collectionManager = [];
   page: number;
   password = '';
+  totaleCompteNonActive: any;
   user: User = new User();
   constructor(
     private http: HttpClient,
@@ -29,7 +30,7 @@ export class ParametrageComponent implements OnInit {
 
   ngOnInit() {
 
-
+    this.statistiqueCompte();
   this.getUserManager();
   this.getUser();
 
@@ -74,5 +75,15 @@ export class ParametrageComponent implements OnInit {
      } , err => {
        console.log(err);
      });
+   }
+
+   statistiqueCompte() {
+     return this.userService.getTotalCompteNonActive().subscribe( data => {
+       this.totaleCompteNonActive = data ;
+       console.log('total Compte non active :' + this.totaleCompteNonActive);
+     });
+   }
+   detailUser(user) {
+     this.router.navigate(['/detailUser', user.id]);
    }
 }

@@ -17,8 +17,8 @@ export class NavBarComponent implements OnInit {
 
   deconnexion() {
     this.authService.logout();
-    this.router.navigateByUrl('/login');
     this.authService.isAuthenticated = false;
+    this.router.navigateByUrl('/login');
 
   }
 }

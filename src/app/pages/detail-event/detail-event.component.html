@@ -1,0 +1,108 @@
+<app-nav-bar></app-nav-bar>
+<div class="body">
+
+  <main role="main" class="container">
+    <div class="row">
+
+      <div class="col-md-8">
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+           
+            <a class="nav-item nav-link active"   id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile"
+              aria-selected="false"> {{evenement.nomEvenement}}</a>
+            
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+          
+          <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+     
+              <form novalidate #fo="ngForm" class="form-signin" (ngSubmit)="saveEvent(fo)">
+                  <div class="alert alert-danger" *ngIf="nomEvenement.errors?.required && lieu.touched ">
+                    * Veuillez saisir le nom de l'evenement
+                  </div>
+                  <div class="alert alert-danger" *ngIf="lieu.errors?.required && dateEvenement.touched ">
+                    * Veuillez saisir le lieu de l'evenement
+                  </div>
+                  <div class="alert alert-danger" *ngIf="dateEvenement.errors?.required && heureEvenement.touched ">
+                    * Veuillez saisir la date de l'evenement
+                  </div>
+                  <div class="alert alert-danger" *ngIf="heureEvenement.errors?.required && categorie.touched ">
+                    * Veuillez saisir l'heure' de l'evenement
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6"> Nom de L'evenement :
+                      <div class="form-label-group">
+                        <input [(ngModel)]="evenement.nomEvenement" #nomEvenement="ngModel" type="text" name="nomEvenement" class="form-control"
+                          required>
+    
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6"> Lieu de L'evenement :
+                      <div class="form-label-group">
+                        <input type="text" name="lieu" class="form-control" [(ngModel)]="evenement.lieu" #lieu="ngModel" required>
+    
+                      </div>
+                    </div>
+    
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6"> Date :
+                      <div class="form-label-group">
+                        <input type="date" name="dateEvenement" [(ngModel)]="evenement.dateEvenement" #dateEvenement="ngModel" class="form-control"
+                          required>
+    
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6"> Heure :
+                      <div class="form-label-group">
+                        <input type="time" name="heureEvenement" [(ngModel)]="evenement.heureEvenement" #heureEvenement="ngModel" class="form-control"
+                          required>
+    
+                      </div>
+                    </div>
+                  </div>
+    
+                  <div class="form-group">Categorie :
+                    <div class="input-group mb-3">
+    
+                      <select class="custom-select" id="inputGroupSelect01" name="categorie" [(ngModel)]="evenement.categorie" #categorie="ngModel"
+                        required>
+    
+                        <option value="Challenge sportif">Challenge sportif</option>
+                        <option value="Voyage de motivation">Voyage de motivation</option>
+                        <option value="Team learning">Team learning</option>
+                        <option value="Séminaire">Séminaire </option>
+                        <option value="Marketing">Marketing </option>
+                        <option value="Congrès">Congrès</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="form-label-group"> Déscription :
+                      <textarea name="description" [(ngModel)]="evenement.description" #description="ngModel" class="form-control"> </textarea>
+    
+                    </div>
+                  </div>
+    
+    
+    
+    
+                  <button [disabled]="!fo.form.valid" type="submit" class="btn-md  btn btn-success">Modifier</button>
+                  <button type="button" class="btn btn-default" (click)="retour()"> Retour </button>
+
+    
+                </form>
+          </div>
+          <!-- Details Evenet -->
+ 
+        </div>
+      </div>
+      <!-- div col-md-8 -->
+ 
+
+    </div>
+    <!-- div row -->
+  </main>
+</div>
+<!-- div body -->

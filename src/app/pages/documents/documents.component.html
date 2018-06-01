@@ -1,80 +1,163 @@
+<app-nav-bar></app-nav-bar>
 <div class="body">
 
-    <main role="main" class="container">
-         
+  <main role="main" class="container">
+
     <div class="row">
-        <div class="col-md-3 col-xs-12">
+      <div class="col-md-8">
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home"
+              aria-selected="true">Document Partagé</a>
+            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile"
+              aria-selected="false">Document Privé</a>
+            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact"
+              aria-selected="false">Créer un Document</a>
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <div class="my-3 p-3 bg-white rounded box-shadow">
+
+              <div class="table-responsive">
+                <table class="table table-sm">
+                  <tr>
+                    <th>#</th>
+                    <th>Nom Document</th>
+                    <th>Document</th>
+
+                    <th>action</th>
+                  </tr>
+                  <tr *ngFor="let doc of documents; let i = index">
+                    <td>#{{i+1}}</td>
+                    <td>{{ doc.nomDocument }}</td>
+                    <td>{{ doc.file }}</td>
+
+
+                    <td>
+                        <button type="button" class="btn btn-sm btn-default" (click)="detailDoc(doc)"><i class="far fa-eye"></i></button>
+
+                      <button class="btn btn-sm btn-default" (click)="onDownloadFile(doc)">
+                        <i class="fas fa-cloud-download-alt"></i>
+                      </button>
+                      <button type="button" class="btn btn-sm btn-default" (click)="onDeleteTask(task)">
+                        <i class="far fa-trash-alt"></i>
+
+                      </button>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+
+
+            </div>
+          </div>
+          <!-- liste de Doc partage -->
+          <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+
+          </div>
+          <!-- liste de Doc prive -->
+
+          <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+            <form novalidate #fo="ngForm" class="form-signin" (ngSubmit)="savedocument(fo)">
+              <div class="alert alert-danger" *ngIf="nomDocument.errors?.required && typeDocument.touched ">
+                * Veuillez saisir le nom de document
+              </div>
+              <div class="alert alert-danger" *ngIf="typeDocument.errors?.required && description.touched ">
+                * Veuillez saisir le type de document
+              </div>
+             <span class="badge badge-info"> Note </span> Le Document qui vous voulez Ajouter ca sera partagé pour tous les Utilisateur (Public)  :
+              <div class="form-check">
+                  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                  <label class="form-check-label" for="exampleRadios1">
+                    Oui
+                  </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                    <label class="form-check-label" for="exampleRadios1">
+                      Non
+                    </label>
+                  </div>
+              <div class="form-row">
+                  <div class="form-group col-md-6"> Nom du Document :
+                      <div class="form-label-group">
+                        <input placeholder="Nom du document" [(ngModel)]="document.nomDocument" #nomDocument="ngModel" type="text" name="nomDocument" class="form-control" required>
+      
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6"> Type de document :
+                      <div class="form-label-group">
+                        <input placeholder="Type du document" type="text" name="type" class="form-control" [(ngModel)]="document.typeDocument" #typeDocument="ngModel" required>
+      
+                      </div>
+                    </div>
+              </div>
+            
+
+
+
+              <div class="form-group">
+                <div class="form-label-group"> Déscription :
+                  <textarea placeholder="Description" name="description" [(ngModel)]="document.description" #description="ngModel" class="form-control"> </textarea>
+
+                </div>
+              </div>
+               
+                <div class="form-group" style="text-align:center">
+                  <label>
+                    <input name="file" [(ngModel)]="document.file" #file="ngModel"  class="form-control" type="file" (change)="selectFile($event)">
+                  </label>
+                  <button [disabled]="!selectedFiles" class="btn btn-default" (click)="upload()">Upload</button>
+                </div>
+              
+
+
+
+              <button [disabled]="!fo.form.valid" type="submit" class="btn-md  btn btn-default">Créer</button>
+
+
+            </form>
+          </div>
+          <!-- nouveaux Doc -->
+        </div>
+
+
+      </div>
+      <!-- col-md-8-->
+      <div class="col-md-4">
+        <div class="card border-light mb-3" style="max-width: 18rem;">
+          <div class="card-header">#Document</div>
+          <div class="card-body">
+
+            <p class="card-text lh-125 border-bottom border-gray" *ngFor="let docs of documents">
+              <span>
+
+                {{ docs.dateCreation | date : 'dd-MM-yyyy HH:mm ' }} : {{ docs.file }}
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- col-md-4 -->
+    </div>
+    <!-- row -->
+  </main>
+
+
+
+
+  <!--  <div class="col-md-3 col-xs-12">
 
             <div class="my-3 p-3 bg-white rounded box-shadow ">
                 <button class="btn btn-md btn-outline-primary btn-block" data-toggle="modal" data-target="#exampleModal" type="button">Ajouter un Document </button>
                 
-                <!-- Modal Add Document -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Nouveaux Document</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                        <form novalidate #fo="ngForm" class="form-signin" (ngSubmit)="savedocument(fo)">
-                            <div class="alert alert-danger"   *ngIf="nomDocument.errors?.required && typeDocument.touched " >
-                                *  Veuillez saisir le nom de document
-                               </div>
-                               <div class="alert alert-danger"   *ngIf="typeDocument.errors?.required && description.touched " >
-                                  *  Veuillez saisir le type de document
-                                  </div>
-                          <div class="form-group"> Nom du Document :
-                            <div class="form-label-group">
-                              <input [(ngModel)]="document.nomDocument" #nomDocument="ngModel" type="text" name="nomDocument" class="form-control"
-                                required>
-      
-                            </div>
-                          </div>
-                          <div class="form-group"> Type de document :
-                            <div class="form-label-group">
-                              <input type="text" name="type" class="form-control" [(ngModel)]="document.typeDocument" #typeDocument="ngModel" required>
-      
-                            </div>
-                          </div>
-              
-                   
-                         
-                          <div class="form-group">
-                            <div class="form-label-group"> Déscription :
-                              <textarea name="description" [(ngModel)]="document.description" #description="ngModel" class="form-control"> </textarea>
-      
-                            </div>
-                          </div>
-                          <div class="media text-muted  pt-3">
-                            <div style="text-align:center">
-                              <label>
-                                <input name="file" [(ngModel)]="document.file" #file="ngModel" type="file" (change)="selectFile($event)">
-                                </label>
-                                <button [disabled]="!selectedFiles"
-                            (click)="upload()">Upload</button>
-                              </div>
-                          </div>
-      
-      
-      
-                          <button [disabled]="!fo.form.valid" type="submit" class="btn-md btn-block btn btn-primary">Créer</button>
-      
-      
-                        </form>
-                      </div>
-      
-      
-      
-                    </div>
-                  </div>
-                </div>
+           
                 
                 
                 
-                <!-- End Add Document-->
+           
                 <div class="media text-muted pt-3">
                   <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                    <strong class="d-block text-gray-dark">@Documents </strong>
@@ -147,10 +230,4 @@
                   <a href="#">All suggestions</a>
                 </small>
               </div>
-         </div>
-
-    </div>
-     
-       
-      </main>
-    </div>
+         </div> -->

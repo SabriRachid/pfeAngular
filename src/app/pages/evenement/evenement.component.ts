@@ -63,5 +63,8 @@ this.router.navigateByUrl('/evenement');
   findEventById(event) {
    this.eventService.getEventById(event);
   }
+  detailEvenet(event) {
+    this.router.navigate(['/detailEvent', event.id]);
+  }
 
 }

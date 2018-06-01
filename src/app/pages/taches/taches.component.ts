@@ -14,6 +14,8 @@ export class TachesComponent implements OnInit {
 isAdmin: boolean ;
 task: Task = new Task();
 users;
+nom: string;
+prenom: string;
 tasks: any;
 p: number ;
 collection =  [];
@@ -59,5 +61,7 @@ this.getAllTasks();
       console.log(err);
     });
   }
-
+  detailTache(task) {
+ this.router.navigate(['/detailTache', task.id] );
+  }
 }
