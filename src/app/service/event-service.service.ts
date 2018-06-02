@@ -53,4 +53,12 @@ export class EventServiceService {
   setter(event: Evenement) {
     this.event = event;
   }
+
+  getTotalEvent() {
+    if (this.jwtToken == null) {
+      this.loadToken();
+    }
+    return this.http.get(this.baseURL + '/events/totale',  { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+
+  }
 }

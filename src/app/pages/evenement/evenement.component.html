@@ -19,6 +19,12 @@
           <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
 
             <div class="table-responsive">
+                <fieldset>
+                    <legend >Recherche Evenement</legend>
+                <div class="form-group">
+                    <input  [(ngModel)]="motCle" type="text" placeholder="Par Nom du L'evenement" class="form-control">
+                  </div>
+                  </fieldset>
               <table class="table table-sm">
                 <tr>
                   <th>#</th>
@@ -27,7 +33,7 @@
 
                   <th>action</th>
                 </tr>
-                <tr *ngFor="let event of evenements; let i = index">
+                <tr *ngFor="let event of evenements | eventFilter:motCle; let i = index">
                   <td>#{{i+1}}</td>
                   <td>{{event.nomEvenement}}</td>
                   <td>{{event.categorie}}</td>
@@ -66,14 +72,14 @@
               <div class="form-row">
                 <div class="form-group col-md-6"> Nom de L'evenement :
                   <div class="form-label-group">
-                    <input [(ngModel)]="evenement.nomEvenement" #nomEvenement="ngModel" type="text" name="nomEvenement" class="form-control"
+                    <input [(ngModel)]="evenement.nomEvenement" placeholder="Nom de L'evenement" #nomEvenement="ngModel" type="text" name="nomEvenement" class="form-control"
                       required>
 
                   </div>
                 </div>
                 <div class="form-group col-md-6"> Lieu de L'evenement :
                   <div class="form-label-group">
-                    <input type="text" name="lieu" class="form-control" [(ngModel)]="evenement.lieu" #lieu="ngModel" required>
+                    <input type="text" name="lieu" placeholder="Lieu de L'evenement" class="form-control" [(ngModel)]="evenement.lieu" #lieu="ngModel" required>
 
                   </div>
                 </div>
@@ -113,7 +119,7 @@
               </div>
               <div class="form-group">
                 <div class="form-label-group"> Déscription :
-                  <textarea name="description" [(ngModel)]="evenement.description" #description="ngModel" class="form-control"> </textarea>
+                  <textarea name="description" placeholder="Description" [(ngModel)]="evenement.description" #description="ngModel" class="form-control"> </textarea>
 
                 </div>
               </div>

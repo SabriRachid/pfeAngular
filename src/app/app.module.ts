@@ -25,6 +25,12 @@ import { FileUploadServiceService } from './service/file-upload-service.service'
 import { DetailTachesComponent } from './pages/detail-taches/detail-taches.component';
 import { DetailEventComponent } from './pages/detail-event/detail-event.component';
 import { DetailUserComponent } from './pages/detail-user/detail-user.component';
+import { ParametrageManagerFilter } from './pages/parametrage/parametrage-filter.pipe';
+import { ParametrageUserFilter } from './pages/parametrage/parametrageUser-filter.pipe';
+import { TacheFilter } from './pages/taches/tache-filter.pipe';
+import { EventFilter } from './pages/evenement/evenement-filter.pipe';
+import { DocumentFilter } from './pages/documents/documentPar-filter.pipe';
+import { AttachementServiceService } from './service/attachement-service.service';
 
 const appRoutes: Routes  = [
 { path : 'login' , component : LoginComponent },
@@ -55,7 +61,13 @@ const appRoutes: Routes  = [
     DocumentsComponent,
     DetailTachesComponent,
     DetailEventComponent,
-    DetailUserComponent
+    DetailUserComponent,
+    ParametrageManagerFilter,
+    ParametrageUserFilter,
+    TacheFilter,
+    EventFilter,
+    DocumentFilter
+
   ],
   imports: [
     BrowserModule,
@@ -68,7 +80,7 @@ const appRoutes: Routes  = [
 
   ],
   providers: [UserServiceService, EventServiceService, AuthenticationServiceService, TaskServiceService,
-    DataChatServiceService, FileUploadServiceService],
+    DataChatServiceService, FileUploadServiceService, AttachementServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

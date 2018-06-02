@@ -12,6 +12,7 @@ export class DocumentsComponent implements OnInit {
   selectedFiles: FileList;
   currentFileUpload: File;
   documents: any;
+  motCle: string;
   filename: any;
   document: Document = new Document();
   constructor(private fileUploadService: FileUploadServiceService) { }

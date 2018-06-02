@@ -4,6 +4,7 @@ import { UserServiceService } from '../../service/user-service.service';
 import { TaskServiceService } from '../../service/task-service.service';
 import { Task } from '../../task';
 import { AuthenticationServiceService } from '../../service/authentication-service.service';
+import { Commentaire } from '../../comment';
 
 @Component({
   selector: 'app-detail-taches',
@@ -14,7 +15,9 @@ export class DetailTachesComponent implements OnInit {
 
   id: number;
   task: any;
+  tache: Task ;
   nomTache: string;
+  commentaire: Commentaire = new Commentaire();
   constructor(private auth: AuthenticationServiceService ,
     private router: Router, private activateRoute: ActivatedRoute, private tacheService: TaskServiceService) { }
 
@@ -26,5 +29,13 @@ export class DetailTachesComponent implements OnInit {
   }
   retour() {
     this.router.navigate(['/taches']);
+  }
+  onNewComment(valid) {
+
+    this.tacheService.saveComment(this.commentaire).subscribe( data => {
+      console.log(data);
+    }, err => {
+      console.log(err);
+    });
   }
 }

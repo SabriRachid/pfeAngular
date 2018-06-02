@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./parametrage.component.css']
 })
 export class ParametrageComponent implements OnInit {
+  motCle: string;
+  motCleUser: string;
   users: any;
   managers: any ;
   p: number;

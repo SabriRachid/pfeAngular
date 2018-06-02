@@ -45,4 +45,17 @@ getTaskById(id) {
   }
   return this.http.get(this.hostTask + '/tasks/' + id, { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
 }
+saveComment(comment) {
+  if (this.jwtToken == null) {
+    this.loadToken();
+  }
+  return this.http.post(this.hostTask + '/tasks/comment' , comment , { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+}
+getTotalTache() {
+  if (this.jwtToken == null) {
+    this.loadToken();
+  }
+  return this.http.get(this.hostTask + '/tasks/total' , { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+
+}
 }

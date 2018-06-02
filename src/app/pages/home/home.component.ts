@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { DataChatServiceService } from '../../service/data-chat-service.service';
 import { Chart } from 'chart.js';
+import { TaskServiceService } from '../../service/task-service.service';
+import { FileUploadServiceService } from '../../service/file-upload-service.service';
+import { UserServiceService } from '../../service/user-service.service';
+import { EventServiceService } from '../../service/event-service.service';
 
 @Component({
   selector: 'app-home',
@@ -15,6 +19,11 @@ export class HomeComponent implements OnInit {
   totalAnnule: any;
   totalNonCommence: any ;
   totalTermine: any;
+  totalTache: any;
+  totalDoc: any;
+  totalCompte: any;
+  totalEvent: any;
+  tasks: any;
 
 /*   public doughnutChartLabels: string[] = ['Non Commencé', 'Annuler', 'En Cours', 'Terminer'];
   public doughnutChartData: number[] = [350, 450, 100, 200];
@@ -40,17 +49,30 @@ export class HomeComponent implements OnInit {
     console.log(e);
   }
 
-  constructor(private dataChartService: DataChatServiceService ) { }
+  constructor(private dataChartService: DataChatServiceService, private taskSerive: TaskServiceService ,
+    private fileService: FileUploadServiceService, private userService: UserServiceService, private eventService: EventServiceService ) { }
 
   ngOnInit() {
     this.getTotalTaskEncours();
     this.getTotalTaskAnnule();
     this.getTotalTaskNonCommence();
     this.getTotalTaskTermine();
+    this.getTotalTache();
+    this.getTotalDocument();
+    this.getTotalCompte();
+    this.getTotalEvent();
+    this.getAllTasks();
 
 
   }
-
+  getAllTasks() {
+    return this.taskSerive.getAllTasks().subscribe(data => {
+      this.tasks = data ;
+      console.log(data);
+        }, err => {
+      console.log(err);
+    });
+  }
 getTotalTaskEncours(): number {
    this.dataChartService.getTotalTacheEncours().subscribe( data => {
      this.totalEncours = data;
@@ -80,6 +102,26 @@ getTotalTaskTermine() {
   });
 }
 
+getTotalTache() {
+this.taskSerive.getTotalTache().subscribe(data => {
+  this.totalTache = data;
+  console.log('total' + data);
+});
+}
+getTotalDocument() {
+  this.fileService.getTotalDocument().subscribe(data => {
+    this.totalDoc = data;
+  });
+}
 
-
+getTotalCompte() {
+  this.userService.getTotalCompte().subscribe(data => {
+    this.totalCompte = data;
+  });
+}
+getTotalEvent() {
+  this.eventService.getTotalEvent().subscribe(data => {
+    this.totalEvent = data;
+  });
+}
 }

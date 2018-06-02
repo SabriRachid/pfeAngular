@@ -1,106 +1,170 @@
 <app-nav-bar></app-nav-bar>
 <div class="body">
 
-<main role="main" class="container">
-     <div class="row">
-       <div class="col-md-8 col-xs-12">
-          
-              <h6 class="border-bottom border-gray pb-2 mb-0">Statistiques Taches</h6>
-          
-             
-                 {{totalEncours}}
-                 {{totalAnnule}}
-                 {{totalNonCommence}}
-                 {{totalTermine}}
-               <!--   <div style="display: block">
-                  <canvas baseChart
-                              [data]="doughnutChartData"
-                              [labels]="doughnutChartLabels"
-                              [chartType]="doughnutChartType"
-                              (chartHover)="chartHovered($event)"
-                              (chartClick)="chartClicked($event)"></canvas>
-                </div> -->
-                <div style="display: block">
-                    <canvas baseChart
-                            [data]="pieChartData"
-                            [labels]="pieChartLabels"
-                            [chartType]="pieChartType"
-                            (chartHover)="chartHovered($event)"
-                            (chartClick)="chartClicked($event)"></canvas>
-                  </div>
-              
-               
-              <small class="d-block text-right mt-3">
-                <a href="#">All updates</a>
-              </small>
-            
-        
-
-       </div>
-       <div class="col-md-4 col-xs-12">
-
-          <div class="my-3 p-3 bg-white rounded box-shadow ">
-              <h6 class="border-bottom border-gray pb-2 mb-0">Profile</h6>
-              <div class="media text-muted  pt-3">
-                 <img src="http://via.placeholder.com/300x300" class="rounded img-fluid img-thumbnail" >
-                              
-              </div>
-              <div class="media text-muted pt-3">
-                <img data-src="holder.js/32x32?theme=thumb&bg=e83e8c&fg=e83e8c&size=1" alt="" class="mr-2 rounded">
-                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                  <strong class="d-block text-gray-dark">Guemri Mondher</strong>
-                  <strong class="d-block text-gray-dark">@Idir</strong>
-                   Developpeur
-                   
-                </p>
+  <main role="main" class="container">
+    <div class="row">
+      <div class="col-md-3">
            
+              <div class="card-deck">
+                  <div class="card">
+                    <img class="card-img-top" src="assets/images/logo2.png" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title">Guemri Mondher</h5>
+                      <p class="card-text">Ingénieur Java / JEE </p>
+                      <p class="card-text">
+                        <small class="text-muted">Cite l'oasis Ghomrassen 3220</small><br>
+                        <small class="text-muted">Portable :20 532 900</small>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+           
+      </div>
+      <div class="col-md-9">
+        <div class="row">
+             
+            
+            <div class="col-sm-3">
+                <div class="card" style="height:150px;">
+                  <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-tasks"></i>
+
+                      Tache <span class="badge badge-success"> {{totalTache}}   </span> </h5>
+                    <p class="card-text">
+                    
+                        {{totalTache}} : Tache Assigné 
+                    </p>
+                    
+                  </div>
+                </div>
               </div>
-               
-              <small class="d-block text-right mt-3">
-                <a href="#" routerLink="/profile">modifier</a>
-              </small>
+              <div class="col-sm-3">
+                  <div class="card" style="height:150px;">
+                    <div class="card-body">
+                      <h5 class="card-title"><i class="fas fa-calendar-alt"></i>
+
+                        Evenement <span class="badge badge-success">{{totalEvent}}</span> </h5>
+                      <p class="card-text"> {{totalEvent}} :  Evenements Créer </p>
+                     
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="card" style="height:150px;">
+                      <div class="card-body">
+                        <h5 class="card-title"> <i class="fas fa-file-alt"></i>
+
+                          Document <span class="badge badge-success">{{totalDoc}}</span>  </h5>
+                        <p class="card-text">
+                            {{totalDoc}} : Document disponible
+                        </p>
+                    
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                      <div class="card" style="height:150px;">
+                        <div class="card-body">
+                          <h5 class="card-title"><i class="fas fa-users"></i>
+
+                            Compte <span class="badge badge-success">{{totalCompte}}</span></h5>
+                          <p class="card-text"> </p>
+                          {{totalCompte}} : Comptes Créer
+                        </div>
+                      </div>
+                    </div>
+                    
+            <div class="col-md-12">
+                <p></p>
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                      <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home"
+                        aria-selected="true">Mes Taches</a>
+                    <!--   <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile"
+                        aria-selected="false">Mes Evenements</a>
+                      <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact"
+                        aria-selected="false">Mes Documents</a> -->
+                    </div>
+                  </nav>
+          
+                  <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                       
+                       <!--   
+                        <div style="display: block">
+                          <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType" (chartHover)="chartHovered($event)"
+                            (chartClick)="chartClicked($event)"></canvas>
+                        </div> -->
+                        <div class="table-responsive">
+                            <fieldset style="text-align: center"  >
+                                <legend >Recherche <span class="badge badge-default"><i class="fas fa-search"></i>
+
+                                </span></legend>
+                            <div class="form-group">
+                                <input  [(ngModel)]="motCle" type="text" placeholder="Par Nom du Tache" class="form-control">
+                              </div>
+                              </fieldset>
+                          <table class="table table-sm">
+                            <tr>
+                              <th>#</th>
+                              <th>Nom du Tache</th>
+                              <th>Etat </th>
+                             
+                             
+                            </tr>
+                            <tr *ngFor="let task of tasks | tacheFilter:motCle; let i = index">
+                              <td>#{{i+1}}</td>
+                              <td>{{task.nomTache}}</td>
+                              <td>{{ task.etatTache }}</td>
+                           
+           
+                            </tr>
+                          </table>
+                        </div>
+          
+          
+                       
+                    </div>
+                    <!-- Taches -->
+             <!--        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+          
+          
+          
+                    </div> -->
+                    <!-- Evenements -->
+          
+                   <!--  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+          
+          
+          
+                    </div> -->
+                    <!-- Documents -->
+                  </div>
             </div>
-        
-       </div>
+        </div>
+         
+           
+          
 
-     </div>
+         
 
- 
-    <div class="my-3 p-3 bg-white rounded box-shadow">
-      <h6 class="border-bottom border-gray pb-2 mb-0">Suggestions</h6>
-      <div class="media text-muted pt-3">
-        <img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">
-        <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-          <div class="d-flex justify-content-between align-items-center w-100">
-            <strong class="text-gray-dark">Full Name</strong>
-            <a href="#">Follow</a>
-          </div>
-          <span class="d-block">@username</span>
-        </div>
       </div>
-      <div class="media text-muted pt-3">
-        <img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">
-        <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-          <div class="d-flex justify-content-between align-items-center w-100">
-            <strong class="text-gray-dark">Full Name</strong>
-            <a href="#">Follow</a>
-          </div>
-          <span class="d-block">@username</span>
-        </div>
-      </div>
-      <div class="media text-muted pt-3">
-        <img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">
-        <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-          <div class="d-flex justify-content-between align-items-center w-100">
-            <strong class="text-gray-dark">Full Name</strong>
-            <a href="#">Follow</a>
-          </div>
-          <span class="d-block">@username</span>
-        </div>
-      </div>
-      <small class="d-block text-right mt-3">
-        <a href="#">All suggestions</a>
-      </small>
+     
+
+       
     </div>
+    
+    <div class="row">
+      <div class="col-md-3">
+
+      </div>
+     
+    </div>
+  
+    
+      
+
+      
+   
   </main>
 </div>

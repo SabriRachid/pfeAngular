@@ -44,5 +44,13 @@ getDocumentByFileName(file)  {
   }
   return this.http.get(this.baseUrl + '/documents/' + file, { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
 }
+getTotalDocument() {
+  if (this.jwtToken == null) {
+    this.loadToken();
+  }
+  return this.http.get(this.baseUrl + '/documents/totale', { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+}
+
 
 }
+

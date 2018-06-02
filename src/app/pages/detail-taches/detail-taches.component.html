@@ -10,12 +10,15 @@
            
             <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile"
               aria-selected="false">{{ task.nomTache }}</a>
+              <a class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home"
+              aria-selected="false">Commentaire</a>
             
           </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
           
           <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+              Proprietaire: <span style="color: green">{{ task.utilisateur.nom }} {{ task.utilisateur.prenom }}</span>
               <form novalidate #fo="ngForm" (ngSubmit)="onNewTask(fo)">
                   <div class="alert alert-danger" *ngIf="nomTache.errors?.required && utilisateur.touched ">
                     * Veuillez saisir un nom du tache Valid
@@ -35,10 +38,11 @@
                         <div class="input-group mb-3">
     
                           <select class="custom-select" id="inputGroupSelect01" name="etatTache" #etat="ngModel" [(ngModel)]="task.etatTache" required>
-                            <option value="Non Commence">Non Commencé</option>
-                            <option value="En Cours">En cours</option>
-                            <option value="Termine">Terminé</option>
-                            <option value="Annule">Annulé</option>
+                             <option value="En Cours">En cours</option>
+                            <option value="Terminer">Terminer</option>
+                            <option value="Annuler">Annuler</option>
+                            <option   value="Valider">Valider</option>
+                            <option value="Pour Revision">Pour Revision</option>
     
                           </select>
                         </div>
@@ -79,7 +83,39 @@
             
           </div>
           <!-- nouveaux tache -->
- 
+          <div class="tab-pane fade " id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+             
+                <div class="card w-100">
+                    <div class="card-body">
+                      <h5 class="card-title">{{task.nomTache}}  </h5>
+                      #Assigne a: <span style="color: green">{{ task.utilisateur.nom }} {{ task.utilisateur.prenom }}</span>
+                      <hr>
+                      <p class="card-text"></p>
+                      <form novalidate #fo="ngForm" (ngSubmit)="onNewComment(fo)" >
+                          <div class="alert alert-danger" *ngIf="comment.errors?.required  ">
+                              * Veuillez saisir votre commentaire
+                            </div>
+                        <div class="form-group">
+                          <div class="form-label-group">
+                            <textarea class="form-control" [(ngModel)]="commentaire.comment" #comment="ngModel" name="comment" placeholder="Commentaire ..." required></textarea>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-label-group">
+                              <input type="text" class="form-control" [value]="task"    name="tache"  > 
+                            </div>
+                          </div>
+                        <div class="form-group text-right">
+                            <button [disabled]="!fo.form.valid" type="submit" class="btn btn-success">Comment</button>
+                            <button type="button" class="btn btn-default" (click)="retour()"> Annuler </button>
+                        </div>
+                       
+                      </form>
+                    
+                    </div>
+                  </div>
+          </div>
+          <!-- Commentaire-->
         </div>
       </div>
       <!-- div col-md-8 -->

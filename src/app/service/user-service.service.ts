@@ -56,5 +56,12 @@ export class UserServiceService {
     }
     return this.http.get(this.baseURL + '/users/' + id, { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
   }
+  getTotalCompte() {
+
+      if (this.jwtToken == null) {
+        this.loadToken();
+      }
+      return this.http.get(this.baseURL + '/users/totale' , { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+  }
 
 }

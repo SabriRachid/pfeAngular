@@ -20,6 +20,13 @@
             <div class="my-3 p-3 bg-white rounded box-shadow">
 
               <div class="table-responsive">
+                  <fieldset>
+                      <legend >Recherche Document</legend>
+                      <div class="form-group">  
+                        <input  [(ngModel)]="motCle" type="text" placeholder=" Par Nom du Document" class="form-control">
+                      </div>
+                      </fieldset>
+                 
                 <table class="table table-sm">
                   <tr>
                     <th>#</th>
@@ -28,10 +35,10 @@
 
                     <th>action</th>
                   </tr>
-                  <tr *ngFor="let doc of documents; let i = index">
+                  <tr *ngFor="let doc of documents | docFilter:motCle; let i = index">
                     <td>#{{i+1}}</td>
                     <td>{{ doc.nomDocument }}</td>
-                    <td>{{ doc.file }}</td>
+                    <td><a href="file:///D:\pfe-workspace\PFERestApi\Document\{{doc.file}">{{doc.file }}</a> </td>
 
 
                     <td>
@@ -69,13 +76,13 @@
               </div>
              <span class="badge badge-info"> Note </span> Le Document qui vous voulez Ajouter ca sera partagé pour tous les Utilisateur (Public)  :
               <div class="form-check">
-                  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                  <input class="form-check-input" type="radio" [(ngModel)]="document.etatPublic" name="etatPublic" id="exampleRadios1"  value="true" checked>
                   <label class="form-check-label" for="exampleRadios1">
                     Oui
                   </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                    <input class="form-check-input" type="radio" [(ngModel)]="document.etatPublic" value="false" name="etatPublic" id="exampleRadios1"   >
                     <label class="form-check-label" for="exampleRadios1">
                       Non
                     </label>

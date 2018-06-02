@@ -13,7 +13,9 @@ export class EvenementComponent implements OnInit {
 
   evenement: Evenement = new Evenement();
   evenements: any;
+  nomEvenement: string;
   event: any ;
+  motCle: string;
   p: number;
   collection =  [];
   constructor(private eventService: EventServiceService, private router: Router) { }

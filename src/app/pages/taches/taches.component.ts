@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { TaskServiceService } from '../../service/task-service.service';
 import { User } from '../../user';
 import { Task } from '../../task';
+import { Attachement } from '../../attachement';
+import { HttpResponse } from '@angular/common/http';
+import { AttachementServiceService } from '../../service/attachement-service.service';
 
 @Component({
   selector: 'app-taches',
@@ -12,19 +15,36 @@ import { Task } from '../../task';
 })
 export class TachesComponent implements OnInit {
 isAdmin: boolean ;
+selectedFiles: FileList;
+currentFileUpload: File;
 task: Task = new Task();
-users;
+users: any;
+motCle: string;
 nom: string;
 prenom: string;
 tasks: any;
 p: number ;
+attachement: Attachement = new Attachement();
 collection =  [];
-  constructor(private authService: AuthenticationServiceService, private router: Router, private taskSerive: TaskServiceService) { }
+  constructor(private attachementService: AttachementServiceService,
+    private authService: AuthenticationServiceService, private router: Router, private taskSerive: TaskServiceService) { }
 
   ngOnInit() {
   //  this.isAdmin = this.authService.isAdmin();
 this.getAllUserRole();
 this.getAllTasks();
+  }
+  selectFile(event) {
+    this.selectedFiles = event.target.files;
+  }
+  upload() {
+    this.currentFileUpload = this.selectedFiles.item(0);
+    this.attachementService.pushFileToStorage(this.currentFileUpload).subscribe(event => {
+     if (event instanceof HttpResponse) {
+        console.log('upload de fichier avec success!');
+      }
+    });
+    this.selectedFiles = undefined;
   }
 
   onNewTask(valid: boolean) {
@@ -63,5 +83,14 @@ this.getAllTasks();
   }
   detailTache(task) {
  this.router.navigate(['/detailTache', task.id] );
+  }
+  saveAttachement() {
+
+    this.attachementService.saveAttachement(this.attachement).subscribe(data => {
+      console.log(data);
+    }, err => {
+      console.log(err);
+    });
+    this.attachement = new Attachement();
   }
 }
