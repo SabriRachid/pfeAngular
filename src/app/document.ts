@@ -4,5 +4,5 @@ export class Document {
   typeDocument: string;
   description: string;
   file: string;
-  etatPublic: boolean;
+  etatPublic: string;
 }

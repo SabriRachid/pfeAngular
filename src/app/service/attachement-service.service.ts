@@ -31,4 +31,20 @@ export class AttachementServiceService {
     }
     return this.http.post(this.url + '/upload', attachements,  { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
   }
+  pushFileToStorageServer(file: File): Observable<HttpEvent<{}>> {
+    if (this.jwtToken == null) {
+      this.loadToken();
+    }
+    const formdata: FormData = new FormData();
+    formdata.append('file', file);
+    const req = new HttpRequest('POST', 'http://localhost:8080/api/attachements/upload', formdata, {
+      reportProgress: true,
+      responseType: 'text',
+      headers: new HttpHeaders({ 'Authorization': this.jwtToken })
+    });
+    return this.http.request(req);
+  }
+  getFiles(): Observable<any> {
+    return this.http.get(this.url + '/attachements/getallfiles', { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+  }
 }

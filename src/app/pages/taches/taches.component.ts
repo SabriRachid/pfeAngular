@@ -1,20 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AuthenticationServiceService } from '../../service/authentication-service.service';
 import { Router } from '@angular/router';
 import { TaskServiceService } from '../../service/task-service.service';
 import { User } from '../../user';
 import { Task } from '../../task';
 import { Attachement } from '../../attachement';
-import { HttpResponse } from '@angular/common/http';
+import { HttpResponse, HttpEventType } from '@angular/common/http';
 import { AttachementServiceService } from '../../service/attachement-service.service';
-
+import { Observable } from 'rxjs/Observable';
 @Component({
   selector: 'app-taches',
   templateUrl: './taches.component.html',
   styleUrls: ['./taches.component.css']
 })
 export class TachesComponent implements OnInit {
+  @Input() fileUpload: string;
 isAdmin: boolean ;
+submitForm = false;
 selectedFiles: FileList;
 currentFileUpload: File;
 task: Task = new Task();
@@ -24,6 +26,10 @@ nom: string;
 prenom: string;
 tasks: any;
 p: number ;
+showFile = false;
+fileUploads:  Observable<string[]>;
+
+  progress: { percentage: number } = { percentage: 0 };
 attachement: Attachement = new Attachement();
 collection =  [];
   constructor(private attachementService: AttachementServiceService,
@@ -42,17 +48,20 @@ this.getAllTasks();
     this.attachementService.pushFileToStorage(this.currentFileUpload).subscribe(event => {
      if (event instanceof HttpResponse) {
         console.log('upload de fichier avec success!');
+
       }
     });
     this.selectedFiles = undefined;
   }
 
   onNewTask(valid: boolean) {
+
      this.taskSerive.saveTask(this.task).subscribe(data => {
      console.log(data);
     }, err => {
       console.log(err);
     });
+    this.submitForm = true;
     this.task = new Task();
   }
   getAllUserRole() {
@@ -92,5 +101,27 @@ this.getAllTasks();
       console.log(err);
     });
     this.attachement = new Attachement();
+  }
+  uploadFile() {
+    this.progress.percentage = 0;
+
+    this.currentFileUpload = this.selectedFiles.item(0);
+    this.attachementService.pushFileToStorageServer(this.currentFileUpload).subscribe(event => {
+      if (event.type === HttpEventType.UploadProgress) {
+        this.progress.percentage = Math.round(100 * event.loaded / event.total);
+      } else if (event instanceof HttpResponse) {
+        console.log('File is completely uploaded!');
+
+      }
+    });
+
+    this.selectedFiles = undefined;
+  }
+  showFiles(enable: boolean) {
+    this.showFile = enable;
+
+    if (enable) {
+      this.fileUploads = this.attachementService.getFiles();
+    }
   }
 }
