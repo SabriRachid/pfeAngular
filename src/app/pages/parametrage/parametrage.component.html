@@ -11,9 +11,9 @@
                 <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home"
                   aria-selected="true">Utilisateur</a>
                 <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile"
-                  aria-selected="false">Manager</a>
+                *ngIf="auth.isAdmin()"   aria-selected="false">Manager</a>
                 <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact"
-                  aria-selected="false">Nouveaux Compte</a>
+                *ngIf="auth.isAdmin()"   aria-selected="false">Nouveaux Compte</a>
               </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
@@ -45,8 +45,9 @@
       
                             </button>
                             <button type="button" class="btn btn-sm btn-default" (click)="onDeleteTask(task)">
-                              <i class="far fa-trash-alt"></i>
-      
+                              <i class="fas fa-archive"></i>
+
+
                             </button>
                           </td>
                         </tr>
@@ -58,7 +59,7 @@
                   </div>
                 </div>
                 <!-- liste de utilisateur -->
-                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" *ngIf="auth.isAdmin()">
            
                     <div class="table-responsive">
                         <fieldset>
@@ -85,7 +86,9 @@
         
                               </button>
                               <button type="button" class="btn btn-sm btn-default" (click)="onDeleteTask(task)">
-                                <i class="far fa-trash-alt"></i>
+                                <i class="fas fa-archive"></i>
+
+
         
                               </button>
                             </td>
@@ -95,7 +98,7 @@
 
                 </div>
                 <!-- liste de manager -->
-                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" >
                     <div class="card w-100">
                         <div class="card-body">
                           <h5 class="card-title"> <i class="fas fa-user-circle"></i>
@@ -107,6 +110,9 @@
                           </h5>
                            
                           <p class="card-text"></p>
+                          <div class="alert alert-success" *ngIf="submited">
+                              {{messageManager}}
+                          </div>
                           <form novalidate #fo="ngForm" class="form-signin" (ngSubmit)="saveManager(fo)">
                               <div class="alert alert-danger"   *ngIf="username.errors?.required && nom.touched " >
                                   *  Veuillez Complétez le Champ Username

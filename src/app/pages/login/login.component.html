@@ -5,17 +5,17 @@
           <form novalidate #f="ngForm" (ngSubmit)="onLogin(f.value)" class="form-signin">
            
             <div class="text-center mb-4">
-               <h3 class="display-4">Espace de Connexion</h3>
+               <h3 class="display-4">Login</h3>
             </div>
             <div class="alert alert-danger" *ngIf="mode==1" >
               <strong>Username/Mot de passe Invalid</strong>
           </div>
-            <div class="form-label-group">
+            <div class="form-label-group">Username:
               <input type="text" ngModel="" name="username"  placeholder="Username" id="username" class="form-control"   required autofocus>
            
             </div>
       
-            <div class="form-label-group">
+            <div class="form-label-group">Mot de Passe:
               <input type="password" ngModel="" name="password" placeholder="Mot de passe"  id="password" class="form-control"   required>
       
             </div>

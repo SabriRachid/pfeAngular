@@ -9,11 +9,11 @@
                   <div class="card">
                     <img class="card-img-top" src="assets/images/logo2.png" alt="Card image cap">
                     <div class="card-body">
-                      <h5 class="card-title">Guemri Mondher</h5>
-                      <p class="card-text">Ingénieur Java / JEE </p>
+                      <h5 class="card-title">{{loggedUser.nom}} {{loggedUser.prenom}}</h5>
+                      <p class="card-text">{{profileUserLogged.profession}} </p>
                       <p class="card-text">
-                        <small class="text-muted">Cite l'oasis Ghomrassen 3220</small><br>
-                        <small class="text-muted">Portable :20 532 900</small>
+                        <small class="text-muted">Address : {{profileUserLogged.address}}</small><br>
+                        <small class="text-muted">Portable :{{profileUserLogged.numeroTelephone}}</small>
                       </p>
                     </div>
                   </div>
@@ -79,7 +79,7 @@
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                       <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home"
-                        aria-selected="true">Mes Taches</a>
+                        aria-selected="true">Mes Taches <span class="badge badge-danger">{{ totalTacheUser }}</span> </a>
                     <!--   <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile"
                         aria-selected="false">Mes Evenements</a>
                       <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact"
@@ -95,7 +95,7 @@
                           <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType" (chartHover)="chartHovered($event)"
                             (chartClick)="chartClicked($event)"></canvas>
                         </div> -->
-                        <div class="table-responsive">
+                        <div class="table-responsive" *ngIf="!auth.isUser()" >
                             <fieldset style="text-align: center"  >
                                 <legend >Recherche <span class="badge badge-default"><i class="fas fa-search"></i>
 
@@ -121,7 +121,33 @@
                             </tr>
                           </table>
                         </div>
-          
+                        <div class="table-responsive" *ngIf="auth.isUser()">
+                            <fieldset>
+                              <legend>Recherche Tache</legend>
+                              <div class="form-group">
+                                <input [(ngModel)]="motCle" type="text" placeholder="Par Nom du Tache" class="form-control">
+                              </div>
+                            </fieldset>
+                            <table class="table table-sm">
+                              <tr>
+                                  <th>#</th>
+                                  <th>Nom du Tache</th>
+                                  <th>Etat </th>
+            
+            
+                               
+                              </tr>
+                              <tr *ngFor="let task of TacheLoggedUser | tacheFilter:motCle; let i = index">
+                                  <td>#{{i+1}}</td>
+                                  <td>{{task.nomTache}}</td>
+                                  <td>{{ task.etatTache }}</td>
+            
+            
+            
+                                
+                              </tr>
+                            </table>
+                          </div>
           
                        
                     </div>

@@ -10,16 +10,15 @@
             <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home"
               aria-selected="true">Mes Tache</a>
             <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile"
-              aria-selected="false">Créer une Tache</a>
-            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact"
-              aria-selected="false">Contact</a>
+              aria-selected="false" *ngIf="!auth.isUser()">Créer une Tache</a>
+
           </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
           <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
             <div class="my-3 p-3 bg-white rounded box-shadow">
 
-              <div class="table-responsive">
+              <div class="table-responsive" *ngIf="!auth.isUser()">
                 <fieldset>
                   <legend>Recherche Tache</legend>
                   <div class="form-group">
@@ -45,170 +44,189 @@
                         <i class="far fa-eye"></i>
 
                       </button>
-                      <button type="button" class="btn btn-sm btn-default" (click)="onDeleteTask(task)">
-                        <i class="far fa-trash-alt"></i>
+                      <button type="button" class="btn btn-sm btn-default" (click)="onArchivedTask(task)">
+                        <i class="fas fa-archive"></i>
+
+
 
                       </button>
                     </td>
                   </tr>
                 </table>
               </div>
+              <div class="table-responsive" *ngIf="auth.isUser()">
+                <fieldset>
+                  <legend>Recherche Tache</legend>
+                  <div class="form-group">
+                    <input [(ngModel)]="motCle" type="text" placeholder="Par Nom du Tache" class="form-control">
+                  </div>
+                </fieldset>
+                <table class="table table-sm">
+                  <tr>
+                    <th>#</th>
+                    <th>Nom du Tache</th>
 
 
+                    <th>action</th>
+                  </tr>
+                  <tr *ngFor="let task of TacheLoggedUser | tacheFilter:motCle; let i = index">
+                    <td>#{{i+1}}</td>
+                    <td>{{task.nomTache}}</td>
+
+
+
+                    <td>
+                      <button type="button" class="btn btn-sm btn-default" (click)="detailTache(task)">
+                        <i class="far fa-eye"></i>
+
+                      </button>
+
+                    </td>
+                  </tr>
+                </table>
+              </div>
 
             </div>
           </div>
           <!-- liste de tache -->
           <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
             <form novalidate #fo="ngForm" (ngSubmit)="onNewTask(fo)">
-                <div class="card w-100">
-                    <div class="card-body">
-                      <h5 class="card-title">
-                            <i class="fas fa-tasks"></i>
-                            Tache
+              <div class="card w-100">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <i class="fas fa-tasks"></i>
+                    Tache
 
-    
-                          </h5>
-                     
-                      
-                      <p class="card-text"></p>
-                      <div class="alert alert-danger" *ngIf="nomTache.errors?.required && utilisateur.touched ">
-                          * Veuillez saisir un nom du tache Valid
-                        </div>
-                      <div class="form-row">
-                        <div class="form-group col-md-6"> Nom du Tache :
-                            <div class="form-label-group">
-                              <input type="text" placeholder="Nom du Tache" #nomTache="ngModel" [(ngModel)]="task.nomTache" name="nomTache" class="form-control"
-                                required>
-          
-                            </div>
-                          </div>
-                          <div class="form-group  col-md-6">
-                              <div class="form-label-group"> Assigner à :
-                                <select class="custom-select" id="inputGroupSelect01" name="utilisateur" #utilisateur="ngModel" [(ngModel)]="task.utilisateur"
-                                  required>
-            
-                                  <option *ngFor="let u of users" [ngValue]="u"> {{ u.nom }} {{u.prenom }} </option>
-            
-                                </select>
-            
-                              </div>
-                            </div>
-                          </div>
-                            
-              <div class="form-row">
-                  <div class="form-group col-md-6"> Date Debut :
+
+                  </h5>
+
+
+                  <p class="card-text"></p>
+                  <div class="alert alert-danger" *ngIf="nomTache.errors?.required && utilisateur.touched ">
+                    * Veuillez saisir un nom du tache Valid
+                  </div>
+                  <div class="form-group "> Nom de Projet :
                     <div class="form-label-group">
-                      <input type="date" #dateDebutTache="ngModel" [(ngModel)]="task.dateDebut" name="dateDebut" class="form-control" required>
-  
+                      <input type="text" placeholder="Nom de Projet" #nomTache="ngModel" [(ngModel)]="task.nomProjet" name="nomProjet" class="form-control">
+
                     </div>
                   </div>
-                  <div class="form-group col-md-6"> Date D'echeance :
-                    <div class="form-label-group">
-                      <input type="date" #dateEcheanceTache="ngModel" [(ngModel)]="task.dateEcheance" name="dateEcheance" class="form-control"
-                        required>
-  
+                  <div class="form-row">
+                    <div class="form-group col-md-6"> Nom du Tache :
+                      <div class="form-label-group">
+                        <input type="text" placeholder="Nom du Tache" #nomTache="ngModel" [(ngModel)]="task.nomTache" name="nomTache" class="form-control"
+                          required>
+
+                      </div>
+                    </div>
+                    <div class="form-group  col-md-6">
+                      <div class="form-label-group"> Assigner à :
+                        <select class="custom-select" id="inputGroupSelect01" name="utilisateur" #utilisateur="ngModel" [(ngModel)]="task.utilisateur"
+                          required>
+
+                          <option *ngFor="let u of users" [ngValue]="u"> {{ u.nom }} {{u.prenom }} </option>
+
+                        </select>
+
+                      </div>
                     </div>
                   </div>
-  
-                </div>
-                <div class="form-group">
-                    <div class="form-label-group"> Description :
-                      <textarea #description="ngModel" [(ngModel)]="task.description" placeholder="Description " name="description" class="form-control"> </textarea>
-    
+
+                  <div class="form-row">
+                    <div class="form-group col-md-6"> Date Debut :
+                      <div class="form-label-group">
+                        <input type="date" #dateDebutTache="ngModel" [(ngModel)]="task.dateDebut" name="dateDebut" class="form-control" required>
+
+                      </div>
                     </div>
-                  </div>
-                  <div class="text-right">
-                      <button [disabled]="!fo.form.valid" type="submit" class="btn   btn btn-default">Créer</button> 
-                  </div>
-                 
-                    </div>
-                  
-                    </div>
-                  
-                   
-              
-               
-            
+                    <div class="form-group col-md-6"> Date D'echeance :
+                      <div class="form-label-group">
+                        <input type="date" #dateEcheanceTache="ngModel" [(ngModel)]="task.dateEcheance" name="dateEcheance" class="form-control"
+                          required>
 
-
-
-
-
-             
-
-                  <div class="card w-100"   >
-                      <div class="card-body">
-                        <h5 class="card-title">
-                          <i class="fas fa-paperclip"></i>
-      
-                          Attachement </h5>Taille Maximum : <span class="badge badge-info">5MB</span> 
-                        <span style="color: green"> </span>
-                        <hr>
-                        <p class="card-text"></p>
-      
-                         
-                          <div *ngIf="currentFileUpload" class="progress">
-                            <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" attr.aria-valuenow="{{progress.percentage}}"
-                              aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progress.percentage+'%'}">
-                              {{progress.percentage}}%</div>
-                          </div>
-      
-                          <label class="btn btn-default">
-                            <input type="file" (change)="selectFile($event)">
-                          </label>
-      
-                          <button class="btn btn-success" [disabled]="!selectedFiles" (click)="uploadFile()">Upload</button>
-      
-                          <!-- <button class="btn btn-info" *ngIf='showFile'
-                          (click)='showFiles(false)'>Cacher  </button>
-                         
-                      <button class="btn btn-info" *ngIf='!showFile'
-                          (click)='showFiles(true)'>Voir Fichier</button>
-                         
-                      <div [hidden]="!showFile">
-                          <div class="panel panel-primary">
-                            <div class="panel-heading">List of Files</div>
-                            <div *ngFor="let file of fileUploads  | async">
-                              <div class="panel-body">
-                                 <div>{{file}}</div>
-                              </div>
-                            </div>
-                          </div>
-                        </div> 
-       -->
-                         
-      
-                        <div class="table-responsive">
-                          <table class="table table-sm">
-                            <tr>
-                              <th>#</th>
-                              <th>File</th>
-                              <th>Action</th>
-                            </tr>
-                            <tr  >
-                              <td> </td>
-                              <td></td>
-                              <td></td>
-                            </tr>
-                          </table>
-                        </div>
-      
                       </div>
                     </div>
 
-                  </form>   
-              <p></p>
+                  </div>
+                  <div class="form-group">
+                    <div class="form-label-group"> Description :
+                      <textarea #description="ngModel" [(ngModel)]="task.description" placeholder="Description " name="description" class="form-control"> </textarea>
 
-             
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <button [disabled]="!fo.form.valid" type="submit" class="btn   btn btn-default">Créer</button>
+                  </div>
+
+                </div>
+
+              </div>
 
 
-             
+
+
+
+
+
+
+
+
+
+
+              <div class="card w-100">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <i class="fas fa-paperclip"></i>
+
+                    Attachement </h5>Taille Maximum :
+                  <span class="badge badge-info">5MB</span>
+                  <span style="color: green"> </span>
+                  <hr>
+                  <p class="card-text"></p>
+
+
+                  <div *ngIf="currentFileUpload" class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" attr.aria-valuenow="{{progress.percentage}}"
+                      aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progress.percentage+'%'}">
+                      {{progress.percentage}}%</div>
+                  </div>
+
+                  <label class="btn btn-default">
+                    <input type="file" (change)="selectFile($event)">
+                  </label>
+
+                  <button class="btn btn-success" [disabled]="!selectedFiles" (click)="uploadFile()">Upload</button>
+
+                
+
+                  <div class="table-responsive">
+                    <table class="table table-sm">
+                      <tr>
+                        <th>#</th>
+                        <th>File</th>
+                        <th>Action</th>
+                      </tr>
+                      <tr>
+                        <td> </td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                    </table>
+                  </div>
+
+                </div>
+              </div>
+
+            </form>
+            <p></p>
+
+
+
+
+
           </div>
           <!-- nouveaux tache -->
-          <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
 
-          </div>
         </div>
       </div>
       <!-- div col-md-8 -->

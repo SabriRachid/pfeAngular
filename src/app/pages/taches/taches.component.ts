@@ -25,6 +25,7 @@ motCle: string;
 nom: string;
 prenom: string;
 tasks: any;
+TacheLoggedUser: any;
 p: number ;
 showFile = false;
 fileUploads:  Observable<string[]>;
@@ -33,12 +34,13 @@ fileUploads:  Observable<string[]>;
 attachement: Attachement = new Attachement();
 collection =  [];
   constructor(private attachementService: AttachementServiceService,
-    private authService: AuthenticationServiceService, private router: Router, private taskSerive: TaskServiceService) { }
+    private auth: AuthenticationServiceService, private router: Router, private taskSerive: TaskServiceService) { }
 
   ngOnInit() {
   //  this.isAdmin = this.authService.isAdmin();
 this.getAllUserRole();
 this.getAllTasks();
+this. getTacheByLoggedUser();
   }
   selectFile(event) {
     this.selectedFiles = event.target.files;
@@ -58,6 +60,7 @@ this.getAllTasks();
 
      this.taskSerive.saveTask(this.task).subscribe(data => {
      console.log(data);
+     this.attachement.tache = this.task;
     }, err => {
       console.log(err);
     });
@@ -123,5 +126,16 @@ this.getAllTasks();
     if (enable) {
       this.fileUploads = this.attachementService.getFiles();
     }
+  }
+  getTacheByLoggedUser() {
+    this.auth.getTacheByUsername().subscribe(data => {
+      this.TacheLoggedUser = data ;
+    });
+  }
+  onArchivedTask(task) {
+    this.taskSerive.archiveTask(task).subscribe(data => {
+      console.log(data);
+      this.router.navigateByUrl('/archive');
+    });
   }
 }

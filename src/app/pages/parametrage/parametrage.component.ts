@@ -5,6 +5,7 @@ import { UserServiceService } from '../../service/user-service.service';
 import { TaskServiceService } from '../../service/task-service.service';
 import 'rxjs/add/operator/map';
 import { Router } from '@angular/router';
+import { AuthenticationServiceService } from '../../service/authentication-service.service';
 @Component({
   selector: 'app-parametrage',
   templateUrl: './parametrage.component.html',
@@ -21,8 +22,11 @@ export class ParametrageComponent implements OnInit {
   page: number;
   password = '';
   totaleCompteNonActive: any;
+  submited = false;
+  messageManager: string;
   user: User = new User();
   constructor(
+    private auth: AuthenticationServiceService,
     private http: HttpClient,
     private userService: UserServiceService,
     private taskService: TaskServiceService,
@@ -51,6 +55,8 @@ export class ParametrageComponent implements OnInit {
    this.user.password = this.password;
     this.userService.saveManager(this.user).subscribe(data => {
       console.log(data);
+      this.submited = true;
+      this.messageManager = 'compte manager créer avec success ..';
       this.user = new User();
 
       this.router.navigateByUrl('/parametrage');

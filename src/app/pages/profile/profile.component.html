@@ -8,11 +8,11 @@
               <div class="card">
                 <img class="card-img-top" src="assets/images/logo2.png" alt="Card image cap">
                 <div class="card-body">
-                  <h5 class="card-title">Guemri Mondher</h5>
-                  <p class="card-text">Ingénieur Java / JEE </p>
+                  <h5 class="card-title">{{loggedUser.nom}} {{ loggedUser.prenom }}</h5>
+                  <p class="card-text">{{profileUserLogged.profession}} </p>
                   <p class="card-text">
-                    <small class="text-muted">Cite l'oasis Ghomrassen 3220</small><br>
-                    <small class="text-muted">Portable :20 532 900</small>
+                    <small class="text-muted">Address : {{profileUserLogged.address}}</small><br>
+                    <small class="text-muted">Portable :{{profileUserLogged.numeroTelephone}}</small>
                   </p>
                 </div>
               </div>
@@ -27,57 +27,54 @@
               aria-selected="true">Mes Infos</a>
             <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile"
               aria-selected="false">Compte</a>
+              <a class="nav-item nav-link" id="nav-pass-tab" data-toggle="tab" href="#nav-pass" role="tab" aria-controls="nav-pass"
+              aria-selected="false">Confidentialité</a>
             <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact"
               aria-selected="false">Contact</a>
+             
           </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
           <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
             <div class="my-3 p-3 bg-white rounded box-shadow">
 
-              <form>
-                <div class="form-group ">
-                    <div class="form-label-group">Nom :
-                 
-                    <input type="text" class="form-control" id="nom" placeholder="Nom">
+                <div class="alert alert-success" *ngIf="submitedInfo">
+                    {{messageInfo}}
                   </div>
-                </div>
-                <div class="form-group ">
-                    <div class="form-label-group">Prenom:
-                   
-                      <input type="text" class="form-control" id="prenom" placeholder="Prenom">
-                    </div>
-                  </div>
+                    <form novalidate #fo="ngForm" (ngSubmit)="editInfo()">
+               
 
                   <div class="form-group ">
                       <div class="form-label-group">Date de Naissance:
                      
-                        <input type="date" class="form-control" id="naissance" placeholder="Date de Naissance">
+                        <input type="date" [(ngModel)]="profileUserLogged.dateNaissance" name="dateNaissance" class="form-control" id="naissance" placeholder="Date de Naissance">
                       </div>
                     </div>
                
                     <div class="form-group ">
                         <div class="form-label-group">Address:
                       
-                          <input type="text" class="form-control" id="address" placeholder="address">
+                          <input type="text" [(ngModel)]="profileUserLogged.address" name="address" class="form-control" id="address" placeholder="address">
                         </div>
                       </div>
                       <div class="form-group ">
                           <div class="form-label-group">Profession: 
                          
-                            <input type="text" class="form-control" id="profession" placeholder="Profession">
+                            <input type="text" [(ngModel)]="profileUserLogged.profession" name="profession" class="form-control" id="profession" placeholder="Profession">
                           </div>
                         </div>
                       <div class="form-group ">
                           <div class="form-label-group">N° Tel (mobile) : 
                       
-                            <input type="number" class="form-control" id="numero" placeholder="Numero ">
+                            <input type="number" [(ngModel)]="profileUserLogged.numeroTelephone" name="numeroTelephone" class="form-control" id="numero" placeholder="Numero ">
                           </div>
                         </div>
                  
                 <div class="form-group ">
-                 
-                    <button type="submit" class="btn btn-success">Modifier</button>
+                 <div class="text-right">
+                    <button type="submit" class="btn btn-success">Mettre a jour</button>
+                 </div>
+                   
                   
                 </div>
               </form>
@@ -87,18 +84,27 @@
           </div>
           <!-- mes Infos -->
           <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-              <form  >
-                 
-                
-                    <div class="form-group "> Username :
-                      <div class="form-label-group">
-                        <input type="text" placeholder="Username"   name="username" class="form-control" required>
-    
+            <div class="alert alert-success" *ngIf="submited">
+              {{messageCompte}}
+            </div>
+              <form novalidate #fo="ngForm" (ngSubmit)="editCompte()">
+                  <div class="form-group ">
+                      <div class="form-label-group">Nom :
+                   
+                      <input type="text" class="form-control" required [(ngModel)]="loggedUser.nom" name="nom" id="nom" placeholder="Nom">
+                    </div>
+                  </div>
+                  <div class="form-group ">
+                      <div class="form-label-group">Prenom:
+                     
+                        <input type="text" required [(ngModel)]="loggedUser.prenom" name="prenom" class="form-control" id="prenom" placeholder="Prenom">
                       </div>
                     </div>
+                
+                   
                     <div class="form-group "> Email :
                         <div class="form-label-group">
-                          <input type="email" placeholder="Email"  name="email" class="form-control" required>
+                          <input type="email"  placeholder="Email" [(ngModel)]="loggedUser.email"   name="email" class="form-control" required>
       
                         </div>
                       </div>
@@ -106,23 +112,12 @@
                      
                   
                 
-                  <div class="form-group "> Nouveaux Mot de passe :
-                      <div class="form-label-group">
-                        <input type="password" placeholder="Mot de passe"  name="password" class="form-control" required>
-    
-                      </div>
-                    </div>
-                    <div class="form-group  "> Confirmation Mot de passe :
-                        <div class="form-label-group">
-                          <input type="password" placeholder="Mot de passe"  name="confpassword" class="form-control" required>
-      
-                        </div>
-                      </div>
+                 
     
     
-    
-     
-                  <button  type="submit" class="btn-md  btn btn-success">Modifier</button>
+                      <div class="text-right">
+                          <button type="submit" class="btn btn-success">Modifier</button>
+                       </div>
     
     
                 </form>
@@ -131,26 +126,66 @@
           </div>
           <!-- Compte -->
 
-          <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+        
+          
+          <div class="tab-pane fade" id="nav-pass" role="tabpanel" aria-labelledby="nav-pass-tab">
+              <div class="alert alert-success" *ngIf="submitedPassword">
+                  {{messagePassword}}
+                </div>
+            <form novalidate #for="ngForm" (ngSubmit)="editPassword()"  >
+                <div class="form-group "> Username :
+                    <div class="form-label-group">
+                      <input type="text" [(ngModel)]="loggedUser.username"  placeholder="Username"   name="username" class="form-control" required>
+  
+                    </div>
+                  </div>
 
-            <div class="table-responsive">
-              <table class="table">
-                <tr>
-                  <th>#</th>
-                  <th>Nom Prenom</th>
-                  <th>Action</th>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-              </table>
-
+                <div class="form-group "> Nouveaux Mot de passe :
+                    <div class="form-label-group">
+                      <input type="password" placeholder="Mot de passe" [(ngModel)]="loggedUser.nvpassword"  placeholder="Nouveaux mot de passe"  name="password" class="form-control" required>
+  
+                    </div>
+                  </div>
+                  <div class="form-group  "> Confirmation :
+                      <div class="form-label-group">
+                        <input type="password" placeholder="Confirmation"  name="confpassword" class="form-control" >
+    
+                      </div>
+                    </div>
+                    <div class="text-right">
+                        <button [disabled]="!for.form.valid" type="submit" class="btn-md  btn btn-success">Modifier</button>
+                    </div>
+                  
+  
+            </form>
+              
             </div>
+            <!-- Conf -->
+            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
 
-          </div>
-          <!-- Coordonnee -->
+                <div class="table-responsive">
+                  <table class="table table-sm">
+                    <tr>
+                      <th>#</th>
+                      <th>Nom Prenom</th>
+                      <th>Action</th>
+                    </tr>
+                    <tr *ngFor="let profile of profiles; let  i= index">
+                      <td>#{{i+1}}</td>
+                      <td>{{profile.utilisateur.nom}} {{profile.utilisateur.prenom}}</td>
+                      <td>
+                        <button type="button" class="btn btn-sm btn-default" (click)="detailProfile(profile)">
+                          <i class="far fa-eye"></i>
+    
+                        </button>
+                      </td>
+                    </tr>
+                  </table>
+    
+                </div>
+    
+              </div>
+              <!-- Coordonnee -->
         </div>
       </div>
  

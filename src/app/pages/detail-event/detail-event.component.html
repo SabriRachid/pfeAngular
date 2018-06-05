@@ -7,17 +7,33 @@
       <div class="col-md-8">
         <nav>
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
-           
+              
             <a class="nav-item nav-link active"   id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile"
-              aria-selected="false"> {{evenement.nomEvenement}}</a>
+               aria-selected="false"> {{evenement.nomEvenement}}</a>
+       
             
           </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
           
           <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-     
-              <form novalidate #fo="ngForm" class="form-signin" (ngSubmit)="saveEvent(fo)">
+            <div class="card w-100"  >
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="fab fa-elementor"></i>
+
+
+                      Edit Evenement
+
+
+                    </h5>
+               
+                
+                <p class="card-text">Etat : <span style="color: red"> {{ evenement.etatEvent}} </span></p>
+                <div class="alert alert-success" *ngIf="submited">
+                  {{messageEvent}}
+                </div>
+              <form novalidate #f="ngForm" class="form-signin" (ngSubmit)="updateEvent(f)">
                   <div class="alert alert-danger" *ngIf="nomEvenement.errors?.required && lieu.touched ">
                     * Veuillez saisir le nom de l'evenement
                   </div>
@@ -28,7 +44,7 @@
                     * Veuillez saisir la date de l'evenement
                   </div>
                   <div class="alert alert-danger" *ngIf="heureEvenement.errors?.required && categorie.touched ">
-                    * Veuillez saisir l'heure' de l'evenement
+                    * Veuillez saisir l'heure de l'evenement
                   </div>
                   <div class="form-row">
                     <div class="form-group col-md-6"> Nom de L'evenement :
@@ -78,6 +94,18 @@
                       </select>
                     </div>
                   </div>
+                  <div *ngIf="!auth.isUser()" class="form-group"><span style="color: red"> Etat : </span> 
+                      <div class="input-group mb-3">
+      
+                        <select class="custom-select"   name="categorie" [(ngModel)]="evenement.etatEvent" #etatEvent="ngModel"
+                          >
+      
+                          <option value="Annuler">Annuler</option>
+                          <option value="Reporter">Reporter</option>
+                          <option value="Confirmer">Confirmer</option>                          
+                        </select>
+                      </div>
+                    </div>
                   <div class="form-group">
                     <div class="form-label-group"> Déscription :
                       <textarea name="description" [(ngModel)]="evenement.description" #description="ngModel" class="form-control"> </textarea>
@@ -88,13 +116,18 @@
     
     
     
-                  <button [disabled]="!fo.form.valid" type="submit" class="btn-md  btn btn-success">Modifier</button>
+                  <button [disabled]="!f.form.valid" type="submit" class="btn-md  btn btn-success">Modifier</button>
                   <button type="button" class="btn btn-default" (click)="retour()"> Retour </button>
 
     
                 </form>
+                </div>
+                </div>
+
+               
           </div>
           <!-- Details Evenet -->
+       
  
         </div>
       </div>

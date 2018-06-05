@@ -5,6 +5,9 @@ import { TaskServiceService } from '../../service/task-service.service';
 import { FileUploadServiceService } from '../../service/file-upload-service.service';
 import { UserServiceService } from '../../service/user-service.service';
 import { EventServiceService } from '../../service/event-service.service';
+import { AuthenticationServiceService } from '../../service/authentication-service.service';
+import { User } from '../../user';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-home',
@@ -24,6 +27,7 @@ export class HomeComponent implements OnInit {
   totalCompte: any;
   totalEvent: any;
   tasks: any;
+  profileUserLogged: any;
 
 /*   public doughnutChartLabels: string[] = ['Non Commencé', 'Annuler', 'En Cours', 'Terminer'];
   public doughnutChartData: number[] = [350, 450, 100, 200];
@@ -39,7 +43,9 @@ export class HomeComponent implements OnInit {
   public pieChartLabels: string[] = ['Non Commencé', 'Annuler', 'En Cours', 'Terminer'];
   public pieChartData: number[] = [300, 500, 100, 250];
   public pieChartType = 'pie';
-
+  loggedUser: any;
+  totalTacheUser: any;
+  TacheLoggedUser: any;
   // events
   public chartClicked(e: any): void {
     console.log(e);
@@ -50,7 +56,8 @@ export class HomeComponent implements OnInit {
   }
 
   constructor(private dataChartService: DataChatServiceService, private taskSerive: TaskServiceService ,
-    private fileService: FileUploadServiceService, private userService: UserServiceService, private eventService: EventServiceService ) { }
+    private fileService: FileUploadServiceService, private userService: UserServiceService, private eventService: EventServiceService,
+    private auth: AuthenticationServiceService) { }
 
   ngOnInit() {
     this.getTotalTaskEncours();
@@ -62,7 +69,10 @@ export class HomeComponent implements OnInit {
     this.getTotalCompte();
     this.getTotalEvent();
     this.getAllTasks();
-
+    this.getUserLoggedIn();
+    this.getTotalTacheByUsername();
+    this.getProfileUserLogged();
+    this.getTacheByLoggedUser();
 
   }
   getAllTasks() {
@@ -122,6 +132,33 @@ getTotalCompte() {
 getTotalEvent() {
   this.eventService.getTotalEvent().subscribe(data => {
     this.totalEvent = data;
+  });
+}
+getUserLoggedIn() {
+  this.auth.getUserByUsername().subscribe(data => {
+    this.loggedUser = data ;
+    console.log(data);
+  }, err => {
+    console.log(err);
+  });
+}
+
+getTotalTacheByUsername() {
+  this.auth.getTotalTacheByUsername().subscribe(data => {
+    this.totalTacheUser = data;
+  });
+}
+getProfileUserLogged() {
+  this.auth.getProfileByUsername().subscribe( data => {
+    this.profileUserLogged = data;
+    console.log(data);
+  }, err => {
+    console.log(err);
+  });
+}
+getTacheByLoggedUser() {
+  this.auth.getTacheByUsername().subscribe(data => {
+    this.TacheLoggedUser = data ;
   });
 }
 }

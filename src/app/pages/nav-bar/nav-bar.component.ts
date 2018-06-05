@@ -10,14 +10,14 @@ import { Router } from '@angular/router';
 export class NavBarComponent implements OnInit {
 
   loggedIn = true;
-  constructor( private authService: AuthenticationServiceService, private router: Router) { }
+  constructor( private auth: AuthenticationServiceService, private router: Router) { }
 
   ngOnInit() {
   }
 
   deconnexion() {
-    this.authService.logout();
-    this.authService.isAuthenticated = false;
+    this.auth.logout();
+    this.auth.isAuthenticated = false;
     this.router.navigateByUrl('/login');
 
   }

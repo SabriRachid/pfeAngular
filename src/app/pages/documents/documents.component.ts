@@ -3,6 +3,7 @@ import { FileUploadServiceService } from '../../service/file-upload-service.serv
 import { HttpClient, HttpResponse, HttpEventType } from '@angular/common/http';
 import { Document } from '../../document';
 import {saveAs } from 'file-saver';
+import { AuthenticationServiceService } from '../../service/authentication-service.service';
 @Component({
   selector: 'app-documents',
   templateUrl: './documents.component.html',
@@ -16,7 +17,7 @@ export class DocumentsComponent implements OnInit {
   filename: any;
   document: Document = new Document();
   progress: { percentage: number } = { percentage: 0 };
-  constructor(private fileUploadService: FileUploadServiceService) { }
+  constructor(private fileUploadService: FileUploadServiceService, private auth: AuthenticationServiceService) { }
 
   ngOnInit() {
     this.getAllDocuments();

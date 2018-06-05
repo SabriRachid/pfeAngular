@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router , Params , ActivatedRoute } from '@angular/router';
 import { EventServiceService } from '../../service/event-service.service';
+import { AuthenticationServiceService } from '../../service/authentication-service.service';
 
 
 @Component({
@@ -11,8 +12,9 @@ import { EventServiceService } from '../../service/event-service.service';
 export class DetailEventComponent implements OnInit {
 id: number;
 evenement: any;
-
-  constructor(
+submited = false;
+messageEvent: string;
+  constructor( private auth: AuthenticationServiceService,
     private router: Router, private activateRoute: ActivatedRoute, private eventService: EventServiceService) { }
 
   ngOnInit() {
@@ -23,5 +25,14 @@ evenement: any;
   }
   retour() {
     this.router.navigateByUrl('/evenement');
+  }
+  updateEvent() {
+    this.eventService.updateEvent(this.evenement).subscribe(data => {
+      console.log(data);
+      this.submited = true;
+      this.messageEvent = 'Evenement Modifié avec success ...';
+    }, err => {
+      console.log(err);
+    });
   }
 }

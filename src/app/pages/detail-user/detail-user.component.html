@@ -16,9 +16,19 @@
         <div class="tab-content" id="nav-tabContent">
           
           <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-              Date d'inscription  :  <span style="color: green" >  {{user.dateInscrit | date : 'dd-MM-yyyy HH:mm'}}</span> 
+            
            
-           
+              <div class="card w-100">
+                <div class="card-body">
+                  <h5 class="card-title"> <i class="fas fa-users-cog"></i>
+
+
+
+                    Edit Compte
+
+                  </h5>
+                  Date d'inscription  :  <span style="color: green" >  {{user.dateInscrit | date : 'dd-MM-yyyy HH:mm'}}</span> 
+                  <p class="card-text"></p>
               <form novalidate #fo="ngForm" class="form-signin" (ngSubmit)="saveUser(fo)">
               
             
@@ -100,6 +110,8 @@
                 
    
                </form>
+               </div>
+               </div>
           </div>
           <!-- Details user -->
  

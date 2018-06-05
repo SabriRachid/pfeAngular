@@ -25,6 +25,12 @@ saveTask(task) {
   }
 return this.http.post(this.hostTask + '/tasks', task , { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})} );
 }
+updateTask(task) {
+  if (this.jwtToken == null) {
+    this.loadToken();
+  }
+return this.http.put(this.hostTask + '/tasks/' + task.id, task , { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})} );
+}
 getAllTasks() {
   if (this.jwtToken == null) {
     this.loadToken();
@@ -58,4 +64,25 @@ getTotalTache() {
   return this.http.get(this.hostTask + '/tasks/total' , { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
 
 }
+getCommentByTacheId(id) {
+  if (this.jwtToken == null) {
+    this.loadToken();
+  }
+  return this.http.get(this.hostTask + '/tasks/comment/' + id, { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
 }
+getArchivedTache() {
+  if (this.jwtToken == null) {
+    this.loadToken();
+  }
+  return this.http.get(this.hostTask + '/tasks/archives' , { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+
+}
+archiveTask(task) {
+  if (this.jwtToken == null) {
+    this.loadToken();
+  }
+  return this.http.put(this.hostTask + '/tasks/archive/' + task.id , task,  {
+    headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+}
+}
+

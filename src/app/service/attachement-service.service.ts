@@ -47,4 +47,5 @@ export class AttachementServiceService {
   getFiles(): Observable<any> {
     return this.http.get(this.url + '/attachements/getallfiles', { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
   }
+
 }

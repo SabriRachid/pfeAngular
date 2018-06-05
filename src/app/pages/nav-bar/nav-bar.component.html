@@ -20,10 +20,13 @@
           <a class="nav-link" href="#" routerLink="/profile" routerLinkActive="active">Profile</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#" routerLink="/parametrage" routerLinkActive="active">Paramètrage</a>
+          <a class="nav-link" href="#" routerLink="/parametrage" *ngIf="!auth.isUser()" routerLinkActive="active">Paramètrage</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#" routerLink="/document" routerLinkActive="active">Document </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" routerLink="/archive" *ngIf="!auth.isUser()" routerLinkActive="active">Archive </a>
           </li>
       <!--  <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Settings</a>

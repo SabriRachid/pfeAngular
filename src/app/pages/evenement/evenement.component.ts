@@ -3,6 +3,7 @@ import { EventServiceService } from '../../service/event-service.service';
 import { Evenement } from '../../event';
 import 'rxjs/add/operator/map';
 import { Router } from '@angular/router';
+import { AuthenticationServiceService } from '../../service/authentication-service.service';
 
 @Component({
   selector: 'app-evenement',
@@ -16,14 +17,17 @@ export class EvenementComponent implements OnInit {
   nomEvenement: string;
   event: any ;
   motCle: string;
+  eventLoggedUser: any;
   p: number;
   collection =  [];
-  constructor(private eventService: EventServiceService, private router: Router) { }
+  constructor(private eventService: EventServiceService, private router: Router,
+  private auth: AuthenticationServiceService) { }
 
   ngOnInit() {
 
     this.event = this.eventService.getter();
    this.getAllEvents();
+   this.findEventByUser();
   }
 getAllEvents() {
   this.eventService.getAllEvent().subscribe(data => {
@@ -43,9 +47,10 @@ getAllEvents() {
 
   }
 
-  onDeleteEvent(event) {
+  deleteEvent(event) {
     this.eventService.deleteEvent(event.id).subscribe( data => {
       console.log(event.id);
+      this.router.navigateByUrl('/home');
 
     }, err => {
       console.log(err);
@@ -65,8 +70,22 @@ this.router.navigateByUrl('/evenement');
   findEventById(event) {
    this.eventService.getEventById(event);
   }
-  detailEvenet(event) {
+  detailEvent(event) {
     this.router.navigate(['/detailEvent', event.id]);
+  }
+  detailEventUser(event) {
+    this.router.navigate(['/detailEventUser', event.id]);
+  }
+  findEventByUser() {
+    this.auth.getEventByUsername().subscribe(data => {
+      this.eventLoggedUser = data;
+    });
+  }
+  onArchiveEvent(event) {
+    this.eventService.archiveEvent(event).subscribe(data => {
+      console.log(data);
+      this.router.navigateByUrl('/archive');
+    });
   }
 
 }

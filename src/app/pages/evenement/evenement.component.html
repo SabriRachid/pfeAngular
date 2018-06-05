@@ -7,11 +7,12 @@
         <nav>
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home"
-              aria-selected="true">Evenement</a>
+              aria-selected="true">Evenements</a>
             <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile"
               aria-selected="false">Créer un Evenement</a>
-            <a   class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact"
-              aria-selected="false">Contact</a>
+            <a class="nav-item nav-link" id="nav-event-tab" data-toggle="tab" href="#nav-event" role="tab" aria-controls="nav-event"
+              aria-selected="false">Mes Evenements</a>
+
           </div>
         </nav>
 
@@ -19,12 +20,12 @@
           <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
 
             <div class="table-responsive">
-                <fieldset>
-                    <legend >Recherche Evenement</legend>
+              <fieldset>
+                <legend>Recherche Evenement</legend>
                 <div class="form-group">
-                    <input  [(ngModel)]="motCle" type="text" placeholder="Par Nom du L'evenement" class="form-control">
-                  </div>
-                  </fieldset>
+                  <input [(ngModel)]="motCle" type="text" placeholder="Par Nom du L'evenement" class="form-control">
+                </div>
+              </fieldset>
               <table class="table table-sm">
                 <tr>
                   <th>#</th>
@@ -41,115 +42,162 @@
 
 
                   <td>
-                    <button type="button" class="btn btn-sm btn-default" (click)="detailEvenet(event)"><i class="far fa-eye"></i>
+                    <button type="button" *ngIf="!auth.isUser()" class="btn btn-sm btn-default" (click)="detailEvent(event)">
+                      <i class="far fa-eye"></i>
+                    </button>
+                    <button type="button" *ngIf="auth.isUser()" class="btn btn-sm btn-default" (click)="detailEventUser(event)">
+                      <i class="far fa-eye"></i>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-default" (click)="onArchiveEvent(event)" *ngIf="!auth.isUser()">
+                      <i class="fas fa-archive"></i>
+                    </button>
+                  </td>
+
+
+                </tr>
+              </table>
+            </div>
+
+
+          </div>
+          <!-- liste de evenement -->
+          <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+            <div class="card w-100">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="fas fa-calendar-alt"></i>
+
+                  Evenement
+
+                </h5>
+
+                <p class="card-text"></p>
+                <form novalidate #fo="ngForm" class="form-signin" (ngSubmit)="saveEvent(fo)">
+                  <div class="alert alert-danger" *ngIf="nomEvenement.errors?.required && lieu.touched ">
+                    * Veuillez saisir le nom de l'evenement
+                  </div>
+                  <div class="alert alert-danger" *ngIf="lieu.errors?.required && dateEvenement.touched ">
+                    * Veuillez saisir le lieu de l'evenement
+                  </div>
+                  <div class="alert alert-danger" *ngIf="dateEvenement.errors?.required && heureEvenement.touched ">
+                    * Veuillez saisir la date de l'evenement
+                  </div>
+                  <div class="alert alert-danger" *ngIf="heureEvenement.errors?.required && categorie.touched ">
+                    * Veuillez saisir l'heure' de l'evenement
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6"> Nom de L'evenement :
+                      <div class="form-label-group">
+                        <input [(ngModel)]="evenement.nomEvenement" placeholder="Nom de L'evenement" #nomEvenement="ngModel" type="text" name="nomEvenement"
+                          class="form-control" required>
+
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6"> Lieu de L'evenement :
+                      <div class="form-label-group">
+                        <input type="text" name="lieu" placeholder="Lieu de L'evenement" class="form-control" [(ngModel)]="evenement.lieu" #lieu="ngModel"
+                          required>
+
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6"> Date :
+                      <div class="form-label-group">
+                        <input type="date" name="dateEvenement" [(ngModel)]="evenement.dateEvenement" #dateEvenement="ngModel" class="form-control"
+                          required>
+
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6"> Heure :
+                      <div class="form-label-group">
+                        <input type="time" name="heureEvenement" [(ngModel)]="evenement.heureEvenement" #heureEvenement="ngModel" class="form-control"
+                          required>
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">Categorie :
+                    <div class="input-group mb-3">
+
+                      <select class="custom-select" id="inputGroupSelect01" name="categorie" [(ngModel)]="evenement.categorie" #categorie="ngModel"
+                        required>
+
+                        <option value="Challenge sportif">Challenge sportif</option>
+                        <option value="Voyage de motivation">Voyage de motivation</option>
+                        <option value="Team learning">Team learning</option>
+                        <option value="Séminaire">Séminaire </option>
+                        <option value="Marketing">Marketing </option>
+                        <option value="Congrès">Congrès</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="form-label-group"> Déscription :
+                      <textarea name="description" placeholder="Description" [(ngModel)]="evenement.description" #description="ngModel" class="form-control"> </textarea>
+
+                    </div>
+                  </div>
+
+
+
+
+                  <button [disabled]="!fo.form.valid" type="submit" class="btn-md  btn btn-default">Créer</button>
+
+
+                </form>
+
+              </div>
+            </div>
+
+
+          </div>
+          <!-- nouveaux evenement -->
+          <div class="tab-pane fade show " id="nav-event" role="tabpanel" aria-labelledby="nav-event-tab">
+
+            <div class="table-responsive">
+              <fieldset>
+                <legend>Recherche Evenement</legend>
+                <div class="form-group">
+                  <input [(ngModel)]="motCle" type="text" placeholder="Par Nom du L'evenement" class="form-control">
+                </div>
+              </fieldset>
+              <table class="table table-sm">
+                <tr>
+                  <th>#</th>
+                  <th>Nom du l'evenement</th>
+                  <th>Categorie</th>
+
+                  <th>action</th>
+                </tr>
+                <tr *ngFor="let event of eventLoggedUser | eventFilter:motCle; let i = index">
+                  <td>#{{i+1}}</td>
+                  <td>{{event.nomEvenement}}</td>
+                  <td>{{event.categorie}}</td>
+
+
+
+                  <td>
+                    <button type="button" class="btn btn-sm btn-default" (click)="detailEvent(event)">
+                      <i class="far fa-eye"></i>
 
                     </button>
-                    <button type="button" class="btn btn-sm btn-default" (click)="onDeleteTask(evnt)">
-                      <i class="far fa-trash-alt"></i>
+                    <button type="button" class="btn btn-sm btn-default" (click)="deleteEvent(event)">
+                        <i class="fas fa-trash-alt"></i>
 
-                    </button>
+
+  
+                      </button>
+
                   </td>
                 </tr>
               </table>
             </div>
 
           </div>
-          <!-- liste de evenement -->
-          <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-              <div class="card w-100">
-                  <div class="card-body">
-                    <h5 class="card-title"> <i class="fas fa-calendar-alt"></i>
-
-                      Evenement
-
-                    </h5>
-                     
-                    <p class="card-text"></p>
-                    <form novalidate #fo="ngForm" class="form-signin" (ngSubmit)="saveEvent(fo)">
-                        <div class="alert alert-danger" *ngIf="nomEvenement.errors?.required && lieu.touched ">
-                          * Veuillez saisir le nom de l'evenement
-                        </div>
-                        <div class="alert alert-danger" *ngIf="lieu.errors?.required && dateEvenement.touched ">
-                          * Veuillez saisir le lieu de l'evenement
-                        </div>
-                        <div class="alert alert-danger" *ngIf="dateEvenement.errors?.required && heureEvenement.touched ">
-                          * Veuillez saisir la date de l'evenement
-                        </div>
-                        <div class="alert alert-danger" *ngIf="heureEvenement.errors?.required && categorie.touched ">
-                          * Veuillez saisir l'heure' de l'evenement
-                        </div>
-                        <div class="form-row">
-                          <div class="form-group col-md-6"> Nom de L'evenement :
-                            <div class="form-label-group">
-                              <input [(ngModel)]="evenement.nomEvenement" placeholder="Nom de L'evenement" #nomEvenement="ngModel" type="text" name="nomEvenement" class="form-control"
-                                required>
-          
-                            </div>
-                          </div>
-                          <div class="form-group col-md-6"> Lieu de L'evenement :
-                            <div class="form-label-group">
-                              <input type="text" name="lieu" placeholder="Lieu de L'evenement" class="form-control" [(ngModel)]="evenement.lieu" #lieu="ngModel" required>
-          
-                            </div>
-                          </div>
-          
-                        </div>
-                        <div class="form-row">
-                          <div class="form-group col-md-6"> Date :
-                            <div class="form-label-group">
-                              <input type="date" name="dateEvenement" [(ngModel)]="evenement.dateEvenement" #dateEvenement="ngModel" class="form-control"
-                                required>
-          
-                            </div>
-                          </div>
-                          <div class="form-group col-md-6"> Heure :
-                            <div class="form-label-group">
-                              <input type="time" name="heureEvenement" [(ngModel)]="evenement.heureEvenement" #heureEvenement="ngModel" class="form-control"
-                                required>
-          
-                            </div>
-                          </div>
-                        </div>
-          
-                        <div class="form-group">Categorie :
-                          <div class="input-group mb-3">
-          
-                            <select class="custom-select" id="inputGroupSelect01" name="categorie" [(ngModel)]="evenement.categorie" #categorie="ngModel"
-                              required>
-          
-                              <option value="Challenge sportif">Challenge sportif</option>
-                              <option value="Voyage de motivation">Voyage de motivation</option>
-                              <option value="Team learning">Team learning</option>
-                              <option value="Séminaire">Séminaire </option>
-                              <option value="Marketing">Marketing </option>
-                              <option value="Congrès">Congrès</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <div class="form-label-group"> Déscription :
-                            <textarea name="description" placeholder="Description" [(ngModel)]="evenement.description" #description="ngModel" class="form-control"> </textarea>
-          
-                          </div>
-                        </div>
-          
-          
-          
-          
-                        <button [disabled]="!fo.form.valid" type="submit" class="btn-md  btn btn-default">Créer</button>
-          
-          
-                      </form>
-
-                    </div>
-                    </div>
-         
-
-          </div>
-          <!-- nouveaux evenement -->
-          <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-
-          </div>
+          <!-- Mes event-->
         </div>
 
 
@@ -157,58 +205,26 @@
       <!-- div md8 -->
       <div class="col-md-4">
 
-          <div class="card border-light mb-3" style="max-width: 18rem;">
-              <div class="card-header">#Evenement</div>
-              <div class="card-body">
-                
-                <p class="card-text  lh-125 border-bottom border-gray"  *ngFor="let e of evenements" >
-                    <span> {{e.dateCreation | date :'dd/MM/yyyy HH:mm'}} : {{ e.nomEvenement }}
-                        <span *ngIf="e.dateCreation ==  today ">
-      
-                          <span class="badge badge-warning"> Nouveaux</span>
-      
-      
-                        </span>
-      
-      
-      
-                      </span>
-                </p>
-              </div>
-            </div>
-<!-- 
-        <div class="my-3 p-3 bg-white rounded box-shadow">
+        <div class="card border-light mb-3" style="max-width: 18rem;">
+          <div class="card-header">#Evenement</div>
+          <div class="card-body">
 
+            <p class="card-text  lh-125 border-bottom border-gray" *ngFor="let e of evenements">
+              <span> {{e.dateCreation | date :'dd/MM/yyyy HH:mm'}} : {{ e.nomEvenement }}
+                <span *ngIf="e.dateCreation ==  today ">
 
-
-
-
-          <div class="media text-muted pt-3">
-            <img data-src="holder.js/32x32?theme=thumb&bg=e83e8c&fg=e83e8c&size=1" alt="" class="mr-2 rounded">
-            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-              <strong class="d-block text-gray-dark">@Evenement</strong>
-              <span *ngFor="let e of evenements">
-                <span> {{e.dateCreation | date :'dd/MM/yyyy HH:mm'}} : {{ e.nomEvenement }}
-                  <span *ngIf="e.dateCreation ==  today ">
-
-                    <span class="badge badge-warning"> Nouveaux</span>
-
-
-                  </span>
-
+                  <span class="badge badge-warning"> Nouveaux</span>
 
 
                 </span>
-                <br>
+
+
+
               </span>
             </p>
           </div>
-
-          <small class="d-block text-right mt-3">
-            <a href="#">Notif</a>
-          </small>
         </div>
- -->
+
 
 
       </div>
@@ -218,94 +234,3 @@
   </main>
 </div>
 <!-- div body -->
-
-
-
-
-<!--    <div class="col-md-8 col-xs-12">
-       
-        <div class="my-3 p-3 bg-white rounded box-shadow" >
-            <h6 class="border-bottom border-gray pb-2 mb-0">Listes des Evenements </h6>
-          <div class="media text-muted pt-3" *ngFor="let event of evenements | paginate: { itemsPerPage: 5, currentPage: p }  ">
-            <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-             <p>
-               <strong class="d-block text-gray-dark"> {{event.nomEvenement}}  </strong>
-              <strong>Date de l'évenement :</strong> {{event.dateEvenement | date :'dd/MM/yyyy'}} <strong>à:</strong> {{ event.heureEvenement}}
-              <strong>Responsable :</strong>{{event.utilisateur}} 
-             
-            </p>
-           <div class="text-right "> 
-             <button class="btn btn-secondary btn-sm">Voir Details..</button>
-             <button class="btn btn-success btn-sm" (click)="findEventById(event)" data-toggle="modal" data-target="#exampleModal3" type="button" ><i class="far fa-edit"></i> </button> 
-
-<!-- Modal Update -->
-<!-- <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modification d’un évènement</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-        
-        </div>
-
-
-
-      </div>
-    </div>
-  </div>  
-
-
-
-
-
- 
-
-
-
-             <button class="btn btn-danger btn-sm" type="button" data-toggle="modal" data-target="#exampleModal1" > <i class="fas fa-trash"></i> </button> 
-            
-<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog"   aria-hidden="true">
-    <div class="modal-dialog " role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-         <h5>Confirmation</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body ">
-          <p >vous voulez vraiment supprimer cette Evenement </p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Annuler</button>
-          <button type="button" class="btn btn-sm btn-warning" (click)="onDeleteEvent(event)">Oui</button>
-        </div>
-      </div>
-    </div>
-  </div>
-           </div>
-      
-            </div>
-         
-         </div>
-    
- 
-          <small class="d-block text-right mt-3">
-              <pagination-controls (pageChange)="p = $event" previousLabel="Précedent" nextLabel="Next"></pagination-controls>
-          </small>
-        </div>
-
-
-      </div> -->
-
-
-<!--     </div>
-
-
-
-  </main>
-</div> -->

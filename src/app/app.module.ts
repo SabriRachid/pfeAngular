@@ -31,20 +31,27 @@ import { TacheFilter } from './pages/taches/tache-filter.pipe';
 import { EventFilter } from './pages/evenement/evenement-filter.pipe';
 import { DocumentFilter } from './pages/documents/documentPar-filter.pipe';
 import { AttachementServiceService } from './service/attachement-service.service';
+import { ProfileServiceService } from './service/profile-service.service';
+import { AuthGuardService } from './service/auth-guard.service';
+import { ArchiveComponent } from './pages/archive/archive.component';
+import { DetailEventUserComponent } from './pages/detail-event-user/detail-event-user.component';
 
 const appRoutes: Routes  = [
 { path : 'login' , component : LoginComponent },
 { path : '' , redirectTo : 'login' ,  pathMatch: 'full' },
-{ path : 'home', component : HomeComponent },
-{ path : 'register', component : RegisterComponent },
-{ path : 'parametrage', component : ParametrageComponent },
-{ path : 'taches', component : TachesComponent },
-{ path : 'profile', component : ProfileComponent },
-{ path : 'evenement', component : EvenementComponent },
-{ path : 'detailTache/:id', component : DetailTachesComponent },
-{ path : 'detailEvent/:id', component : DetailEventComponent },
-{ path : 'detailUser/:id', component : DetailUserComponent },
-{ path : 'document', component : DocumentsComponent }
+{ path : 'home', component : HomeComponent , canActivate: [AuthGuardService]},
+{ path : 'register', component : RegisterComponent  },
+{ path : 'parametrage', component : ParametrageComponent , canActivate: [AuthGuardService]},
+{ path : 'taches', component : TachesComponent , canActivate: [AuthGuardService] },
+{ path : 'profile', component : ProfileComponent, canActivate: [AuthGuardService]},
+{ path : 'evenement', component : EvenementComponent , canActivate: [AuthGuardService]},
+{ path : 'detailTache/:id', component : DetailTachesComponent , canActivate: [AuthGuardService]},
+{ path : 'detailEvent/:id', component : DetailEventComponent, canActivate: [AuthGuardService] },
+{ path : 'detailEventUser/:id', component : DetailEventUserComponent, canActivate: [AuthGuardService] },
+{ path : 'detailUser/:id', component : DetailUserComponent , canActivate: [AuthGuardService]},
+{ path : 'document', component : DocumentsComponent , canActivate: [AuthGuardService]},
+{ path : 'archive', component : ArchiveComponent , canActivate: [AuthGuardService]},
+{ path: '**', redirectTo: 'login' }
 ];
 
 @NgModule({
@@ -66,7 +73,9 @@ const appRoutes: Routes  = [
     ParametrageUserFilter,
     TacheFilter,
     EventFilter,
-    DocumentFilter
+    DocumentFilter,
+    ArchiveComponent,
+    DetailEventUserComponent
 
   ],
   imports: [
@@ -80,7 +89,7 @@ const appRoutes: Routes  = [
 
   ],
   providers: [UserServiceService, EventServiceService, AuthenticationServiceService, TaskServiceService,
-    DataChatServiceService, FileUploadServiceService, AttachementServiceService],
+    DataChatServiceService, FileUploadServiceService, AttachementServiceService , ProfileServiceService, AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

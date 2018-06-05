@@ -34,11 +34,11 @@ export class EventServiceService {
     }
    return  this.http.delete(this.baseURL + '/events/' + id , { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
   }
-  updateEvent(events) {
+  updateEvent(event) {
     if (this.jwtToken == null) {
       this.loadToken();
     }
-    return this.http.put(this.baseURL + '/events', events,  { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+    return this.http.put(this.baseURL + '/events/' + event.id, event,  { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
   }
   getEventById(id) {
     if (this.jwtToken == null) {
@@ -60,5 +60,20 @@ export class EventServiceService {
     }
     return this.http.get(this.baseURL + '/events/totale',  { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
 
+  }
+
+  archiveEvent(event) {
+    if (this.jwtToken == null) {
+      this.loadToken();
+    }
+    return this.http.put(this.baseURL + '/events/archive/' + event.id , event,  {
+      headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+  }
+
+  getByArchiveTrue() {
+    if (this.jwtToken == null) {
+      this.loadToken();
+    }
+    return this.http.get(this.baseURL + '/events/archives' , {  headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
   }
 }

@@ -7,135 +7,246 @@
       <div class="col-md-8">
         <nav>
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
-           
+
             <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile"
               aria-selected="false">{{ task.nomTache }}</a>
-              <a class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home"
-              aria-selected="false">Commentaire</a>
-            
+            <a class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="false">Commentaire</a>
+
           </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
-          
+
           <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-             
-              <div class="card w-100"   >
-                  <div class="card-body">
-                    <h5 class="card-title">
-                        <i class="fab fa-tripadvisor"></i>
+
+            <!--   EDIT TACHE FOR USER -->
+            <div class="alert alert-success" *ngIf="submitedTask">
+              {{messageTask}}
+            </div>
+            <div class="card w-100" *ngIf="auth.isUser()">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="fab fa-tripadvisor"></i>
 
 
-  
-                      Edit Tache </h5>   Proprietaire: <span style="color: green">{{ task.utilisateur.nom }} {{ task.utilisateur.prenom }}</span>
-                    <hr>
-                    <p class="card-text"></p>
-                    <form novalidate #fo="ngForm" (ngSubmit)="onNewTask(fo)">
-                        <div class="alert alert-danger" *ngIf="nomTache.errors?.required && utilisateur.touched ">
-                          * Veuillez saisir un nom du tache Valid
-                        </div>
-                        <div class="form-row">
-                          <div class="form-group col-md-6"> Nom du Tache :
-                            <div class="form-label-group">
-                              <input  type="text" #nomTache="ngModel" [(ngModel)]="task.nomTache" name="nomTache" class="form-control" required>
-          
-                            </div>
-                          </div>
-          
-          
-                          
-                          <div class="form-group col-md-6">
-                            <div class="form-label-group"> Etat :
-                              <div class="input-group mb-3">
-          
-                                <select class="custom-select" id="inputGroupSelect01" name="etatTache" #etat="ngModel" [(ngModel)]="task.etatTache" required>
-                                   <option value="En Cours">En cours</option>
-                                  <option value="Terminer">Terminer</option>
-                                  <option value="Annuler">Annuler</option>
-                                  <option  value="Valider">Valider</option>
-                                  <option value="Pour Revision">Pour Revision</option>
-          
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="form-row">
-                          <div class="form-group col-md-6"> Date Debut :
-                            <div class="form-label-group">
-                              <input type="date" #dateDebutTache="ngModel" [(ngModel)]="task.dateDebut  " name="dateDebut" class="form-control" required>
-          
-                            </div>
-                          </div>
-                          <div class="form-group col-md-6"> Date D'echeance :
-                            <div class="form-label-group">
-                              <input type="date" #dateEcheanceTache="ngModel" [(ngModel)]="task.dateEcheance" name="dateEcheance" class="form-control"
-                                required>
-          
-                            </div>
-                          </div>
-          
-                        </div>
-          
-          
-          
-          
-          
-                        <div class="form-group">
-                          <div class="form-label-group"> Description :
-                            <textarea #description="ngModel" [(ngModel)]="task.description" placeholder="Description " name="description" class="form-control"> </textarea>
-          
-                          </div>
-                        </div>
-                        <button [disabled]="!fo.form.valid" type="submit" class="btn-md  btn btn-success">Modifier</button>
-                        <button type="button" class="btn btn-default" (click)="retour()"> Retour </button>
-          
-                      </form>
-                  
-                    </div>
-                    </div>
 
-              
-          </div>
-          <!-- nouveaux tache -->
-          <div class="tab-pane fade " id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-             
-                <div class="card w-100">
-                    <div class="card-body">
-                      <h5 class="card-title"> <i class="fas fa-comments"></i> Comment Tache  {{task.nomTache}}
+                  Edit Tache </h5> Proprietaire:
+                <span style="color: green">{{ task.utilisateur.nom }} {{ task.utilisateur.prenom }}</span>
+                <br> Etat:
+                <span style="color: green">{{task.etatTache}}</span>
+                <hr>
+                <p class="card-text"></p>
 
-                      </h5>
-                      Proprietaire: <span style="color: green">{{ task.utilisateur.nom }} {{ task.utilisateur.prenom }}</span>
-                      <hr>
-                      <p class="card-text"></p>
-                      <form novalidate #fo="ngForm" (ngSubmit)="onNewComment(fo)" >
-                          <div class="alert alert-danger" *ngIf="comment.errors?.required  ">
-                              * Veuillez saisir votre commentaire
-                            </div>
-                        <div class="form-group">
-                          <div class="form-label-group">
-                            <textarea class="form-control" [(ngModel)]="commentaire.comment" #comment="ngModel" name="comment" placeholder="Commentaire ..." required></textarea>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-label-group">
-                              <input type="text" class="form-control" [value]="task"    name="tache"  > 
-                            </div>
-                          </div>
-                        <div class="form-group text-right">
-                            <button [disabled]="!fo.form.valid" type="submit" class="btn btn-success">Comment</button>
-                            <button type="button" class="btn btn-default" (click)="retour()"> Annuler </button>
-                        </div>
-                       
-                      </form>
-                    
+                <form novalidate #f="ngForm" (ngSubmit)="editTask(f)">
+
+                  <div class="form-group "> Nom de Projet :
+                    <div class="form-label-group">
+                      <input readonly type="text" placeholder="Nom de Projet" #nomTache="ngModel" [(ngModel)]="task.nomProjet" name="nomProjet"
+                        class="form-control">
+
                     </div>
                   </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6"> Nom du Tache :
+                      <div class="form-label-group">
+                        <input readonly type="text" #nomTache="ngModel" [(ngModel)]="task.nomTache" name="nomTache" class="form-control" required>
+
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6" *ngIf="auth.isUser()">
+                      <div class="form-label-group"> Etat :
+                        <div class="input-group mb-3">
+
+                          <select class="custom-select" id="inputGroupSelect01" name="etatTache" #etat="ngModel" [(ngModel)]="task.etatTache" required>
+                            <option value="En Cours">En cours</option>
+                            <option value="Terminer">Terminer</option>
+
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6"> Date Debut :
+                      <div class="form-label-group">
+                        <input readonly type="date" #dateDebutTache="ngModel" [(ngModel)]="task.dateDebut  " name="dateDebut" class="form-control"
+                          required>
+
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6"> Date D'echeance :
+                      <div class="form-label-group">
+                        <input readonly type="date" #dateEcheanceTache="ngModel" [(ngModel)]="task.dateEcheance" name="dateEcheance" class="form-control"
+                          required>
+
+                      </div>
+                    </div>
+
+                  </div>
+
+
+
+
+
+                  <div class="form-group">
+                    <div class="form-label-group"> Description :
+                      <textarea readonly #description="ngModel" [(ngModel)]="task.description" placeholder="Description " name="description" class="form-control"> </textarea>
+
+                    </div>
+                  </div>
+                  <button [disabled]="!f.form.valid" type="submit" class="btn-md  btn btn-success">Modifier</button>
+                  <button type="button" class="btn btn-default" (click)="retour()"> Retour </button>
+
+                </form>
+
+              </div>
+            </div>
+
+
+            <!-- END EDIT TACHE FOR USER -->
+
+            <div class="card w-100" *ngIf="auth.isAdmin()">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="fab fa-tripadvisor"></i>
+
+
+
+                  Edit Tache </h5> Proprietaire:
+                <span style="color: green">{{ task.utilisateur.nom }} {{ task.utilisateur.prenom }}</span>
+                <br> Etat:
+                <span style="color: green">{{task.etatTache}}</span>
+                <hr>
+                <p class="card-text"></p>
+
+                <form novalidate #fo="ngForm" (ngSubmit)="editTask(fo)">
+                  <div class="alert alert-danger" *ngIf="nomTache.errors?.required && utilisateur.touched ">
+                    * Veuillez saisir un nom du tache Valid
+                  </div>
+                  <div class="form-group "> Nom de Projet :
+                    <div class="form-label-group">
+                      <input type="text" placeholder="Nom de Projet" #nomTache="ngModel" [(ngModel)]="task.nomProjet" name="nomProjet" class="form-control">
+
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6"> Nom du Tache :
+                      <div class="form-label-group">
+                        <input type="text" #nomTache="ngModel" [(ngModel)]="task.nomTache" name="nomTache" class="form-control" required>
+
+                      </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                      <div class="form-label-group"> Etat :
+                        <div class="input-group mb-3">
+
+                          <select class="custom-select" id="inputGroupSelect01" name="etatTache" #etat="ngModel" [(ngModel)]="task.etatTache" required>
+
+
+                            <option value="Annuler">Annuler</option>
+                            <option value="Valider">Valider</option>
+                            <option value="Pour Revision">Pour Revision</option>
+
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6"> Date Debut :
+                      <div class="form-label-group">
+                        <input type="date" #dateDebutTache="ngModel" [(ngModel)]="task.dateDebut  " name="dateDebut" class="form-control" required>
+
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6"> Date D'echeance :
+                      <div class="form-label-group">
+                        <input type="date" #dateEcheanceTache="ngModel" [(ngModel)]="task.dateEcheance" name="dateEcheance" class="form-control"
+                          required>
+
+                      </div>
+                    </div>
+
+                  </div>
+
+
+
+
+
+                  <div class="form-group">
+                    <div class="form-label-group"> Description :
+                      <textarea #description="ngModel" [(ngModel)]="task.description" placeholder="Description " name="description" class="form-control"> </textarea>
+
+                    </div>
+                  </div>
+                  <button [disabled]="!fo.form.valid" type="submit" class="btn-md  btn btn-success">Modifier</button>
+                  <button type="button" class="btn btn-default" (click)="retour()"> Retour </button>
+
+                </form>
+
+              </div>
+            </div>
+
+
+          </div>
+          <!-- edit tache admin -->
+          <div class="tab-pane fade " id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+
+
+            <div class="card w-100">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="fas fa-comments"></i> Comment {{task.nomTache}}
+
+                </h5>
+                Proprietaire:
+                <span style="color: green">{{ task.utilisateur.nom }} {{ task.utilisateur.prenom }}</span>
+
+                <hr>
+
+                <div class="jumbotron" *ngFor="let comments of commentTache">
+
+                  <h5 class="display-5">{{ comments.utilisateur.nom}} {{ comments.utilisateur.prenom}}</h5>
+                  <p class="lead"> {{ comments.dateComment | date : 'dd-MM-yyyy HH:mm'}}</p>
+                  <hr class="my-4">
+                  <p>{{ comments.comment}}</p>
+
+                </div>
+
+
+                <form novalidate #fo="ngForm" (ngSubmit)="onNewComment(fo)">
+                  <div class="alert alert-success" *ngIf="submited">
+                    {{messageComment}}
+                  </div>
+                  <div class="alert alert-danger" *ngIf="comment.errors?.required  ">
+                    * Veuillez saisir votre commentaire
+                  </div>
+                  <div class="form-group">
+                    <div class="form-label-group">
+                      <textarea class="form-control" [(ngModel)]="commentaire.comment" #comment="ngModel" name="comment" placeholder="Commentaire ..."
+                        required></textarea>
+                    </div>
+                  </div>
+
+                  <div class="form-group text-right">
+                    <button [disabled]="!fo.form.valid" type="submit" class="btn btn-success">Comment</button>
+                    <button type="button" class="btn btn-default" (click)="retour()"> Annuler </button>
+                  </div>
+
+                </form>
+
+              </div>
+            </div>
           </div>
           <!-- Commentaire-->
         </div>
       </div>
       <!-- div col-md-8 -->
- 
+
 
     </div>
     <!-- div row -->

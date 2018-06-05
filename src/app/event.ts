@@ -10,4 +10,5 @@ export class Evenement {
      description: string;
      utilisateur: User;
      dateCreation: Date;
+     etatEvent: string;
 }
