@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit {
   totalDoc: any;
   totalCompte: any;
   totalEvent: any;
+  totalEventUser: any;
   tasks: any;
   profileUserLogged: any;
 
@@ -73,6 +74,7 @@ export class HomeComponent implements OnInit {
     this.getTotalTacheByUsername();
     this.getProfileUserLogged();
     this.getTacheByLoggedUser();
+    this.getTotalEventByUsername();
 
   }
   getAllTasks() {
@@ -146,6 +148,11 @@ getUserLoggedIn() {
 getTotalTacheByUsername() {
   this.auth.getTotalTacheByUsername().subscribe(data => {
     this.totalTacheUser = data;
+  });
+}
+getTotalEventByUsername() {
+  this.auth.getTotalEventByUsername().subscribe(data => {
+    this.totalEventUser = data;
   });
 }
 getProfileUserLogged() {

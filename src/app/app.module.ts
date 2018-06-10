@@ -35,6 +35,8 @@ import { ProfileServiceService } from './service/profile-service.service';
 import { AuthGuardService } from './service/auth-guard.service';
 import { ArchiveComponent } from './pages/archive/archive.component';
 import { DetailEventUserComponent } from './pages/detail-event-user/detail-event-user.component';
+import { DocumentPriveFilter } from './pages/documents/documentPrive-filter.pipe';
+import { ArchiveService } from './service/archive.service';
 
 const appRoutes: Routes  = [
 { path : 'login' , component : LoginComponent },
@@ -71,6 +73,7 @@ const appRoutes: Routes  = [
     DetailUserComponent,
     ParametrageManagerFilter,
     ParametrageUserFilter,
+    DocumentPriveFilter,
     TacheFilter,
     EventFilter,
     DocumentFilter,
@@ -88,7 +91,7 @@ const appRoutes: Routes  = [
     RouterModule.forRoot(appRoutes)
 
   ],
-  providers: [UserServiceService, EventServiceService, AuthenticationServiceService, TaskServiceService,
+  providers: [ArchiveService, UserServiceService, EventServiceService, AuthenticationServiceService, TaskServiceService,
     DataChatServiceService, FileUploadServiceService, AttachementServiceService , ProfileServiceService, AuthGuardService],
   bootstrap: [AppComponent]
 })

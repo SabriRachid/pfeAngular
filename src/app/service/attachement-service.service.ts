@@ -31,6 +31,19 @@ export class AttachementServiceService {
     }
     return this.http.post(this.url + '/upload', attachements,  { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
   }
+  getAllAttachement() {
+    if (this.jwtToken == null) {
+      this.loadToken();
+    }
+    return this.http.get(this.url + '/attachements',  { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+  }
+  deleteAttachement(attachements) {
+    if (this.jwtToken == null) {
+      this.loadToken();
+    }
+    return this.http.delete(this.url + '/attachements/' + attachements.id ,
+     { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+  }
   pushFileToStorageServer(file: File): Observable<HttpEvent<{}>> {
     if (this.jwtToken == null) {
       this.loadToken();

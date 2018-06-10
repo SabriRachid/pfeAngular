@@ -1,18 +1,21 @@
  
 .form-signin {
+   
+    
+
     width: 100%;
-    max-width: 420px;
+    max-width: 350px;
     padding: 15px;
-    margin: 120px auto;
-   /* border: 1px solid #000000;
-    background-color: #f5f5f5;*/
+    margin: 120px auto 0px auto;
   }
   
   input{
       margin-top:5px;
       margin-bottom: 5px; 
   }
- 
+  .form-label-group{
+    font-weight: bolder;
+}
    
 .ng-valid[required],.ng-valid.required{
   border-left: 5px solid #42A948; /*alert vert */

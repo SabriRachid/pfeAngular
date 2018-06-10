@@ -19,31 +19,31 @@
               <div class="alert alert-danger"   *ngIf="nom.errors?.minlength && prenom.touched" >
               Nom doit etre superieur a 4 lettre
            </div>
-              <div class="form-label-group">
-                  <input type="text" #nom="ngModel" [(ngModel)]="user.nom" placeholder="Votre Nom " minlength="4" name="nom" class="form-control"   required   >
+              <div class="form-label-group">Nom :
+                  <input type="text" #nom="ngModel" [(ngModel)]="user.nom" placeholder="  Nom " minlength="4" name="nom" class="form-control"   required   >
                
                 </div>
-                <div class="form-label-group">
-                    <input type="text"   #prenom="ngModel" [(ngModel)]="user.prenom" placeholder="Votre Prénom " name="prenom" class="form-control"   required  >
+                <div class="form-label-group">Prenom :
+                    <input type="text"   #prenom="ngModel" [(ngModel)]="user.prenom" placeholder="  Prénom " name="prenom" class="form-control"   required  >
                  
                   </div>
-                  <div class="form-label-group">
+                  <div class="form-label-group">Username :
                       <input type="text" #username="ngModel" [(ngModel)]="user.username" placeholder="Username " name="Username"  class="form-control"   required  >
                    
                     </div>
         
-              <div class="form-label-group">
+              <div class="form-label-group">Email :
                 <input type="email" #email="ngModel" [(ngModel)]="user.email"  placeholder="Address Email " name="email"  class="form-control"   required  >
              
               </div>
         
-              <div class="form-label-group">
+              <div class="form-label-group">Mot de Passe :
                 <input type="password" #mdp="ngModel" placeholder="Mot de passe" [(ngModel)]="user.password"  name="password"  class="form-control"   required>
         
               </div>
         
               
-              <button [disabled]="!fo.form.valid" class="btn btn-md btn-success btn-block" type="submit">Créer </button>
+              <button [disabled]="!fo.form.valid" class="btn btn-sm btn-success btn-block" type="submit">Créer </button>
              
               <a href="" class="text-muted" routerLink="/">  J'ai déja un compte       </a>
                

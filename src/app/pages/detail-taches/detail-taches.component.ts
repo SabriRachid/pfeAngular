@@ -6,6 +6,8 @@ import { Task } from '../../task';
 import { AuthenticationServiceService } from '../../service/authentication-service.service';
 import { Commentaire } from '../../comment';
 import { Observable } from 'rxjs/Observable';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { AttachementServiceService } from '../../service/attachement-service.service';
 @Component({
   selector: 'app-detail-taches',
   templateUrl: './detail-taches.component.html',
@@ -21,9 +23,14 @@ export class DetailTachesComponent implements OnInit {
   submited = false;
   messageComment: string;
   commentaire: Commentaire = new Commentaire();
+  progress: { percentage: number } = { percentage: 0 };
+  fileUploads:  Observable<string[]>;
+  selectedFiles: FileList;
+  currentFileUpload: File;
   submitedTask = false;
   messageTask: string;
-  constructor(private auth: AuthenticationServiceService ,
+  allAttachement: any;
+  constructor(private auth: AuthenticationServiceService , private attachementService: AttachementServiceService,
     private router: Router, private activateRoute: ActivatedRoute, private tacheService: TaskServiceService) { }
 
   ngOnInit() {
@@ -34,9 +41,39 @@ export class DetailTachesComponent implements OnInit {
      this.tacheService.getCommentByTacheId(this.id).subscribe(data => {
        this.commentTache = data;
      });
+     this.getAllAttachement();
+  }
+  onDeleteAttachement(att) {
+    this.attachementService.deleteAttachement(att).subscribe(() => {
+      console.log('deleted  ... !!!' + att.id);
+      this.router.navigateByUrl('/tache');
+    });
   }
   retour() {
     this.router.navigate(['/taches']);
+  }
+  uploadFile() {
+    this.progress.percentage = 0;
+
+    this.currentFileUpload = this.selectedFiles.item(0);
+    this.attachementService.pushFileToStorageServer(this.currentFileUpload).subscribe(event => {
+      if (event.type === HttpEventType.UploadProgress) {
+        this.progress.percentage = Math.round(100 * event.loaded / event.total);
+      } else if (event instanceof HttpResponse) {
+        console.log('File is completely uploaded!');
+
+      }
+    });
+
+    this.selectedFiles = undefined;
+  }
+  getAllAttachement() {
+    this.attachementService.getAllAttachement().subscribe( data => {
+      this.allAttachement = data;
+      console.log(data);
+    }, err => {
+      console.log(err);
+    });
   }
   onNewComment(valid) {
     this.commentaire.tache = this.task;

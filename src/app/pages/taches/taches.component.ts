@@ -29,7 +29,7 @@ TacheLoggedUser: any;
 p: number ;
 showFile = false;
 fileUploads:  Observable<string[]>;
-
+allAttachement: any;
   progress: { percentage: number } = { percentage: 0 };
 attachement: Attachement = new Attachement();
 collection =  [];
@@ -41,6 +41,7 @@ collection =  [];
 this.getAllUserRole();
 this.getAllTasks();
 this. getTacheByLoggedUser();
+this.getAllAttachement();
   }
   selectFile(event) {
     this.selectedFiles = event.target.files;
@@ -136,6 +137,21 @@ this. getTacheByLoggedUser();
     this.taskSerive.archiveTask(task).subscribe(data => {
       console.log(data);
       this.router.navigateByUrl('/archive');
+    });
+  }
+  getAllAttachement() {
+    this.attachementService.getAllAttachement().subscribe( data => {
+      this.allAttachement = data;
+      console.log(data);
+    }, err => {
+      console.log(err);
+    });
+  }
+
+  onDeleteAttachement(att) {
+    this.attachementService.deleteAttachement(att).subscribe(() => {
+      console.log('deleted  ... !!!' + att.id);
+      this.router.navigateByUrl('/tache');
     });
   }
 }

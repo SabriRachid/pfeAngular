@@ -11,7 +11,7 @@
             <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile"
               aria-selected="false">Tache</a>
             <a   class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact"
-              aria-selected="false">Utilisateur</a>
+              aria-selected="false">Document</a>
           </div>
         </nav>
 
@@ -31,7 +31,7 @@
                   <th>Nom</th>
                   <th>Categorie</th>
 
-                  <th>action</th>
+                 
                 </tr>
                 <tr *ngFor="let archiveEvent of archivedEvent | eventFilter:motCle; let i = index ">
                   <td>#{{i+1}}</td>
@@ -39,19 +39,13 @@
                   <td> {{archiveEvent.categorie}} </td>
                    
 
-                  <td>
                    
-                    <button type="button" class="btn btn-sm btn-default" (click)="deleteEventArchive(archiveEvent)"  >
-                      <i class="far fa-trash-alt"></i>
-
-                    </button>
-                  </td>
                 </tr>
               </table>
             </div>
 
           </div>
-          <!-- liste de evenement -->
+          <!-- archive evenement -->
           <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
               <div class="table-responsive">
                   <fieldset>
@@ -66,7 +60,7 @@
                     <th>Nom</th>
                     <th>Etat</th>
   
-                    <th>action</th>
+                    
                   </tr>
                   <tr *ngFor="let archiveTask of archivedTask | tacheFilter:motCle; let i = index ">
                     <td>#{{i+1}}</td>
@@ -74,35 +68,73 @@
                     <td> {{archiveTask.etatTache}} </td>
                      
   
-                    <td>
-                     
-                      <button type="button" class="btn btn-sm btn-default" (click)="deleteTaskArchive(archiveTask)"  >
-                        <i class="far fa-trash-alt"></i>
-  
-                      </button>
-                    </td>
+                   
                   </tr>
                 </table>
               </div>
          
 
           </div>
-          <!-- nouveaux evenement -->
+          <!-- Archive Tache  -->
           <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+            <div class="table-responsive">
+              <fieldset>
+                  <legend>Recherche Tache</legend>
+                  <div class="form-group">
+                    <input [(ngModel)]="motCle" type="text" placeholder="Par Nom du Tache" class="form-control">
+                  </div>
+                </fieldset>
+            <table class="table table-sm">
+              <tr>
+                <th>#</th>
+                <th>Nom Document</th>
+                <th>File</th>
 
+              
+              </tr>
+              <tr *ngFor="let archivedoc of archivedDoc | docFilter:motCle; let i = index ">
+                <td>#{{i+1}}</td>
+                <td> {{archivedoc.nomDocument}} </td>
+                <td> {{archivedoc.file}} </td>
+                 
+
+              
+              </tr>
+            </table>
           </div>
+     
+          </div><!-- Archive Document-->
         </div>
 
 
       </div>
       <!-- div md8 -->
+       
+        
+
+
+
+
+
+
+
       <div class="col-md-4">
 
           <div class="card border-light mb-3" style="max-width: 18rem;">
               <div class="card-header">#Archive</div>
               <div class="card-body">
+                  <h5 class="card-title"> Tache  </h5>
+                  <p class="card-text lh-125 border-bottom border-gray"> <span class="badge badge-primary"> {{ totalArchiveTache }}</span> : Tache(s)  archivé</p>
                 
-                <p class="card-text  lh-125 border-bottom border-gray"  *ngFor="let e of evenements" >
+                    <h5 class="card-title"> Document  </h5>
+                    <p class="card-text lh-125 border-bottom border-gray"> <span class="badge badge-primary"> {{ totalArchiveDocument }}</span> : Document(s)  archivé</p>
+                     
+                      <h5 class="card-title"> Evenement  </h5>
+                      <p class="card-text lh-125 border-bottom border-gray"> <span class="badge badge-primary"> {{ totalArchiveEvent }}</span> : Evenement(s)  archivé</p>
+
+                
+                
+                <p class="card-text  lh-125 border-bottom border-gray"    >
                     <span>  
                          
       

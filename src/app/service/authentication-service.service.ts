@@ -70,6 +70,13 @@ getTotalTacheByUsername() {
    return this.http.get(this.URL + '/tasks/total/' + this.username, { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
 }
 
+getTotalEventByUsername() {
+  if (this.jwtToken == null) {
+    this.loadToken();
+  }
+   return this.http.get(this.URL + '/events/total/' + this.username, { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+}
+
   logout() {
     this.jwtToken = null;
     this.isAuthenticated = false;

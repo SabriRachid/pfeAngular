@@ -80,9 +80,9 @@
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                       <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home"
                         aria-selected="true">Mes Taches <span class="badge badge-danger">{{ totalTacheUser }}</span> </a>
-                    <!--   <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile"
-                        aria-selected="false">Mes Evenements</a>
-                      <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact"
+                     <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile"
+                        aria-selected="false">Mes Evenements <span class="badge badge-danger">{{ totalTacheUser }}</span></a>
+                      <!--  <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact"
                         aria-selected="false">Mes Documents</a> -->
                     </div>
                   </nav>
@@ -140,7 +140,7 @@
                               <tr *ngFor="let task of TacheLoggedUser | tacheFilter:motCle; let i = index">
                                   <td>#{{i+1}}</td>
                                   <td>{{task.nomTache}}</td>
-                                  <td>{{ task.etatTache }}</td>
+                                  <td>{{ task.etatTache }} </td>
             
             
             
@@ -152,11 +152,11 @@
                        
                     </div>
                     <!-- Taches -->
-             <!--        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
           
           
           
-                    </div> -->
+                    </div>  
                     <!-- Evenements -->
           
                    <!--  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">

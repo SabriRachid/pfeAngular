@@ -36,7 +36,7 @@ export class FileUploadServiceService {
     if (this.jwtToken == null) {
       this.loadToken();
     }
-    return this.http.get(this.baseUrl + '/documents',  { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+    return this.http.get(this.baseUrl + '/documents/public',  { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
   }
 getDocumentByFileName(file)  {
   if (this.jwtToken == null) {
@@ -51,6 +51,26 @@ getTotalDocument() {
   return this.http.get(this.baseUrl + '/documents/totale', { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
 }
 
+getAllArchivedDocument() {
+  if (this.jwtToken == null) {
+    this.loadToken();
+  }
+  return this.http.get(this.baseUrl + '/documents/archives',  { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+}
 
+archiveDoc(doc) {
+  if (this.jwtToken == null) {
+    this.loadToken();
+  }
+  return this.http.put(this.baseUrl + '/documents/archive/' + doc.id ,
+  doc ,  { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+}
+
+getAllDocumentPrivate() {
+  if (this.jwtToken == null) {
+    this.loadToken();
+  }
+  return this.http.get(this.baseUrl + '/documents/prive',  { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+}
 }
 

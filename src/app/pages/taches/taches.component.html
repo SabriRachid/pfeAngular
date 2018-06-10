@@ -206,10 +206,13 @@
                         <th>File</th>
                         <th>Action</th>
                       </tr>
-                      <tr>
-                        <td> </td>
-                        <td></td>
-                        <td></td>
+                      <tr *ngFor=" let att of allAttachement; let i = index">
+                        <td> #{{i+1}} </td>
+                        <td> {{att.file}} </td>
+                        <td>  <button type="button" class="btn btn-sm btn-default" (click)="onDeleteAttachement(att)"  >
+                          <i class="far fa-trash-alt"></i>
+    
+                        </button></td>
                       </tr>
                     </table>
                   </div>

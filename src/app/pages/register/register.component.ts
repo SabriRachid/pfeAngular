@@ -12,8 +12,7 @@ import 'rxjs/add/operator/map';
 export class RegisterComponent implements OnInit {
 
   user: User = new User();
-   message = 'Inscription reussite avec success';
-   submited = false;
+  submited = false;
   constructor (private userService: UserServiceService , private router: Router ) { }
 
   ngOnInit() {
