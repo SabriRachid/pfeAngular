@@ -38,10 +38,13 @@ export class DetailTachesComponent implements OnInit {
      this.tacheService.getTaskById(this.id).subscribe( data => {
        this.task = data;
      });
-     this.tacheService.getCommentByTacheId(this.id).subscribe(data => {
-       this.commentTache = data;
-     });
      this.getAllAttachement();
+     this.commentTacheByID();
+  }
+  commentTacheByID() {
+    this.tacheService.getCommentByTacheId(this.id).subscribe(data => {
+      this.commentTache = data;
+    });
   }
   onDeleteAttachement(att) {
     this.attachementService.deleteAttachement(att).subscribe(() => {
@@ -80,6 +83,7 @@ export class DetailTachesComponent implements OnInit {
     this.tacheService.saveComment(this.commentaire).subscribe( data => {
       console.log(data);
      this.submited = true;
+     this.commentTacheByID();
      this.messageComment = 'Laissez un autre commentaire ...';
     }, err => {
       console.log(err);

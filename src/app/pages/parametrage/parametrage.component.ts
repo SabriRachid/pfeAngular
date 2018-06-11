@@ -58,8 +58,7 @@ export class ParametrageComponent implements OnInit {
       this.submited = true;
       this.messageManager = 'compte manager créer avec success ..';
       this.user = new User();
-
-      this.router.navigateByUrl('/parametrage');
+      this.getUserManager();
     } , err => {
       console.log(err);
     });

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileServiceService } from '../../service/profile-service.service';
 import { AuthenticationServiceService } from '../../service/authentication-service.service';
+import { Profile } from '../../profile';
+import { User } from '../../user';
 
 @Component({
   selector: 'app-profile',
@@ -9,8 +11,8 @@ import { AuthenticationServiceService } from '../../service/authentication-servi
 })
 export class ProfileComponent implements OnInit {
   profiles: any;
-  loggedUser: any;
-  profileUserLogged: any;
+  loggedUser: User[] = [];
+  profileUserLogged: Profile[] = [];
   messageCompte: string;
   messageInfo: string;
   submited = false;
@@ -66,7 +68,7 @@ export class ProfileComponent implements OnInit {
     });
   }
   editPassword() {
-    this.loggedUser.password = this.nvpassword;
+   // this.loggedUser = this.nvpassword;
     this.profileService.editPassword(this.loggedUser).subscribe( data => {
       console.log(data);
       this.submitedPassword = true;

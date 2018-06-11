@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { JwtHelper } from 'angular2-jwt';
 import { Router } from '@angular/router';
 import { User } from '../user';
+import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class AuthenticationServiceService {
 
@@ -37,13 +38,13 @@ export class AuthenticationServiceService {
        this.isAuthenticated = true;
   }
 
-  getUserByUsername() {
+  getUserByUsername(): Observable<any> {
     if (this.jwtToken == null) {
       this.loadToken();
     }
      return this.http.get(this.URL + '/users/JWT/' + this.username, { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
   }
-  getProfileByUsername() {
+  getProfileByUsername(): Observable<any> {
     if (this.jwtToken == null) {
       this.loadToken();
     }

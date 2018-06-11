@@ -17,7 +17,9 @@
 
         <div class="tab-content" id="nav-tabContent">
           <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-
+            <div class="alert alert-warning" *ngIf="submitedArchiveEvent">
+              {{messsageArchiveEvent}}
+            </div>
             <div class="table-responsive">
                 <fieldset>
                     <legend>Recherche Archive</legend>
@@ -29,14 +31,20 @@
                 <tr>
                   <th>#</th>
                   <th>Nom</th>
-                  <th>Categorie</th>
+                  <th>Etat</th>
+                  <th>Action</th>
 
                  
                 </tr>
                 <tr *ngFor="let archiveEvent of archivedEvent | eventFilter:motCle; let i = index ">
                   <td>#{{i+1}}</td>
                   <td> {{archiveEvent.nomEvenement}} </td>
-                  <td> {{archiveEvent.categorie}} </td>
+                  <td> {{archiveEvent.etatEvent}} </td>
+                  <td>
+                    <button type="submit" class="btn" (click)="deleteEventArchive(archiveEvent)" data-toggle="tooltip" data-placement="top" title="supprimer définitivement"><i class="fas fa-trash-alt"></i>
+
+                     </button>
+                  </td>
                    
 
                    
@@ -47,6 +55,9 @@
           </div>
           <!-- archive evenement -->
           <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+            <div class="alert alert-warning" *ngIf="submitedArchiveTache">
+              {{messsageArchiveTache}}
+            </div>
               <div class="table-responsive">
                   <fieldset>
                       <legend>Recherche Tache</legend>
@@ -59,6 +70,7 @@
                     <th>#</th>
                     <th>Nom</th>
                     <th>Etat</th>
+                    <th >Action</th>
   
                     
                   </tr>
@@ -66,8 +78,12 @@
                     <td>#{{i+1}}</td>
                     <td> {{archiveTask.nomTache}} </td>
                     <td> {{archiveTask.etatTache}} </td>
-                     
-  
+                     <td><button type="submit" class="btn" (click)="deleteTaskArchive(archiveTask)"  data-toggle="tooltip" data-placement="top" title="supprimer définitivement"><i class="fas fa-trash-alt"></i>
+
+                     </button>
+                   <button type="submit" (click)="restoreTask(archiveTask)" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="restaurer"><i class="fas fa-sync-alt"></i>
+
+                    </button></td>
                    
                   </tr>
                 </table>
@@ -77,6 +93,9 @@
           </div>
           <!-- Archive Tache  -->
           <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+            <div class="alert alert-warning" *ngIf="submitedArchiveDoc">
+              {{messsageArchiveDoc}}
+            </div>
             <div class="table-responsive">
               <fieldset>
                   <legend>Recherche Tache</legend>
@@ -89,14 +108,21 @@
                 <th>#</th>
                 <th>Nom Document</th>
                 <th>File</th>
-
+                <th>Action</th>
               
               </tr>
               <tr *ngFor="let archivedoc of archivedDoc | docFilter:motCle; let i = index ">
                 <td>#{{i+1}}</td>
                 <td> {{archivedoc.nomDocument}} </td>
                 <td> {{archivedoc.file}} </td>
-                 
+                 <td>
+                    <button type="submit" (click)="deleteDocArchive(archivedoc)" class="btn"  data-toggle="tooltip" data-placement="top" title="supprimer définitivement"><i class="fas fa-trash-alt"></i>
+
+                    </button>
+                  <button type="submit" (click)="restoreDocument(archivedoc)" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="restaurer"><i class="fas fa-sync-alt"></i>
+
+                   </button>
+                 </td>
 
               
               </tr>

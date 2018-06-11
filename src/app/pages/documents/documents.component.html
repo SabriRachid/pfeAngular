@@ -119,6 +119,9 @@
                     </h5>
                      
                     <p class="card-text"></p>
+                    <div class="alert alert-success" *ngIf="submitedFormDoc">
+                      {{messageFormDOc}}
+                    </div>
 
                     <form novalidate #fo="ngForm" class="form-signin" (ngSubmit)="savedocument(fo)">
                

@@ -72,6 +72,9 @@
                 </h5>
 
                 <p class="card-text"></p>
+                <div class="alert alert-success" *ngIf="submitedEventForm">
+                  {{messageEvent}}
+                </div>
                 <form novalidate #fo="ngForm" class="form-signin" (ngSubmit)="saveEvent(fo)">
                   <div class="alert alert-danger" *ngIf="nomEvenement.errors?.required && lieu.touched ">
                     * Veuillez saisir le nom de l'evenement
@@ -156,7 +159,9 @@
           </div>
           <!-- nouveaux evenement -->
           <div class="tab-pane fade show " id="nav-event" role="tabpanel" aria-labelledby="nav-event-tab">
-
+            <div class="alert alert-warning" *ngIf="submitedEventUser">
+              {{messageEventUser}}
+            </div>
             <div class="table-responsive">
               <fieldset>
                 <legend>Recherche Evenement</legend>

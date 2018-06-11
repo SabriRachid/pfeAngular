@@ -1,23 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { EventServiceService } from '../../service/event-service.service';
 import { Evenement } from '../../event';
 import 'rxjs/add/operator/map';
 import { Router } from '@angular/router';
 import { AuthenticationServiceService } from '../../service/authentication-service.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-evenement',
   templateUrl: './evenement.component.html',
   styleUrls: ['./evenement.component.css']
 })
-export class EvenementComponent implements OnInit {
-
+export class EvenementComponent implements OnInit, OnDestroy {
+  sub: Subscription;
   evenement: Evenement = new Evenement();
-  evenements: any;
+  evenements: Evenement[];
   nomEvenement: string;
   event: any ;
   motCle: string;
+  messageEvent: string;
+  submitedEventForm = false;
   eventLoggedUser: any;
+  submitedEventUser = false;
+  messageEventUser: string;
   p: number;
   collection =  [];
   constructor(private eventService: EventServiceService, private router: Router,
@@ -29,6 +34,7 @@ export class EvenementComponent implements OnInit {
    this.getAllEvents();
    this.findEventByUser();
   }
+  ngOnDestroy() {}
 getAllEvents() {
   this.eventService.getAllEvent().subscribe(data => {
     this.evenements = data;
@@ -40,7 +46,12 @@ getAllEvents() {
   saveEvent(valid: boolean ) {
     this.eventService.save(this.evenement).subscribe(data => {
       console.log(data);
+      this.submitedEventForm = true;
+      this.messageEvent = 'Evenement ajouter avec succéss .. !';
+      this.getAllEvents();
+      this.findEventByUser();
     }, err => {
+      this.messageEvent = 'Erreur ! Verifier les coordonnées saisie .. ';
       console.log('erreur', err);
     });
    this.evenement = new Evenement();
@@ -50,13 +61,16 @@ getAllEvents() {
   deleteEvent(event) {
     this.eventService.deleteEvent(event.id).subscribe( data => {
       console.log(event.id);
-      this.router.navigateByUrl('/home');
+      this.submitedEventUser = true;
+      this.messageEventUser = 'L evenement ' + event.nomEvenement + 'à été supprimer' ;
+      this.findEventByUser();
+      this.getAllEvents();
 
     }, err => {
       console.log(err);
+      this.messageEventUser = ' Erreur ! suppression de L evenement ' + event.nomEvenement + '...!' ;
     });
-this.getAllEvents();
-this.router.navigateByUrl('/evenement');
+
   }
   onUpdateEvent(value) {
     this.eventService.updateEvent(value).subscribe(data => {
@@ -84,7 +98,8 @@ this.router.navigateByUrl('/evenement');
   onArchiveEvent(event) {
     this.eventService.archiveEvent(event).subscribe(data => {
       console.log(data);
-      this.router.navigateByUrl('/archive');
+      this.getAllEvents();
+     // this.router.navigateByUrl('/archive');
     });
   }
 

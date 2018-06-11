@@ -8,6 +8,7 @@ import { EventServiceService } from '../../service/event-service.service';
 import { AuthenticationServiceService } from '../../service/authentication-service.service';
 import { User } from '../../user';
 import {Observable} from 'rxjs/Observable';
+import { Profile } from '../../profile';
 
 @Component({
   selector: 'app-home',
@@ -28,7 +29,7 @@ export class HomeComponent implements OnInit {
   totalEvent: any;
   totalEventUser: any;
   tasks: any;
-  profileUserLogged: any;
+  profileUserLogged: Profile[] = [];
 
 /*   public doughnutChartLabels: string[] = ['Non Commencé', 'Annuler', 'En Cours', 'Terminer'];
   public doughnutChartData: number[] = [350, 450, 100, 200];
@@ -44,7 +45,7 @@ export class HomeComponent implements OnInit {
   public pieChartLabels: string[] = ['Non Commencé', 'Annuler', 'En Cours', 'Terminer'];
   public pieChartData: number[] = [300, 500, 100, 250];
   public pieChartType = 'pie';
-  loggedUser: any;
+  loggedUser: User[] = [];
   totalTacheUser: any;
   TacheLoggedUser: any;
   // events

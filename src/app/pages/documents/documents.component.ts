@@ -17,6 +17,8 @@ export class DocumentsComponent implements OnInit {
   documentsPrive: any;
   motCle: string;
   filename: any;
+  submitedFormDoc = false;
+  messageFormDOc: string;
   document: Document = new Document();
   progress: { percentage: number } = { percentage: 0 };
   constructor(private fileUploadService: FileUploadServiceService, private router: Router,
@@ -47,7 +49,12 @@ export class DocumentsComponent implements OnInit {
 
    this.fileUploadService.saveDocument(this.document).subscribe(data => {
      console.log(data);
+     this.getAllDocuments();
+     this.getAllDocumentsPrivate();
+     this.submitedFormDoc = true;
+     this.messageFormDOc = 'Document ajouter avec succéss .... ';
    }, err => {
+    this.messageFormDOc = 'Erreur! Vérifier votre Document ... ';
      console.log(err);
    });
    this.document = new Document();

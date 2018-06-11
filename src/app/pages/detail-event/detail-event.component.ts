@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router , Params , ActivatedRoute } from '@angular/router';
 import { EventServiceService } from '../../service/event-service.service';
 import { AuthenticationServiceService } from '../../service/authentication-service.service';
+import { Evenement } from '../../event';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { AuthenticationServiceService } from '../../service/authentication-servi
 })
 export class DetailEventComponent implements OnInit {
 id: number;
-evenement: any;
+evenement: Evenement[] = [];
 submited = false;
 messageEvent: string;
   constructor( private auth: AuthenticationServiceService,
@@ -28,7 +29,7 @@ messageEvent: string;
   }
   updateEvent() {
     this.eventService.updateEvent(this.evenement).subscribe(data => {
-      console.log(data);
+      console.log(this.evenement);
       this.submited = true;
       this.messageEvent = 'Evenement Modifié avec success ...';
     }, err => {

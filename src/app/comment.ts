@@ -7,5 +7,5 @@ export class Commentaire {
   comment: string;
   dateComment: Date;
   utilisateur: User;
-  tache: Task;
+  tache: Task[];
 }

@@ -65,12 +65,25 @@ archiveDoc(doc) {
   return this.http.put(this.baseUrl + '/documents/archive/' + doc.id ,
   doc ,  { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
 }
+restoreDoc(doc) {
+  if (this.jwtToken == null) {
+    this.loadToken();
+  }
+  return this.http.put(this.baseUrl + '/documents/restaurer/' + doc.id ,
+  doc ,  { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+}
 
 getAllDocumentPrivate() {
   if (this.jwtToken == null) {
     this.loadToken();
   }
   return this.http.get(this.baseUrl + '/documents/prive',  { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+}
+deleteDoc(id) {
+  if (this.jwtToken == null) {
+    this.loadToken();
+  }
+  return this.http.delete(this.baseUrl + '/documents/' + id,  { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
 }
 }
 

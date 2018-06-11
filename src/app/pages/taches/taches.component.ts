@@ -16,7 +16,8 @@ import { Observable } from 'rxjs/Observable';
 export class TachesComponent implements OnInit {
   @Input() fileUpload: string;
 isAdmin: boolean ;
-submitForm = false;
+submitFormTache = false;
+messageTache: string;
 selectedFiles: FileList;
 currentFileUpload: File;
 task: Task = new Task();
@@ -61,11 +62,15 @@ this.getAllAttachement();
 
      this.taskSerive.saveTask(this.task).subscribe(data => {
      console.log(data);
+     this.submitFormTache = true;
+     this.messageTache = 'Tache ajouter avec success ...';
      this.attachement.tache = this.task;
+     this.getAllTasks();
+
     }, err => {
       console.log(err);
     });
-    this.submitForm = true;
+
     this.task = new Task();
   }
   getAllUserRole() {

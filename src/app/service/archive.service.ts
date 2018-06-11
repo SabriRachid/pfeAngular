@@ -16,18 +16,18 @@ export class ArchiveService {
     if (this.jwtToken == null) {
       this.loadToken();
     }
-    return this.http.get(this.url + '/tasks/total/archive',  { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+    return this.http.get(this.url + '/tasks/totale/archive',  { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
   }
   getTotalEventArchive() {
     if (this.jwtToken == null) {
       this.loadToken();
     }
-    return this.http.get(this.url + '/events/total/archive',  { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+    return this.http.get(this.url + '/events/totale/archive',  { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
   }
   getTotalDocumentArchive() {
     if (this.jwtToken == null) {
       this.loadToken();
     }
-    return this.http.get(this.url + '/documents/total/archive',  { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+    return this.http.get(this.url + '/documents/totale/archive',  { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
   }
 }

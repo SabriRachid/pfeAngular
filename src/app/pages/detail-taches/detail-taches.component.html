@@ -121,9 +121,7 @@
                 <p class="card-text"></p>
 
                 <form novalidate #fo="ngForm" (ngSubmit)="editTask(fo)">
-                  <div class="alert alert-danger" *ngIf="nomTache.errors?.required && utilisateur.touched ">
-                    * Veuillez saisir un nom du tache Valid
-                  </div>
+                  
                   <div class="form-group "> Nom de Projet :
                     <div class="form-label-group">
                       <input type="text" placeholder="Nom de Projet" #nomTache="ngModel" [(ngModel)]="task.nomProjet" name="nomProjet" class="form-control">

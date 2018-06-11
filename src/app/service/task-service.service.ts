@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { JwtHelper } from 'angular2-jwt';
-
+import {Observable} from 'rxjs/Observable';
 @Injectable()
 export class TaskServiceService {
   private host = 'http://localhost:8080/api/users';
@@ -45,7 +45,7 @@ deleteTask(id) {
 return  this.http.delete(this.hostTask + '/tasks/' + id , { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
 }
 
-getTaskById(id) {
+getTaskById(id): Observable<any> {
   if (this.jwtToken == null) {
     this.loadToken();
   }
@@ -82,6 +82,13 @@ archiveTask(task) {
     this.loadToken();
   }
   return this.http.put(this.hostTask + '/tasks/archive/' + task.id , task,  {
+    headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+}
+restoreTask(task) {
+  if (this.jwtToken == null) {
+    this.loadToken();
+  }
+  return this.http.put(this.hostTask + '/tasks/restore/' + task.id , task,  {
     headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
 }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Evenement } from '../event';
 import { User } from '../user';
+import { Observable } from 'rxjs/Observable';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -21,7 +22,7 @@ export class EventServiceService {
     }
     return this.http.post(this.baseURL + '/events', event , { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
   }
-  getAllEvent() {
+  getAllEvent(): Observable<any> {
     if (this.jwtToken == null) {
       this.loadToken();
     }
@@ -34,13 +35,13 @@ export class EventServiceService {
     }
    return  this.http.delete(this.baseURL + '/events/' + id , { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
   }
-  updateEvent(event) {
+  updateEvent(event): Observable<any> {
     if (this.jwtToken == null) {
       this.loadToken();
     }
     return this.http.put(this.baseURL + '/events/' + event.id, event,  { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
   }
-  getEventById(id) {
+  getEventById(id): Observable<any> {
     if (this.jwtToken == null) {
       this.loadToken();
     }
