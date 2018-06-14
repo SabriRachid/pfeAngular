@@ -30,7 +30,6 @@ export class AuthenticationServiceService {
     const jwtHelper = new JwtHelper();
     this.roles = jwtHelper.decodeToken(this.jwtToken).roles;
      this.username = jwtHelper.decodeToken(this.jwtToken).sub;
-    console.log(this.subject);
 
   }
   loadToken() {
@@ -103,8 +102,23 @@ getTotalEventByUsername() {
 
   isLoggedIn(): boolean {
     if (this.isAuthenticated ) {
-      return true;
+        return true;
     }
     return false;
+  }
+  updateLastConnexion() {
+    if (this.jwtToken == null) {
+      this.loadToken();
+    }
+     return this.http.put(this.URL + '/profiles/connexion/' + this.username,
+      { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+  }
+  getDocumentPriveByUsername() {
+    if (this.jwtToken == null) {
+      this.loadToken();
+    }
+    return this.http.get(this.URL + '/documents/prive/username/' + this.username,
+     { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+
   }
 }

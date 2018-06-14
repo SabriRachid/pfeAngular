@@ -31,12 +31,16 @@
                         <tr>
                           <th>#</th>
                           <th>Nom Prenom</th>
+                          <th>Etat Compte</th>
                           <th>Inscrit Le </th>                         
                           <th>action</th>
                         </tr>
                         <tr *ngFor="let user of users  | parametrageUserFilter:motCleUser; let i = index">
                           <td>#{{i+1}}</td>
+                         
                           <td>{{user.nom}} {{user.prenom }}</td>
+                          <td *ngIf="user.active == true">Active</td>
+                          <td *ngIf="user.active == false">Désactive</td>
                           <td>{{ user.dateInscrit | date : 'dd/MM/yyyy hh:mm' }}</td>
                        
       

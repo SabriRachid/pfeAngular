@@ -8,6 +8,7 @@ import { Attachement } from '../../attachement';
 import { HttpResponse, HttpEventType } from '@angular/common/http';
 import { AttachementServiceService } from '../../service/attachement-service.service';
 import { Observable } from 'rxjs/Observable';
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-taches',
   templateUrl: './taches.component.html',
@@ -73,6 +74,7 @@ this.getAllAttachement();
 
     this.task = new Task();
   }
+
   getAllUserRole() {
    return  this.taskSerive.getAllUserByRoleUser().subscribe(data => {
         this.users = data;
@@ -120,11 +122,28 @@ this.getAllAttachement();
         this.progress.percentage = Math.round(100 * event.loaded / event.total);
       } else if (event instanceof HttpResponse) {
         console.log('File is completely uploaded!');
+        this.getAllAttachement();
 
       }
     });
 
     this.selectedFiles = undefined;
+  }
+  downloadAttToSave(attachement) {
+    this.taskSerive.getFile(attachement.file).subscribe(res => {
+      this.saveToFileSystem(res);
+    });
+  }
+  private saveToFileSystem(response) {
+    console.log('file download response:', response);
+    const contentDispositionHeader: string = response.headers.get('Content-Disposition');
+    console.log(contentDispositionHeader);
+    const parts: string[] = contentDispositionHeader.split(';');
+    const filename = parts[1].split('=')[1];
+    const blob = new Blob([response['body']], { type: response.headers.get('Content-Type')});
+  /*   const url = window.URL.createObjectURL(blob);
+    window.open(url); */
+    saveAs(blob, filename);
   }
   showFiles(enable: boolean) {
     this.showFile = enable;
@@ -154,9 +173,10 @@ this.getAllAttachement();
   }
 
   onDeleteAttachement(att) {
-    this.attachementService.deleteAttachement(att).subscribe(() => {
+    this.attachementService.deleteAttachement(att.id).subscribe(() => {
       console.log('deleted  ... !!!' + att.id);
-      this.router.navigateByUrl('/tache');
+      this.getAllAttachement();
+      // this.router.navigateByUrl('/tache');
     });
   }
 }

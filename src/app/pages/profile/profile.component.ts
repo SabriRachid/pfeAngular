@@ -3,6 +3,7 @@ import { ProfileServiceService } from '../../service/profile-service.service';
 import { AuthenticationServiceService } from '../../service/authentication-service.service';
 import { Profile } from '../../profile';
 import { User } from '../../user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -20,12 +21,16 @@ export class ProfileComponent implements OnInit {
   submitedPassword = false;
   nvpassword: string;
   messagePassword: string;
-  constructor(private profileService: ProfileServiceService, private authService: AuthenticationServiceService) { }
+  motCleUser: string;
+  constructor(private router: Router , private profileService: ProfileServiceService, private auth: AuthenticationServiceService) { }
 
   ngOnInit() {
     this.getAllProfile();
     this.getUserLoggedIn();
     this.getProfileUserLogged();
+  }
+  detailProfile(profile) {
+    this.router.navigate(['/detailProfile', profile.id]);
   }
 
   getAllProfile() {
@@ -34,11 +39,8 @@ export class ProfileComponent implements OnInit {
       console.log(data);
     });
   }
-
-  detailProfile(profile) {
-  }
   getUserLoggedIn() {
-    this.authService.getUserByUsername().subscribe(data => {
+    this.auth.getUserByUsername().subscribe(data => {
       this.loggedUser = data ;
       console.log(data);
     }, err => {
@@ -60,7 +62,7 @@ export class ProfileComponent implements OnInit {
     });
   }
   getProfileUserLogged() {
-    this.authService.getProfileByUsername().subscribe( data => {
+    this.auth.getProfileByUsername().subscribe( data => {
       this.profileUserLogged = data;
       console.log(data);
     }, err => {

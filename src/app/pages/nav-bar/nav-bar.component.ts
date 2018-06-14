@@ -13,7 +13,7 @@ export class NavBarComponent implements OnInit {
   constructor( private auth: AuthenticationServiceService, private router: Router) { }
 
   ngOnInit() {
-  }
+   }
 
   deconnexion() {
     this.auth.logout();
@@ -21,4 +21,4 @@ export class NavBarComponent implements OnInit {
     this.router.navigateByUrl('/login');
 
   }
-}
+ }

@@ -5,41 +5,60 @@
 
 
         <div class="body">
-            
+         
          
             <form novalidate #fo="ngForm" class="form-signin" (ngSubmit)="saveUser(fo)">
-              
+        
             
                <div class="text-center mb-4">
                  <h3 class="display-4">Créer un Compte</h3>
               </div>
-              <div class="alert alert-danger"   *ngIf="nom.errors?.required && prenom.touched" >
-                Nom obligatoire
-             </div>
-              <div class="alert alert-danger"   *ngIf="nom.errors?.minlength && prenom.touched" >
-              Nom doit etre superieur a 4 lettre
-           </div>
+              <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="submited">
+                  {{message}}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+              
+                <div class="alert alert-danger"   *ngIf="password.invalid && password.touched" >
+                    Mot de passe obligatoire (8 caractere) 
+                 </div>
+             
+          
               <div class="form-label-group">Nom :
-                  <input type="text" #nom="ngModel" [(ngModel)]="user.nom" placeholder="  Nom " minlength="4" name="nom" class="form-control"   required   >
-               
+                  <input type="text" #nom="ngModel" [(ngModel)]="user.nom" placeholder="  Nom "  name="nom" class="form-control"   required   >
+              <!--     <div class="alert alert-danger"   *ngIf="nom.invalid && prenom.touched" >
+                      Nom obligatoire
+                   </div> -->
                 </div>
                 <div class="form-label-group">Prenom :
                     <input type="text"   #prenom="ngModel" [(ngModel)]="user.prenom" placeholder="  Prénom " name="prenom" class="form-control"   required  >
-                 
+                 <!--    <div class="alert alert-danger"   *ngIf="prenom.invalid && prenom.touched" >
+                        Prénom obligatoire
+                     </div> -->
                   </div>
                   <div class="form-label-group">Username :
-                      <input type="text" #username="ngModel" [(ngModel)]="user.username" placeholder="Username " name="Username"  class="form-control"   required  >
-                   
+                      <input type="text" #username="ngModel" minlength="3" [(ngModel)]="user.username" placeholder="Username " name="Username"  class="form-control"   required  >
+             <!--       <div class="alert alert-danger"   *ngIf="username.invalid && username.touched" >
+                Username obligatoire
+             </div> -->
                     </div>
         
               <div class="form-label-group">Email :
-                <input type="email" #email="ngModel" [(ngModel)]="user.email"  placeholder="Address Email " name="email"  class="form-control"   required  >
-             
+                <input type="email" #email="ngModel" [(ngModel)]="user.email" pattern="[a-zA-Z0-9.!#$%&amp;’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+" placeholder="Address Email " name="email"  class="form-control"   required  >
+             <!-- 
+                <div class="alert alert-danger"   *ngIf="email.errors?.required && email.touched" >
+                    Email obligatoire 
+                 </div>
+                 
+             <div class="alert alert-danger"   *ngIf="email.errors?.email && password.touched" >
+                Email Incorrect ... 
+              </div> -->
               </div>
         
               <div class="form-label-group">Mot de Passe :
-                <input type="password" #mdp="ngModel" placeholder="Mot de passe" [(ngModel)]="user.password"  name="password"  class="form-control"   required>
-        
+                <input type="password" #password="ngModel" minlength="8" placeholder="Mot de passe" [(ngModel)]="user.password"  name="password"  class="form-control"   required>
+           
               </div>
         
               

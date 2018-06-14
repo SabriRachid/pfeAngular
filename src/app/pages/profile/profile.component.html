@@ -164,15 +164,24 @@
             <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
 
                 <div class="table-responsive">
+                    <fieldset>
+                        <legend >Recherche </legend>
+                    <div class="form-group">
+                        <input  [(ngModel)]="motCleUser" type="text" placeholder="Par Nom" class="form-control">
+                      </div>
+                      </fieldset>
                   <table class="table table-sm">
                     <tr>
                       <th>#</th>
                       <th>Nom Prenom</th>
+                     
                       <th>Action</th>
                     </tr>
-                    <tr *ngFor="let profile of profiles; let  i= index">
+                    <tr *ngFor="let profile of profiles| profileFilter:motCleUser; let  i= index">
                       <td>#{{i+1}}</td>
                       <td>{{profile.utilisateur.nom}} {{profile.utilisateur.prenom}}</td>
+                 
+                   
                       <td>
                         <button type="button" class="btn btn-sm btn-default" (click)="detailProfile(profile)">
                           <i class="far fa-eye"></i>

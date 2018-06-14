@@ -77,4 +77,11 @@ export class EventServiceService {
     }
     return this.http.get(this.baseURL + '/events/archives' , {  headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
   }
+  getEventUserProfile(id) {
+    if (this.jwtToken == null) {
+      this.loadToken();
+    }
+    return this.http.get(this.baseURL + '/events/contact/' + id ,  {
+      headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+  }
 }

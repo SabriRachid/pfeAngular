@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from '../user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import 'rxjs/add/operator/map';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class UserServiceService {
@@ -63,5 +64,24 @@ export class UserServiceService {
       }
       return this.http.get(this.baseURL + '/users/totale' , { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
   }
-
+  activeCompte(user) {
+    if (this.jwtToken == null) {
+      this.loadToken();
+    }
+    return this.http.post(this.baseURL + '/users/compte/mail' , user ,
+     { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+  }
+  updateUser(user) {
+    if (this.jwtToken == null) {
+      this.loadToken();
+    }
+    return this.http.put(this.baseURL + '/users/parametrage/' + user.id , user,
+    { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+  }
+  getProfileUserById(id) {
+    if (this.jwtToken == null) {
+      this.loadToken();
+    }
+    return this.http.get(this.baseURL + '/profiles/detail/' + id, { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+  }
 }

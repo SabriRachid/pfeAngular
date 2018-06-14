@@ -1,0 +1,79 @@
+<app-nav-bar></app-nav-bar>
+<div class="body">
+
+  <main role="main" class="container">
+    <div class="row">
+
+      <div class="col-md-9">
+
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home"
+              aria-selected="true">{{profile.utilisateur.nom}} {{profile.utilisateur.prenom}}</a>
+
+
+
+
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <div class="row">
+              <div class="col-md-9">
+                <div class="jumbotron jumbotron-fluid">
+                  <div class="container">
+                    <h1 class="display-4">{{profile.utilisateur.nom}} {{profile.utilisateur.prenom}}</h1>
+                    <p class="lead" *ngFor="let role of profile.utilisateur.roles"> ROLE :
+                      <span class="badge badge-success" *ngIf="role.role == 'ROLE_ADMIN'">ADMINISTRATEUR </span>
+                      <span class="badge badge-success" *ngIf="role.role == 'ROLE_MANAGER'">MANAGER </span>
+                      <span class="badge badge-success" *ngIf="role.role == 'ROLE_USER'">USER </span>
+
+                    </p>
+                    Profession :
+                    <p class="lead"> {{profile.profession}}</p>
+                    Date de Naissance :
+                    <p class="lead">{{profile.dateNaissance}}</p>
+                    Numero Telephone :
+                    <p class="lead">{{profile.numeroTelephone}}</p>
+                    Addresse :
+                    <p class="lead">{{profile.address}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="card border-success" style="width: 100%">
+                  <div class="card-header">
+                    Journal
+                  </div>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item" *ngFor="let contact of profileTache"> <span class="badge badge-default">Tache</span> {{contact.nomTache}}</li>
+                    <li class="list-group-item" *ngFor="let contactEvent of profileEvent"><span class="badge badge-default">Evenement</span> {{contactEvent.nomEvenement}}</li>
+
+                  </ul>
+                </div>
+
+
+              </div>
+            </div>
+
+
+            <div class="text-left">
+              <button (click)="retour()" class="btn btn-outline-default">Retour</button>
+            </div>
+
+
+          </div>
+          <!-- mes Infos -->
+
+
+
+
+
+
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>

@@ -37,6 +37,11 @@ import { ArchiveComponent } from './pages/archive/archive.component';
 import { DetailEventUserComponent } from './pages/detail-event-user/detail-event-user.component';
 import { DocumentPriveFilter } from './pages/documents/documentPrive-filter.pipe';
 import { ArchiveService } from './service/archive.service';
+import { ProfileFilter } from './pages/profile/profile-filter.pipe';
+import { DetailProfileComponent } from './pages/detail-profile/detail-profile.component';
+import { FileService } from './service/file.service';
+import { ListuploadComponent } from './pages/listupload/listupload.component';
+import { DetailsUploadComponent } from './pages/details-upload/details-upload.component';
 
 const appRoutes: Routes  = [
 { path : 'login' , component : LoginComponent },
@@ -51,6 +56,7 @@ const appRoutes: Routes  = [
 { path : 'detailEvent/:id', component : DetailEventComponent, canActivate: [AuthGuardService] },
 { path : 'detailEventUser/:id', component : DetailEventUserComponent, canActivate: [AuthGuardService] },
 { path : 'detailUser/:id', component : DetailUserComponent , canActivate: [AuthGuardService]},
+{path : 'detailProfile/:id', component : DetailProfileComponent , canActivate: [AuthGuardService]},
 { path : 'document', component : DocumentsComponent , canActivate: [AuthGuardService]},
 { path : 'archive', component : ArchiveComponent , canActivate: [AuthGuardService]},
 { path: '**', redirectTo: 'login' }
@@ -77,8 +83,12 @@ const appRoutes: Routes  = [
     TacheFilter,
     EventFilter,
     DocumentFilter,
+    ProfileFilter,
     ArchiveComponent,
-    DetailEventUserComponent
+    DetailEventUserComponent,
+    DetailProfileComponent,
+    ListuploadComponent,
+    DetailsUploadComponent
 
   ],
   imports: [
@@ -91,7 +101,7 @@ const appRoutes: Routes  = [
     RouterModule.forRoot(appRoutes)
 
   ],
-  providers: [ArchiveService, UserServiceService, EventServiceService, AuthenticationServiceService, TaskServiceService,
+  providers: [FileService, ArchiveService, UserServiceService, EventServiceService, AuthenticationServiceService, TaskServiceService,
     DataChatServiceService, FileUploadServiceService, AttachementServiceService , ProfileServiceService, AuthGuardService],
   bootstrap: [AppComponent]
 })

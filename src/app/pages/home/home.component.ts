@@ -9,6 +9,7 @@ import { AuthenticationServiceService } from '../../service/authentication-servi
 import { User } from '../../user';
 import {Observable} from 'rxjs/Observable';
 import { Profile } from '../../profile';
+import { Evenement } from '../../event';
 
 @Component({
   selector: 'app-home',
@@ -48,6 +49,8 @@ export class HomeComponent implements OnInit {
   loggedUser: User[] = [];
   totalTacheUser: any;
   TacheLoggedUser: any;
+  evenements: Evenement[];
+  eventLoggedUser: any;
   // events
   public chartClicked(e: any): void {
     console.log(e);
@@ -76,7 +79,21 @@ export class HomeComponent implements OnInit {
     this.getProfileUserLogged();
     this.getTacheByLoggedUser();
     this.getTotalEventByUsername();
+    this.getAllEvents();
+    this.findEventByUser();
 
+  }
+  findEventByUser() {
+    this.auth.getEventByUsername().subscribe(data => {
+      this.eventLoggedUser = data;
+    });
+  }
+  getAllEvents() {
+    this.eventService.getAllEvent().subscribe(data => {
+      this.evenements = data;
+    } , err => {
+      console.log('erreur', err);
+    });
   }
   getAllTasks() {
     return this.taskSerive.getAllTasks().subscribe(data => {

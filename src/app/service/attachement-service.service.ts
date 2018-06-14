@@ -37,11 +37,11 @@ export class AttachementServiceService {
     }
     return this.http.get(this.url + '/attachements',  { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
   }
-  deleteAttachement(attachements) {
+  deleteAttachement(id) {
     if (this.jwtToken == null) {
       this.loadToken();
     }
-    return this.http.delete(this.url + '/attachements/' + attachements.id ,
+    return this.http.delete(this.url + '/attachements/' + id ,
      { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
   }
   pushFileToStorageServer(file: File): Observable<HttpEvent<{}>> {

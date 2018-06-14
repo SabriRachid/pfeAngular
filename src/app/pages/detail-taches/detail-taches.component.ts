@@ -46,12 +46,7 @@ export class DetailTachesComponent implements OnInit {
       this.commentTache = data;
     });
   }
-  onDeleteAttachement(att) {
-    this.attachementService.deleteAttachement(att).subscribe(() => {
-      console.log('deleted  ... !!!' + att.id);
-      this.router.navigateByUrl('/tache');
-    });
-  }
+
   retour() {
     this.router.navigate(['/taches']);
   }
@@ -64,6 +59,7 @@ export class DetailTachesComponent implements OnInit {
         this.progress.percentage = Math.round(100 * event.loaded / event.total);
       } else if (event instanceof HttpResponse) {
         console.log('File is completely uploaded!');
+        this.getAllAttachement();
 
       }
     });
@@ -97,6 +93,13 @@ export class DetailTachesComponent implements OnInit {
       this.messageTask = 'Tache modifié avec success ..';
     }, err => {
       console.log(err);
+    });
+  }
+  onDeleteAttachement(att) {
+    this.attachementService.deleteAttachement(att.id).subscribe(() => {
+      console.log('deleted  ... !!!' + att.id);
+      this.getAllAttachement();
+      // this.router.navigateByUrl('/tache');
     });
   }
 

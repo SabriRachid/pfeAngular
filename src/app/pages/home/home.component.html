@@ -81,7 +81,7 @@
                       <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home"
                         aria-selected="true">Mes Taches <span class="badge badge-danger">{{ totalTacheUser }}</span> </a>
                      <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile"
-                        aria-selected="false">Mes Evenements <span class="badge badge-danger">{{ totalTacheUser }}</span></a>
+                        aria-selected="false">Mes Evenements <span class="badge badge-danger">{{ totalEventUser }}</span></a>
                       <!--  <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact"
                         aria-selected="false">Mes Documents</a> -->
                     </div>
@@ -154,7 +154,63 @@
                     <!-- Taches -->
                  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
           
+                    <div class="table-responsive" *ngIf="auth.isUser()">
+                        <fieldset style="text-align: center"  >
+                            <legend >Recherche <span class="badge badge-default"><i class="fas fa-search"></i>
+
+                            </span></legend>
+                        <div class="form-group">
+                            <input  [(ngModel)]="motCle" type="text" placeholder="Par Nom du Tache" class="form-control">
+                          </div>
+                          </fieldset>
+                        <table class="table table-sm">
+                          <tr>
+                            <th>#</th>
+                            <th>Nom du l'evenement</th>
+                            <th>Etat</th>
           
+                             
+                          </tr>
+                          <tr *ngFor="let event of eventLoggedUser | eventFilter:motCle; let i = index">
+                            <td>#{{i+1}}</td>
+                            <td>{{event.nomEvenement}}</td>
+                            <td>{{event.etatEvent}}</td>
+          
+          
+          
+                       
+                          </tr>
+                        </table>
+                      </div>
+                      <div class="table-responsive" *ngIf="!auth.isUser()">
+                          <fieldset style="text-align: center"  >
+                              <legend >Recherche <span class="badge badge-default"><i class="fas fa-search"></i>
+
+                              </span></legend>
+                          <div class="form-group">
+                              <input  [(ngModel)]="motCle" type="text" placeholder="Par Nom du Tache" class="form-control">
+                            </div>
+                            </fieldset>
+                          <table class="table table-sm">
+                            <tr>
+                              <th>#</th>
+                              <th>Nom du l'evenement</th>
+                              <th>Etat</th>
+            
+                             
+                            </tr>
+                            <tr *ngFor="let event of evenements | eventFilter:motCle; let i = index">
+                              <td>#{{i+1}}</td>
+                              <td>{{event.nomEvenement}}</td>
+                              <td>{{event.etatEvent}}</td>
+            
+            
+             
+            
+            
+                            </tr>
+                          </table>
+                        </div>
           
                     </div>  
                     <!-- Evenements -->

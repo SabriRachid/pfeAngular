@@ -38,7 +38,7 @@
 
                 <form novalidate #f="ngForm" (ngSubmit)="editTask(f)">
 
-                  <div class="form-group "> Nom de Projet :
+                  <div class="form-group "> Nom de Projet  :
                     <div class="form-label-group">
                       <input readonly type="text" placeholder="Nom de Projet" #nomTache="ngModel" [(ngModel)]="task.nomProjet" name="nomProjet"
                         class="form-control">
@@ -107,6 +107,7 @@
             <!-- END EDIT TACHE FOR USER -->
 
             <div class="card w-100" *ngIf="auth.isAdmin()">
+                <form novalidate #fo="ngForm" (ngSubmit)="editTask(fo)">
               <div class="card-body">
                 <h5 class="card-title">
                   <i class="fab fa-tripadvisor"></i>
@@ -120,7 +121,7 @@
                 <hr>
                 <p class="card-text"></p>
 
-                <form novalidate #fo="ngForm" (ngSubmit)="editTask(fo)">
+                
                   
                   <div class="form-group "> Nom de Projet :
                     <div class="form-label-group">
@@ -184,57 +185,59 @@
                   <button [disabled]="!fo.form.valid" type="submit" class="btn-md  btn btn-success">Modifier</button>
                   <button type="button" class="btn btn-default" (click)="retour()"> Retour </button>
 
-                </form>
+             
 
               </div>
+              <div class="card w-100">
+                  <div class="card-body">
+                    <h5 class="card-title">
+                      <i class="fas fa-paperclip"></i>
+  
+                      Attachement </h5>Taille Maximum :
+                    <span class="badge badge-info">5MB</span>
+                    <span style="color: green"> </span>
+                    <hr>
+                    <p class="card-text"></p>
+  
+  
+                    <div *ngIf="currentFileUpload" class="progress">
+                      <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" attr.aria-valuenow="{{progress.percentage}}"
+                        aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progress.percentage+'%'}">
+                        {{progress.percentage}}%</div>
+                    </div>
+  
+                    <label class="btn btn-default">
+                      <input type="file" (change)="selectFile($event)">
+                    </label>
+  
+                    <button class="btn btn-success" [disabled]="!selectedFiles" (click)="uploadFile()">Upload</button>
+  
+                  
+  
+                    <div class="table-responsive">
+                      <table class="table table-sm">
+                        <tr>
+                          <th>#</th>
+                          <th>File</th>
+                          <th>Action</th>
+                        </tr>
+                        <tr *ngFor=" let att of allAttachement; let i = index">
+                          <td> #{{i+1}} </td>
+                          <td> {{att.file}} </td>
+                          <td>  <button type="button" class="btn btn-sm btn-default" (click)="onDeleteAttachement(att)"  >
+                            <i class="far fa-trash-alt"></i>
+      
+                          </button></td>
+                        </tr>
+                      </table>
+                    </div>
+  
+                  </div>
+                </div>
+                </form>
             </div>
 
-            <div class="card w-100">
-                <div class="card-body">
-                  <h5 class="card-title">
-                    <i class="fas fa-paperclip"></i>
-
-                    Attachement </h5>Taille Maximum :
-                  <span class="badge badge-info">5MB</span>
-                  <span style="color: green"> </span>
-                  <hr>
-                  <p class="card-text"></p>
-
-
-                  <div *ngIf="currentFileUpload" class="progress">
-                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" attr.aria-valuenow="{{progress.percentage}}"
-                      aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progress.percentage+'%'}">
-                      {{progress.percentage}}%</div>
-                  </div>
-
-                  <label class="btn btn-default">
-                    <input type="file" (change)="selectFile($event)">
-                  </label>
-
-                  <button class="btn btn-success" [disabled]="!selectedFiles" (click)="uploadFile()">Upload</button>
-
-                
-
-                  <div class="table-responsive">
-                    <table class="table table-sm">
-                      <tr>
-                        <th>#</th>
-                        <th>File</th>
-                        <th>Action</th>
-                      </tr>
-                      <tr *ngFor=" let att of allAttachement; let i = index">
-                        <td> #{{i+1}} </td>
-                        <td> {{att.file}} </td>
-                        <td>  <button type="button" class="btn btn-sm btn-default" (click)="onDeleteAttachement(att)"  >
-                          <i class="far fa-trash-alt"></i>
-    
-                        </button></td>
-                      </tr>
-                    </table>
-                  </div>
-
-                </div>
-              </div>
+       
 
           </div>
           <!-- edit tache admin -->

@@ -166,11 +166,9 @@
 
               </div>
 
-
-
-
-
-
+</form>
+           
+<p></p>
 
 
 
@@ -207,7 +205,7 @@
                     <table class="table table-sm">
                       <tr>
                         <th>#</th>
-                        <th>File</th>
+                        <th>Attachement</th>
                         <th>Action</th>
                       </tr>
                       <tr *ngFor=" let att of allAttachement; let i = index">
@@ -216,7 +214,11 @@
                         <td>  <button type="button" class="btn btn-sm btn-default" (click)="onDeleteAttachement(att)"  >
                           <i class="far fa-trash-alt"></i>
     
-                        </button></td>
+                        </button>
+                        <button class="btn btn-sm btn-default" (click)="downloadAttToSave(att)">
+                          <i class="fas fa-cloud-download-alt"></i>
+                        </button>
+                      </td>
                       </tr>
                     </table>
                   </div>
@@ -224,7 +226,7 @@
                 </div>
               </div>
 
-            </form>
+         
             <p></p>
 
 

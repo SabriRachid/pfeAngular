@@ -13,7 +13,9 @@ export class LoginComponent implements OnInit {
   jwt: string;
   loggedIn = false;
   ngOnInit() {
+
   }
+
   onLogin(user) {
   this.authService.login(user).subscribe(resp => {
        this.jwt = resp.headers.get('Authorization');
@@ -22,7 +24,7 @@ export class LoginComponent implements OnInit {
         this.authService.saveToken(this.jwt);
         this.authService.isAuthenticated = true;
         this.router.navigateByUrl('/home');
-       } else {
+          } else {
         this.authService.isAuthenticated = false;
         this.router.navigateByUrl('/login');
        }

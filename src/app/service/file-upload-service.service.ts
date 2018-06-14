@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpRequest, HttpEvent, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
+import { Options } from 'selenium-webdriver/opera';
 
 @Injectable()
 export class FileUploadServiceService {
@@ -24,7 +25,17 @@ export class FileUploadServiceService {
     );
     return this.http.request(req);
   }
-
+  getFile(fileName) {
+    if (this.jwtToken == null) {
+      this.loadToken();
+    }
+    const headers = new HttpHeaders();
+    return this.http.get(this.baseUrl + '/documents/' + fileName, {
+      headers : new HttpHeaders( { 'Authorization' : this.jwtToken}),
+      responseType: 'blob',
+      observe : 'response',
+    });
+  }
   saveDocument(document) {
     if (this.jwtToken == null) {
       this.loadToken();

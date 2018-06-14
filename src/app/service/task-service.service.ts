@@ -44,7 +44,23 @@ deleteTask(id) {
   }
 return  this.http.delete(this.hostTask + '/tasks/' + id , { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
 }
-
+deleteAttachement(id) {
+  if (this.jwtToken == null) {
+    this.loadToken();
+  }
+return  this.http.delete(this.hostTask + '/attachements/' + id , { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+}
+getFile(fileName) {
+  if (this.jwtToken == null) {
+    this.loadToken();
+  }
+  const headers = new HttpHeaders();
+  return this.http.get(this.hostTask + '/attachements/' + fileName, {
+    headers : new HttpHeaders( { 'Authorization' : this.jwtToken}),
+    responseType: 'blob',
+    observe : 'response',
+  });
+}
 getTaskById(id): Observable<any> {
   if (this.jwtToken == null) {
     this.loadToken();
@@ -89,6 +105,13 @@ restoreTask(task) {
     this.loadToken();
   }
   return this.http.put(this.hostTask + '/tasks/restore/' + task.id , task,  {
+    headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+}
+getTacheUserProfile(id) {
+  if (this.jwtToken == null) {
+    this.loadToken();
+  }
+  return this.http.get(this.hostTask + '/tasks/contact/' + id ,  {
     headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
 }
 }

@@ -13,23 +13,22 @@ export class RegisterComponent implements OnInit {
 
   user: User = new User();
   submited = false;
+  message: string;
   constructor (private userService: UserServiceService , private router: Router ) { }
 
   ngOnInit() {
   }
 
-  saveUser(valid: boolean) {
-    if ( valid ) {
-      this.userService.save(this.user).subscribe( data => {console.log(data); } , error => {
-        console.log(error);
+  saveUser(valid) {
+
+      this.userService.save(this.user).subscribe( data => {
+        console.log(data);
+        this.submited = true;
+        this.message = 'Compte créer avec success ! Un Email  d activation vous sera envoyé';
+      } , error => {
+        this.message = 'Erreur';
   });
-       this.submited = true;
-      console.log('no error');
-    //  this.router.navigate(['app-login']);
       this.user = new User();
-    } else {
-      console.log('error');
-    }
 
 
   }
