@@ -16,8 +16,12 @@ export class DocumentsComponent implements OnInit {
   selectedFiles: FileList;
   currentFileUpload: File;
   documents: any;
+  docPriveUserLogged: Document[] = [];
   documentsPrive: any;
+  docLoggedUser: Document[] = [];
   motCle: string;
+  messageDelete: string;
+  submiteDelete = false;
   filename: any;
   submitedFormDoc = false;
   messageFormDOc: string;
@@ -29,6 +33,8 @@ export class DocumentsComponent implements OnInit {
   ngOnInit() {
     this.getAllDocuments();
     this.getAllDocumentsPrivate();
+    this.getDocumentPriveByUsername();
+    this.findDocByUser();
   }
   SaveDemo() {
     const file = new Blob(['hello world'], { type: 'text/csv;charset=utf-8' });
@@ -57,6 +63,8 @@ export class DocumentsComponent implements OnInit {
       console.log(data);
       this.getAllDocuments();
       this.getAllDocumentsPrivate();
+      this.getDocumentPriveByUsername();
+      this.findDocByUser();
       this.submitedFormDoc = true;
       this.messageFormDOc = 'Document ajouter avec succéss .... ';
     }, err => {
@@ -125,5 +133,32 @@ export class DocumentsComponent implements OnInit {
       console.log(err);
     });
   }
-
+  getDocumentPriveByUsername() {
+    this.auth.getDocumentPriveByUsername().subscribe( data => {
+      this.docPriveUserLogged = data;
+    }, err => {
+      console.log(err);
+    });
+  }
+  detailDoc(doc) {
+  this.router.navigate(['/detailDocument', doc.id]);
+}
+detailupload(doc) {
+  this.router.navigate(['/detailUpload', doc.id]);
+}
+findDocByUser() {
+  this.auth.getDocByUsername().subscribe(data => {
+    this.docLoggedUser = data;
+  });
+}
+deleteDoc(doc) {
+  this.fileUploadService.deleteDoc(doc.id).subscribe(() => {
+    console.log('Document  deleted ... !!!');
+    this.findDocByUser();
+    this.submiteDelete = true;
+    this.messageDelete = 'Le Document ' + doc.nomDocument + 'à été supprimer ...';
+    }, err => {
+    console.log(err);
+  });
+}
 }

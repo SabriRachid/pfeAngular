@@ -17,11 +17,72 @@
         <div class="tab-content" id="nav-tabContent">
 
           <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
- 
+
+            <div class="card w-100" *ngIf="auth.isUser()">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-book"></i>
+
+
+    
+    
+    
+                      Details Document </h5>                 
+                      <span style="color: red;font-weight: bolder">{{document.file}}</span>  <br>   
+                      Proprietaire:
+                      <span style="color: green">{{document.utilisateur.nom}} {{document.utilisateur.prenom}}</span>
+                      
+                    <hr>
+                   
+                   
+                 
+                    <form  class="form-signin"  >
+               
+                      
+                 
+                        <div class="form-row">
+                            <div class="form-group col-md-6"> Nom du Document :
+                                <div class="form-label-group">
+                                  <input placeholder="Nom du document" readonly [(ngModel)]="document.nomDocument" #nomDocument="ngModel" type="text" name="nomDocument" class="form-control" required>
+                
+                                </div>
+                              </div>
+                              <div class="form-group col-md-6"> Type de document :
+                                <div class="form-label-group">
+                                  <input readonly placeholder="Type du document" type="text" name="type" class="form-control" [(ngModel)]="document.typeDocument" #typeDocument="ngModel" >
+                
+                                </div>
+                              </div>
+                        </div>
+                      
+          
+          
+          
+                        <div class="form-group">
+                          <div class="form-label-group"> Déscription :
+                            <textarea readonly placeholder="Description" name="description" [(ngModel)]="document.description" #description="ngModel" class="form-control"> </textarea>
+          
+                          </div>
+                        </div>
+                       
+                         
+                                          
+          
+          
+          
+                        
+                        <button (click)="retour()" type="submit" class="btn-md  btn btn-default">Retour</button>
+          
+                      </form>
+       
+                  </div>
+            
+            </div>
+
 
             <!-- END EDIT TACHE FOR USER -->
 
-            <div class="card w-100" >
+            <div class="card w-100" *ngIf="auth.isAdmin()">
                 <div class="card-body">
                     <h5 class="card-title">
                         <i class="fas fa-book"></i>
@@ -32,7 +93,8 @@
     
                       Edit Document </h5>                 
                       <span style="color: red;font-weight: bolder">{{document.file}}</span>  <br>   
-                     
+                      Proprietaire:
+                      <span style="color: green">{{document.utilisateur.nom}} {{document.utilisateur.prenom}}</span>
                       
                     <hr>
                    

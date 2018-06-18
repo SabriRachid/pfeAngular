@@ -42,6 +42,7 @@ import { DetailProfileComponent } from './pages/detail-profile/detail-profile.co
 import { FileService } from './service/file.service';
 import { ListuploadComponent } from './pages/listupload/listupload.component';
 import { DetailsUploadComponent } from './pages/details-upload/details-upload.component';
+import { DetailDocumentComponent } from './pages/detail-document/detail-document.component';
 
 const appRoutes: Routes  = [
 { path : 'login' , component : LoginComponent },
@@ -56,7 +57,9 @@ const appRoutes: Routes  = [
 { path : 'detailEvent/:id', component : DetailEventComponent, canActivate: [AuthGuardService] },
 { path : 'detailEventUser/:id', component : DetailEventUserComponent, canActivate: [AuthGuardService] },
 { path : 'detailUser/:id', component : DetailUserComponent , canActivate: [AuthGuardService]},
+{ path : 'detailDocument/:id', component : DetailDocumentComponent , canActivate: [AuthGuardService]},
 {path : 'detailProfile/:id', component : DetailProfileComponent , canActivate: [AuthGuardService]},
+{path : 'detailUpload/:id', component : DetailsUploadComponent , canActivate: [AuthGuardService]},
 { path : 'document', component : DocumentsComponent , canActivate: [AuthGuardService]},
 { path : 'archive', component : ArchiveComponent , canActivate: [AuthGuardService]},
 { path: '**', redirectTo: 'login' }
@@ -88,7 +91,8 @@ const appRoutes: Routes  = [
     DetailEventUserComponent,
     DetailProfileComponent,
     ListuploadComponent,
-    DetailsUploadComponent
+    DetailsUploadComponent,
+    DetailDocumentComponent
 
   ],
   imports: [

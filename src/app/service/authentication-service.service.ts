@@ -63,6 +63,12 @@ export class AuthenticationServiceService {
     }
      return this.http.get(this.URL + '/events/Auth/' + this.username, { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
   }
+  getDocByUsername(): Observable<any> {
+    if (this.jwtToken == null) {
+      this.loadToken();
+    }
+     return this.http.get(this.URL + '/documents/Auth/' + this.username, { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+  }
 getTotalTacheByUsername() {
   if (this.jwtToken == null) {
     this.loadToken();
@@ -113,7 +119,7 @@ getTotalEventByUsername() {
      return this.http.put(this.URL + '/profiles/connexion/' + this.username,
       { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
   }
-  getDocumentPriveByUsername() {
+  getDocumentPriveByUsername(): Observable<any> {
     if (this.jwtToken == null) {
       this.loadToken();
     }

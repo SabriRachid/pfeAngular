@@ -96,5 +96,18 @@ deleteDoc(id) {
   }
   return this.http.delete(this.baseUrl + '/documents/' + id,  { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
 }
+getDocumentById(id): Observable<any> {
+  if (this.jwtToken == null) {
+    this.loadToken();
+  }
+  return this.http.get(this.baseUrl + '/documents/edit/' + id,  { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+}
+updateDoc(doc) {
+  if (this.jwtToken == null) {
+    this.loadToken();
+  }
+  return this.http.put(this.baseUrl + '/documents/' + doc.id ,
+  doc ,  { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+}
 }
 
