@@ -11,5 +11,6 @@ export class Task {
   description: string;
   utilisateur: User;
   dateAffectation: Date;
+  dateModification: Date;
   attachement: Array<Attachement>;
 }

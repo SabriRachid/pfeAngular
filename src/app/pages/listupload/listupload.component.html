@@ -1,1 +1,32 @@
- 
+<app-nav-bar></app-nav-bar>
+<div class="body">
+
+  <main role="main" class="container">
+    <div class="row">
+
+      <div class="col-md-10">
+          <nav>
+              <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    
+                <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile"
+                  aria-selected="false">Mes Notification</a>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <div class="alert alert-primary"  *ngFor="let a of tacheService.notifArray; let iteration = index">
+                        {{a}}
+                          </div>
+<hr>
+              </div>
+        
+</div>
+      </div>
+      <!-- div col-md-8 -->
+
+
+    </div>
+    <!-- div row -->
+  </main>
+</div>
+<!-- div body -->

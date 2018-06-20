@@ -11,7 +11,8 @@
               aria-selected="true">Mes Tache</a>
             <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile"
               aria-selected="false" *ngIf="!auth.isUser()">Créer une Tache</a>
-
+   <!--          <a class="nav-item nav-link" id="nav-att-tab" data-toggle="tab" href="#nav-att" role="tab" aria-controls="nav-att" aria-selected="false"
+              *ngIf="submitFormTache">Attachement</a> -->
           </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
@@ -108,7 +109,7 @@
                   <div class="alert alert-danger" *ngIf="nomTache.errors?.required  ">
                     * Veuillez saisir un nom du tache Valid
                   </div>
-                  
+
                   <div class="form-group "> Nom de Projet :
                     <div class="form-label-group">
                       <input type="text" placeholder="Nom de Projet" #nomTache="ngModel" [(ngModel)]="task.nomProjet" name="nomProjet" class="form-control">
@@ -166,68 +167,17 @@
 
               </div>
 
-</form>
-           
-<p></p>
+            </form>
 
 
 
 
 
 
-              <div class="card w-100">
-                <div class="card-body">
-                  <h5 class="card-title">
-                    <i class="fas fa-paperclip"></i>
-
-                    Attachement </h5>Taille Maximum :
-                  <span class="badge badge-info">5MB</span>
-                  <span style="color: green"> </span>
-                  <hr>
-                  <p class="card-text"></p>
 
 
-                  <div *ngIf="currentFileUpload" class="progress">
-                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" attr.aria-valuenow="{{progress.percentage}}"
-                      aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progress.percentage+'%'}">
-                      {{progress.percentage}}%</div>
-                  </div>
 
-                  <label class="btn btn-default">
-                    <input type="file" (change)="selectFile($event)">
-                  </label>
 
-                  <button class="btn btn-success" [disabled]="!selectedFiles" (click)="uploadFile()">Upload</button>
-
-                
-
-                  <div class="table-responsive">
-                    <table class="table table-sm">
-                      <tr>
-                        <th>#</th>
-                        <th>Attachement</th>
-                        <th>Action</th>
-                      </tr>
-                      <tr *ngFor=" let att of allAttachement; let i = index">
-                        <td> #{{i+1}} </td>
-                        <td> {{att.file}} </td>
-                        <td>  <button type="button" class="btn btn-sm btn-default" (click)="onDeleteAttachement(att)"  >
-                          <i class="far fa-trash-alt"></i>
-    
-                        </button>
-                        <button class="btn btn-sm btn-default" (click)="downloadAttToSave(att)">
-                          <i class="fas fa-cloud-download-alt"></i>
-                        </button>
-                      </td>
-                      </tr>
-                    </table>
-                  </div>
-
-                </div>
-              </div>
-
-         
-            <p></p>
 
 
 
@@ -235,7 +185,78 @@
 
           </div>
           <!-- nouveaux tache -->
+  <!--         <div class="tab-pane fade" id="nav-att" role="tabpanel" aria-labelledby="nav-att-tab">
 
+
+            <div class="card w-100">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="fas fa-paperclip"></i>
+
+                  Attachement </h5>Taille Maximum :
+                <span class="badge badge-info">5MB</span>
+                <span style="color: green"> </span>
+                <hr>
+                <p class="card-text">
+                  {{currentTask.nomTache}}
+                </p>
+                <form novalidate #formFile="ngForm" (ngSubmit)="saveAttachement(formFile)">
+
+
+                <div *ngIf="currentFileUpload" class="progress">
+                  <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" attr.aria-valuenow="{{progress.percentage}}"
+                    aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progress.percentage+'%'}">
+                    {{progress.percentage}}%</div>
+                </div>
+               
+
+                  <label class="btn btn-default">
+                    <input name="file"  [(ngModel)]="attachement.file" type="file" (change)="selectFile($event)">
+                  </label>
+
+                  <button class="btn btn-success" [disabled]="!selectedFiles" (click)="uploadFile()">Upload</button>
+                  <button class="btn btn-default" type="submit">
+                    <i class="far fa-check-circle"></i>
+
+                  </button>
+
+                </form>
+
+                <div class="table-responsive">
+                  <table class="table table-sm">
+                    <tr>
+                      <th>#</th>
+                      <th>Attachement</th>
+                      <th>Action</th>
+                    </tr>
+                    <tr *ngFor=" let att of allAttachement; let i = index">
+                      <td> #{{i+1}} </td>
+                      <td> {{att.file}} </td>
+                      <td>
+                        <button type="button" class="btn btn-sm btn-default" (click)="onDeleteAttachement(att)">
+                          <i class="far fa-trash-alt"></i>
+
+                        </button>
+                        <button class="btn btn-sm btn-default" (click)="downloadAttToSave(att)">
+                          <i class="fas fa-cloud-download-alt"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+
+              </div>
+            </div>
+
+
+
+
+
+
+
+
+          </div> -->
+          <!--ATTachement tache-->
         </div>
       </div>
       <!-- div col-md-8 -->

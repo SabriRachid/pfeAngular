@@ -94,7 +94,7 @@
                 </div>
                 <!-- liste de manager -->
                 <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" >
-                    <div class="card w-100">
+                    <div class="card w-100 content" #content>
                         <div class="card-body">
                           <h5 class="card-title"> <i class="fas fa-user-circle"></i>
 
@@ -109,7 +109,7 @@
                               {{messageManager}}
                           </div>
                           <form novalidate #fo="ngForm" class="form-signin" (ngSubmit)="saveManager(fo)">
-                              <div class="alert alert-danger"   *ngIf="username.errors?.required && nom.touched " >
+                              <div class="alert alert-danger"   *ngIf="username.errors?.required && email.touched " >
                                   *  Veuillez Complétez le Champ Username
                                  </div>
                                  <div class="alert alert-danger"   *ngIf="nom.errors?.required && prenom.touched " >
@@ -121,14 +121,14 @@
                                      <div class="form-row"> 
                                         <div class="form-group col-md-6">
                                             <div class="form-label-group">Nom :
-                                              <input type="text"    name="nom" [(ngModel)]="user.nom" placeholder="Nom" #nom="ngModel" class="form-control" required>
-                      
+                                              <input type="text" id="nom"    name="nom" [(ngModel)]="user.nom" placeholder="Nom" #nom="ngModel" class="form-control" required>
+                                              <p style="font-weight: bolder" [hidden]="user.nom"> {{user.nom}}</p>
                                             </div>
                                           </div>
                                           <div class="form-group col-md-6">
                                             <div class="form-label-group"> Prenom :
-                                              <input type="text"   [(ngModel)]="user.prenom" placeholder="Prenom" #prenom="ngModel" name="prenom" class="form-control" required>
-                      
+                                              <input type="text"    [(ngModel)]="user.prenom" placeholder="Prenom" #prenom="ngModel" name="prenom" class="form-control" required>
+                                              <p style="font-weight: bolder" [hidden]="user.prenom"> {{user.prenom}}</p>
                                             </div>
                                           </div>
                                          
@@ -136,29 +136,29 @@
                             
                            <div class="form-row">
                               <div class="form-group col-md-6">
-                                  <div class="form-label-group"> Username :
-                                    <input type="text"  [(ngModel)]="user.username" placeholder="Username" #username="ngModel"  name="username" class="form-control" required>
-            
+                                  <div class="form-label-group"> Username : 
+                                    <input type="text"    [(ngModel)]="user.username" placeholder="Username" #username="ngModel"  name="username" class="form-control" required>
+                                    <p style="font-weight: bolder" [hidden]="user.username"> {{user.username}}</p>
                                   </div>
                                 </div>
                               <div class="form-group col-md-6">
                                   <div class="form-label-group"> Email :
                                     <input type="text"  [(ngModel)]="user.email" placeholder="Email" #email="ngModel"  name="email" class="form-control" required>
-            
+                                    <p style="font-weight: bolder" [hidden]="user.email"> {{user.email}}</p>
                                   </div>
                                 </div>
                               
                            </div>
                            <div class="form-group  ">
                               <div class="form-label-group"> Mot de passe
-                                <input type="text" [(ngModel)]="password"  #passwordT="ngModel"  name="password" class="form-control" >
-        
+                                <input type="text"   [(ngModel)]="password"  #passwordT="ngModel"  name="password" class="form-control" >
+                                <p style="font-weight: bolder" [hidden]="password"> {{password}}</p>
                               </div>
                             </div>         
         
                             <button [disabled]="!fo.form.valid" type="submit" class="btn-md  btn btn-default">Créer</button>
-        
-        
+                            <button  [disabled]="!fo.form.valid" type="button" (click)="genererPDF()" class="btn-md  btn btn-success">Enregister sous PDF</button>
+                            
         
         
         

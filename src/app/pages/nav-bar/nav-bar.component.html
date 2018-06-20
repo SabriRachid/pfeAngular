@@ -1,8 +1,8 @@
 <nav class="navbar navbar-expand-md fixed-top  navbar-dark bg-dark"   >
     <a class="navbar-brand" href="#"></a>
-    <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
     <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
       <ul class="navbar-nav mr-auto">
@@ -28,14 +28,16 @@
           <li class="nav-item">
             <a class="nav-link" href="#" routerLink="/archive" *ngIf="!auth.isUser()" routerLinkActive="active">Archive </a>
           </li>
-      <!--  <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Settings</a>
+          <li class="nav-item">
+              <a class="nav-link" href="#" routerLink="/editeur"  routerLinkActive="active">Editeur En Ligne </a>
+            </li>
+       <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle"  id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Notification <span class="badge badge-danger">{{notifNumber}}</span></a>
           <div class="dropdown-menu" aria-labelledby="dropdown01">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
+            <a class="dropdown-item" routerLink="/notification"  routerLinkActive="active" href="#">Action</a>
+             
           </div>
-        </li> -->
+        </li>
       </ul>
       <button class="btn btn-outline-secondary my-2 my-sm-0" (click)=" deconnexion()" type="submit">Déconnexion</button>
       <!-- <form class="form-inline my-2 my-lg-0">

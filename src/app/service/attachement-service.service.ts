@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpRequest, HttpEvent } from '@angular/common/http';
 import { JwtHelper } from 'angular2-jwt';
 import { Observable } from 'rxjs/Observable';
+import { Task } from '../task';
 @Injectable()
 export class AttachementServiceService {
 
   private jwtToken = null;
   private url = 'http://localhost:8080/api';
   constructor(private http: HttpClient) { }
-  pushFileToStorage(file: File): Observable<HttpEvent<{}>> {
+
+  pushFileToStorage(file: File ): Observable<HttpEvent<{}>> {
     if (this.jwtToken == null) {
       this.loadToken();
     }
@@ -17,7 +19,7 @@ export class AttachementServiceService {
     const req = new HttpRequest('POST', 'http://localhost:8080/api/attachements/upload', formdata, {
       reportProgress: true,
       responseType: 'text',
-      headers: new HttpHeaders({ 'Authorization': this.jwtToken })
+      headers : new HttpHeaders( { 'Authorization' : this.jwtToken})
     }
     );
     return this.http.request(req);
@@ -25,11 +27,11 @@ export class AttachementServiceService {
   loadToken() {
     this.jwtToken = localStorage.getItem('token');
   }
-  saveAttachement(attachements) {
+  saveAttachement(attachement) {
     if (this.jwtToken == null) {
       this.loadToken();
     }
-    return this.http.post(this.url + '/upload', attachements,  { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+    return this.http.post(this.url + '/attachements', attachement,  { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
   }
   getAllAttachement() {
     if (this.jwtToken == null) {
@@ -60,5 +62,10 @@ export class AttachementServiceService {
   getFiles(): Observable<any> {
     return this.http.get(this.url + '/attachements/getallfiles', { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
   }
-
+getAttachementByTache(id) {
+  if (this.jwtToken == null) {
+    this.loadToken();
+  }
+  return this.http.get(this.url + '/attachements/tache/' + id , { headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+}
 }

@@ -13,8 +13,7 @@
               aria-selected="false">Document Privé</a>
             <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact"
               aria-selected="false">Upload Document</a>
-              <a class="nav-item nav-link" id="nav-doc-tab" data-toggle="tab" href="#nav-doc" role="tab" aria-controls="nav-doc"
-              aria-selected="false">Mes Documents</a>
+            <a class="nav-item nav-link" id="nav-doc-tab" data-toggle="tab" href="#nav-doc" role="tab" aria-controls="nav-doc" aria-selected="false">Mes Documents</a>
           </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
@@ -22,17 +21,17 @@
             <div class="my-3 p-3 bg-white rounded box-shadow">
 
               <div class="table-responsive">
-                  <fieldset>
-                      <legend >Recherche Document</legend>
-                      <div class="form-group">  
-                        <input  [(ngModel)]="motCle" type="text" placeholder=" Par Nom du Document" class="form-control">
-                      </div>
-                      </fieldset>
-                 
+                <fieldset>
+                  <legend>Recherche Document</legend>
+                  <div class="form-group">
+                    <input [(ngModel)]="motCle" type="text" placeholder=" Par Nom du Document" class="form-control">
+                  </div>
+                </fieldset>
+
                 <table class="table table-sm">
                   <tr>
                     <th>#</th>
-                    <th>Nom Document</th>
+                    <th>Titre Document</th>
                     <th>Document</th>
 
                     <th>action</th>
@@ -44,7 +43,9 @@
 
 
                     <td>
-                        <button type="button" class="btn btn-sm btn-default" (click)="detailDoc(doc)"><i class="far fa-eye"></i></button>
+                      <button type="button" class="btn btn-sm btn-default" (click)="detailDoc(doc)">
+                        <i class="far fa-eye"></i>
+                      </button>
 
                       <button class="btn btn-sm btn-default" (click)="downloadFileToSave(doc)">
                         <i class="fas fa-cloud-download-alt"></i>
@@ -68,209 +69,220 @@
           <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
             <div class="table-responsive" *ngIf="!auth.isUser()">
               <fieldset>
-                  <legend >Recherche Document</legend>
-                  <div class="form-group">  
-                    <input  [(ngModel)]="motClep" type="text" placeholder=" Par Nom du Document" class="form-control">
-                  </div>
-              </fieldset>
-             
-            <table class="table table-sm">
-              <tr>
-                <th>#</th>
-                <th>Nom Document</th>
-                <th>Document</th>
-
-                <th>action</th>
-              </tr>
-              <tr *ngFor="let docp of documentsPrive | docPriveFilter:motClep; let i = index">
-                <td>#{{i+1}}</td>
-                <td>{{ docp.nomDocument }}</td>
-                <td>{{docp.file }} </td>
-
-
-                <td>
-                    <button type="button" class="btn btn-sm btn-default" (click)="detailDoc(docp)"><i class="far fa-eye"></i></button>
-
-                  <button class="btn btn-sm btn-default" (click)="downloadFileToSave(docp)">
-                    <i class="fas fa-cloud-download-alt"></i>
-                  </button>
-                  <button type="button" class="btn btn-sm btn-default" *ngIf="!auth.isUser()" (click)="onArchiveDoc(docp)">
-                    <i class="fas fa-archive"></i>
-
-
-
-                  </button>
-                </td>
-              </tr>
-            </table>
-          </div>
-
-
-          <!-- ////////////////////////////#######"## //// // // // // / /-->
-          <div class="table-responsive" *ngIf="auth.isUser()">
-            <fieldset>
-                <legend >Recherche Document</legend>
-                <div class="form-group">  
-                  <input  [(ngModel)]="motClep" type="text" placeholder=" Par Nom du Document" class="form-control">
+                <legend>Recherche Document</legend>
+                <div class="form-group">
+                  <input [(ngModel)]="motClep" type="text" placeholder=" Par Nom du Document" class="form-control">
                 </div>
-            </fieldset>
-           
-          <table class="table table-sm">
-            <tr>
-              <th>#</th>
-              <th>Nom Document</th>
-              <th>Document</th>
+              </fieldset>
 
-              <th>action</th>
-            </tr>
-            <tr *ngFor="let docpriveuser of docPriveUserLogged | docPriveFilter:motClep; let i = index">
-              <td>#{{i+1}}</td>
-              <td>{{ docpriveuser.nomDocument }}</td>
-              <td>{{docpriveuser.file }} </td>
+              <table class="table table-sm">
+                <tr>
+                  <th>#</th>
+                  <th>Titre Document</th>
+                  <th>Document</th>
+
+                  <th>action</th>
+                </tr>
+                <tr *ngFor="let docp of documentsPrive | docPriveFilter:motClep; let i = index">
+                  <td>#{{i+1}}</td>
+                  <td>{{ docp.nomDocument }}</td>
+                  <td>{{docp.file }} </td>
 
 
-              <td>
-                  <button type="button" class="btn btn-sm btn-default" (click)="detailDoc(docpriveuser)"><i class="far fa-eye"></i></button>
+                  <td>
+                    <button type="button" class="btn btn-sm btn-default" (click)="detailDoc(docp)">
+                      <i class="far fa-eye"></i>
+                    </button>
 
-                <button class="btn btn-sm btn-default" (click)="downloadFileToSave(docpriveuser)">
-                  <i class="fas fa-cloud-download-alt"></i>
-                </button>
-          
-              </td>
-            </tr>
-          </table>
-        </div>
+                    <button class="btn btn-sm btn-default" (click)="downloadFileToSave(docp)">
+                      <i class="fas fa-cloud-download-alt"></i>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-default" *ngIf="!auth.isUser()" (click)="onArchiveDoc(docp)">
+                      <i class="fas fa-archive"></i>
+
+
+
+                    </button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+
+
+            <!-- ////////////////////////////#######"## //// // // // // / /-->
+            <div class="table-responsive" *ngIf="auth.isUser()">
+              <fieldset>
+                <legend>Recherche Document</legend>
+                <div class="form-group">
+                  <input [(ngModel)]="motClep" type="text" placeholder=" Par Nom du Document" class="form-control">
+                </div>
+              </fieldset>
+
+              <table class="table table-sm">
+                <tr>
+                  <th>#</th>
+                  <th>Titre Document</th>
+                  <th>Document</th>
+
+                  <th>action</th>
+                </tr>
+                <tr *ngFor="let docpriveuser of docPriveUserLogged | docPriveFilter:motClep; let i = index">
+                  <td>#{{i+1}}</td>
+                  <td>{{ docpriveuser.nomDocument }}</td>
+                  <td>{{docpriveuser.file }} </td>
+
+
+                  <td>
+                    <button type="button" class="btn btn-sm btn-default" (click)="detailDoc(docpriveuser)">
+                      <i class="far fa-eye"></i>
+                    </button>
+
+                    <button class="btn btn-sm btn-default" (click)="downloadFileToSave(docpriveuser)">
+                      <i class="fas fa-cloud-download-alt"></i>
+                    </button>
+
+                  </td>
+                </tr>
+              </table>
+            </div>
           </div>
           <!-- liste de Doc prive -->
 
           <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
 
-              <div class="card w-100">
-                  <div class="card-body">
-                    <h5 class="card-title"> <i class="fas fa-file-alt"></i>
+            <div class="card w-100">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="fas fa-file-alt"></i>
 
 
 
-                      Document
+                  Document
 
-                    </h5>
-                     
-                    <p class="card-text"></p>
-                    <div class="alert alert-success" *ngIf="submitedFormDoc">
-                      {{messageFormDOc}}
+                </h5>
+
+                <p class="card-text"></p>
+                <div class="alert alert-success" *ngIf="submitedFormDoc">
+                  {{messageFormDOc}}
+                </div>
+
+                <form novalidate #fo="ngForm" class="form-signin" (ngSubmit)="savedocument(fo)">
+
+
+                  <span class="badge badge-info"> Note </span> Le Document qui vous voulez Ajouter ca sera partagé pour tous les Utilisateur (Public) :
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" [(ngModel)]="document.etat" #etat="ngModel" required name="etat" id="exampleRadios1"
+                      value="true">
+                    <label class="form-check-label" for="exampleRadios1">
+                      Oui
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" [(ngModel)]="document.etat" value="false" #etat="ngModel" required name="etat"
+                      id="exampleRadios1">
+                    <label class="form-check-label" for="exampleRadios1">
+                      Non
+                    </label>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6"> Titre du Document :
+                      <div class="form-label-group">
+                        <input placeholder="Nom du document" [(ngModel)]="document.nomDocument" #nomDocument="ngModel" type="text" name="nomDocument"
+                          class="form-control" required>
+
+                      </div>
                     </div>
+                    <div class="form-group col-md-6"> Type de document :
+                      <div class="form-label-group">
+                        <input placeholder="Type du document" type="text" name="type" class="form-control" [(ngModel)]="document.typeDocument" #typeDocument="ngModel">
 
-                    <form novalidate #fo="ngForm" class="form-signin" (ngSubmit)="savedocument(fo)">
-               
-                      
-                       <span class="badge badge-info"> Note </span> Le Document qui vous voulez Ajouter ca sera partagé pour tous les Utilisateur (Public)  :
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" [(ngModel)]="document.etat" #etat="ngModel" required name="etat" id="exampleRadios1"  value="true" >
-                            <label class="form-check-label" for="exampleRadios1">
-                              Oui
-                            </label>
-                          </div>
-                          <div class="form-check">
-                              <input class="form-check-input" type="radio" [(ngModel)]="document.etat" value="false" #etat="ngModel"  required   name="etat" id="exampleRadios1"   >
-                              <label class="form-check-label" for="exampleRadios1">
-                                Non
-                              </label>
-                            </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6"> Nom du Document :
-                                <div class="form-label-group">
-                                  <input placeholder="Nom du document" [(ngModel)]="document.nomDocument" #nomDocument="ngModel" type="text" name="nomDocument" class="form-control" required>
-                
-                                </div>
-                              </div>
-                              <div class="form-group col-md-6"> Type de document :
-                                <div class="form-label-group">
-                                  <input placeholder="Type du document" type="text" name="type" class="form-control" [(ngModel)]="document.typeDocument" #typeDocument="ngModel" >
-                
-                                </div>
-                              </div>
-                        </div>
-                      
-          
-          
-          
-                        <div class="form-group">
-                          <div class="form-label-group"> Déscription :
-                            <textarea placeholder="Description" name="description" [(ngModel)]="document.description" #description="ngModel" class="form-control"> </textarea>
-          
-                          </div>
-                        </div>
-                        <div *ngIf="currentFileUpload" class="progress">
-                            <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" attr.aria-valuenow="{{progress.percentage}}"
-                              aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progress.percentage+'%'}">
-                              {{progress.percentage}}%</div>
-                          </div>
-                         
-                          <div class="form-group" style="text-align:center">
-                            <label>
-                              <input required name="file" [(ngModel)]="document.file" #file="ngModel"  class="form-control" type="file" (change)="selectFile($event)">
-                            </label>
-                            <button [disabled]="!selectedFiles" class="btn btn-success" (click)="upload()">Upload</button>
-                          </div>
-                        
-          
-          
-          
-                        <button [disabled]="!fo.form.valid" type="submit" class="btn-md  btn btn-default">Créer</button>
-          
-          
-                      </form>
+                      </div>
                     </div>
+                  </div>
+
+
+
+
+                  <div class="form-group">
+                    <div class="form-label-group"> Déscription :
+                      <textarea placeholder="Description" name="description" [(ngModel)]="document.description" #description="ngModel" class="form-control"> </textarea>
+
                     </div>
-          
+                  </div>
+                  <div *ngIf="currentFileUpload" class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" attr.aria-valuenow="{{progress.percentage}}"
+                      aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progress.percentage+'%'}">
+                      {{progress.percentage}}%</div>
+                  </div>
+
+                  <div class="form-group" style="text-align:center">
+                    <label>
+                      <input required name="file" [(ngModel)]="document.file" #file="ngModel" class="form-control" type="file" (change)="selectFile($event)">
+                    </label>
+                    <button [disabled]="!selectedFiles" class="btn btn-success" (click)="upload()">Upload</button>
+                  </div>
+
+
+
+
+                  <button [disabled]="!fo.form.valid" type="submit" class="btn-md  btn btn-default">Créer</button>
+
+
+                </form>
+              </div>
+            </div>
+
           </div>
           <!-- nouveaux Doc -->
           <div class="tab-pane fade" id="nav-doc" role="tabpanel" aria-labelledby="nav-doc-tab">
-           
+
             <div class="alert alert-warning" *ngIf="submiteDelete">
               {{messageDelete}}
             </div>
             <!-- ////////////////////////////#######"## //// // // // // / /-->
-            <div class="table-responsive" >
+            <div class="table-responsive">
               <fieldset>
-                  <legend >Recherche Document</legend>
-                  <div class="form-group">  
-                    <input [(ngModel)]="motCle"  type="text" placeholder=" Par Nom du Document" class="form-control">
-                  </div>
+                <legend>Recherche Document</legend>
+                <div class="form-group">
+                  <input [(ngModel)]="motCle" type="text" placeholder=" Par Nom du Document" class="form-control">
+                </div>
               </fieldset>
-             
-            <table class="table table-sm">
-              <tr>
-                <th>#</th>
-                <th>Nom Document</th>
-                <th>Document</th>
-  
-                <th>action</th>
-              </tr>
-              <tr *ngFor="let doct of docLoggedUser | docFilter:motCle; let i = index" >
-                <td>#{{i+1}} </td>
-                <td> {{doct.nomDocument}} </td>
-                <td> {{doct.file}} </td>
-  
-  
-                <td>
-                    <button type="button" class="btn btn-sm btn-default" (click)="detailupload(doct)"><i class="far fa-eye"></i></button>
-  
-                  <button class="btn btn-sm btn-default" (click)="downloadFileToSave(doct)">
-                    <i class="fas fa-cloud-download-alt"></i>
-                  </button>
-                  <button type="button" class="btn btn-sm btn-danger" (click)="deleteDoc(doct)"><i class="fas fa-minus-circle"></i>
 
-                  </button>
+              <table class="table table-sm">
+                <tr>
+                  <th>#</th>
+                  <th>Titre Document</th>
+                  <th>Document</th>
 
-            
-                </td>
-              </tr>
-            </table>
-          </div>
+                  <th>action</th>
+                </tr>
+                <tr *ngFor="let doct of docLoggedUser | docFilter:motCle; let i = index">
+                  <td>#{{i+1}} </td>
+                  <td> {{doct.nomDocument}} </td>
+                  <td> {{doct.file}} </td>
+
+
+                  <td>
+                    <button type="button" class="btn btn-sm btn-default" (click)="detailupload(doct)">
+                      <i class="far fa-eye"></i>
+                    </button>
+
+                    <button class="btn btn-sm btn-default" (click)="downloadFileToSave(doct)">
+                      <i class="fas fa-cloud-download-alt"></i>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-danger" (click)="deleteDoc(doct)">
+                      <i class="fas fa-minus-circle"></i>
+
+                    </button>
+
+
+                  </td>
+                </tr>
+              </table>
             </div>
-            <!-- Mes Documents-->
-          
+          </div>
+          <!-- Mes Documents-->
+
         </div>
 
 
@@ -289,13 +301,9 @@
             </p>
           </div>
         </div>
-       
+
       </div>
       <!-- col-md-4 -->
     </div>
     <!-- row -->
   </main>
-
-
-
- 

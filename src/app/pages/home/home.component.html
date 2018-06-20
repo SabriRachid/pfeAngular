@@ -18,7 +18,7 @@
                     </div>
                   </div>
                 </div>
-           
+    
       </div>
       <div class="col-md-9">
         <div class="row">
@@ -122,12 +122,14 @@
                           </table>
                         </div>
                         <div class="table-responsive" *ngIf="auth.isUser()">
-                            <fieldset>
-                              <legend>Recherche Tache</legend>
-                              <div class="form-group">
-                                <input [(ngModel)]="motCle" type="text" placeholder="Par Nom du Tache" class="form-control">
+                            <fieldset style="text-align: center"  >
+                                <legend >Recherche <span class="badge badge-default"><i class="fas fa-search"></i>
+
+                                </span></legend>
+                            <div class="form-group">
+                                <input  [(ngModel)]="motCle" type="text" placeholder="Par Nom du Tache" class="form-control">
                               </div>
-                            </fieldset>
+                              </fieldset>
                             <table class="table table-sm">
                               <tr>
                                   <th>#</th>

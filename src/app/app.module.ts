@@ -43,7 +43,9 @@ import { FileService } from './service/file.service';
 import { ListuploadComponent } from './pages/listupload/listupload.component';
 import { DetailsUploadComponent } from './pages/details-upload/details-upload.component';
 import { DetailDocumentComponent } from './pages/detail-document/detail-document.component';
-
+import { EditorComponent } from './editor/editor/editor.component';
+import { EditorModule } from '@tinymce/tinymce-angular';
+import { AttachementComponent } from './pages/attachement/attachement.component';
 const appRoutes: Routes  = [
 { path : 'login' , component : LoginComponent },
 { path : '' , redirectTo : 'login' ,  pathMatch: 'full' },
@@ -61,6 +63,9 @@ const appRoutes: Routes  = [
 {path : 'detailProfile/:id', component : DetailProfileComponent , canActivate: [AuthGuardService]},
 {path : 'detailUpload/:id', component : DetailsUploadComponent , canActivate: [AuthGuardService]},
 { path : 'document', component : DocumentsComponent , canActivate: [AuthGuardService]},
+{ path : 'attachement/:id', component : AttachementComponent , canActivate: [AuthGuardService]},
+{ path : 'editeur', component : EditorComponent , canActivate: [AuthGuardService]},
+{ path : 'notification', component : ListuploadComponent , canActivate: [AuthGuardService]},
 { path : 'archive', component : ArchiveComponent , canActivate: [AuthGuardService]},
 { path: '**', redirectTo: 'login' }
 ];
@@ -92,7 +97,9 @@ const appRoutes: Routes  = [
     DetailProfileComponent,
     ListuploadComponent,
     DetailsUploadComponent,
-    DetailDocumentComponent
+    DetailDocumentComponent,
+    EditorComponent,
+    AttachementComponent
 
   ],
   imports: [
@@ -102,6 +109,7 @@ const appRoutes: Routes  = [
     HttpClientModule,
     NgxPaginationModule,
     ChartsModule,
+    EditorModule ,
     RouterModule.forRoot(appRoutes)
 
   ],

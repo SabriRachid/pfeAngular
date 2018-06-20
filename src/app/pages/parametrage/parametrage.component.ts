@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { User } from '../../user';
 import { HttpClient } from '@angular/common/http';
 import { UserServiceService } from '../../service/user-service.service';
@@ -6,6 +6,7 @@ import { TaskServiceService } from '../../service/task-service.service';
 import 'rxjs/add/operator/map';
 import { Router } from '@angular/router';
 import { AuthenticationServiceService } from '../../service/authentication-service.service';
+import * as jsPDF from 'jspdf';
 @Component({
   selector: 'app-parametrage',
   templateUrl: './parametrage.component.html',
@@ -25,6 +26,7 @@ export class ParametrageComponent implements OnInit {
   submited = false;
   messageManager: string;
   user: User = new User();
+  @ViewChild('content') content: ElementRef;
   constructor(
     private auth: AuthenticationServiceService,
     private http: HttpClient,
@@ -51,7 +53,7 @@ export class ParametrageComponent implements OnInit {
     return this.password;
   }
 
-  saveManager(valid: boolean) {
+  saveManager() {
    this.user.password = this.password;
     this.userService.saveManager(this.user).subscribe(data => {
       console.log(data);
@@ -92,5 +94,19 @@ export class ParametrageComponent implements OnInit {
    }
    detailUser(user) {
      this.router.navigate(['/detailUser', user.id]);
+   }
+   genererPDF() {
+    const doc = new jsPDF();
+    const specialElementHandlers = {
+      '#editor': function(element, renderer) {
+        return true;
+      }
+    };
+    const content = this.content.nativeElement;
+        doc.fromHTML(content.innerHTML, 15, 15, {
+      'width': 190,
+      'elementHandlers': specialElementHandlers
+    });
+    doc.save(this.user.nom + '' + this.user.prenom);
    }
 }

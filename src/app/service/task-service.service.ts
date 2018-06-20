@@ -7,6 +7,7 @@ export class TaskServiceService {
   private host = 'http://localhost:8080/api/users';
   private hostTask = 'http://localhost:8080/api';
   private jwtToken = null;
+  public notifArray = new Array();
   constructor(private http: HttpClient) { }
 
   getAllUserByRoleUser() {
@@ -61,7 +62,7 @@ getFile(fileName) {
     observe : 'response',
   });
 }
-getTaskById(id): Observable<any> {
+getTaskById(id) {
   if (this.jwtToken == null) {
     this.loadToken();
   }
@@ -113,6 +114,9 @@ getTacheUserProfile(id) {
   }
   return this.http.get(this.hostTask + '/tasks/contact/' + id ,  {
     headers : new HttpHeaders( { 'Authorization' : this.jwtToken})});
+}
+saveNotification(message: string)  {
+  return this.notifArray.push(message);
 }
 }
 

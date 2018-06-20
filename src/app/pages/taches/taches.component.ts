@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { AuthenticationServiceService } from '../../service/authentication-service.service';
 import { Router } from '@angular/router';
 import { TaskServiceService } from '../../service/task-service.service';
@@ -9,6 +9,7 @@ import { HttpResponse, HttpEventType } from '@angular/common/http';
 import { AttachementServiceService } from '../../service/attachement-service.service';
 import { Observable } from 'rxjs/Observable';
 import { saveAs } from 'file-saver';
+import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-taches',
   templateUrl: './taches.component.html',
@@ -16,77 +17,83 @@ import { saveAs } from 'file-saver';
 })
 export class TachesComponent implements OnInit {
   @Input() fileUpload: string;
-isAdmin: boolean ;
-submitFormTache = false;
-messageTache: string;
-selectedFiles: FileList;
-currentFileUpload: File;
-task: Task = new Task();
-users: any;
-motCle: string;
-nom: string;
-prenom: string;
-tasks: any;
-TacheLoggedUser: any;
-p: number ;
-showFile = false;
-fileUploads:  Observable<string[]>;
-allAttachement: any;
+  @ViewChild('fo') public createAttachement: NgForm;
+  isAdmin: boolean;
+  submitFormTache = false;
+  messageTache: string;
+  selectedFiles: FileList;
+  currentFileUpload: File;
+  task: Task = new Task();
+  users: any;
+  motCle: string;
+  nom: string;
+  prenom: string;
+  currentTask: any;
+  tasks: any;
+  TacheLoggedUser: any;
+  p: number;
+  showFile = false;
+  fileUploads: Observable<string[]>;
+  allAttachement: any;
   progress: { percentage: number } = { percentage: 0 };
-attachement: Attachement = new Attachement();
-collection =  [];
+  attachement: Attachement = new Attachement();
+  collection = [];
   constructor(private attachementService: AttachementServiceService,
     private auth: AuthenticationServiceService, private router: Router, private taskSerive: TaskServiceService) { }
 
   ngOnInit() {
-  //  this.isAdmin = this.authService.isAdmin();
-this.getAllUserRole();
-this.getAllTasks();
-this. getTacheByLoggedUser();
-this.getAllAttachement();
+    //  this.isAdmin = this.authService.isAdmin();
+    this.getAllUserRole();
+    this.getAllTasks();
+    this.getTacheByLoggedUser();
+    this.getAllAttachement();
   }
   selectFile(event) {
     this.selectedFiles = event.target.files;
   }
   upload() {
+    this.currentTask = this.task;
     this.currentFileUpload = this.selectedFiles.item(0);
+    console.log(this.task);
     this.attachementService.pushFileToStorage(this.currentFileUpload).subscribe(event => {
-     if (event instanceof HttpResponse) {
-        console.log('upload de fichier avec success!');
+      if (event.type === HttpEventType.UploadProgress) {
+        this.progress.percentage = Math.round(100 * event.loaded / event.total);
+      } else if (event instanceof HttpResponse) {
+        console.log('File is completely uploaded!');
 
       }
     });
     this.selectedFiles = undefined;
   }
 
-  onNewTask(valid: boolean) {
+  onNewTask() {
 
-     this.taskSerive.saveTask(this.task).subscribe(data => {
-     console.log(data);
-     this.submitFormTache = true;
-     this.messageTache = 'Tache ajouter avec success ...';
-     this.attachement.tache = this.task;
-     this.getAllTasks();
-
+    this.taskSerive.saveTask(this.task).subscribe(data => {
+      console.log(data);
+      this.submitFormTache = true;
+      this.messageTache = 'Tache ajouter avec success ...';
+      this.getAllTasks();
+      this.currentTask = data;
+      console.log('tache = ' + this.currentTask.id);
+     this.router.navigate(['attachement', this.currentTask.id]);
     }, err => {
       console.log(err);
     });
-
-    this.task = new Task();
+   // this.router.navigate(['/taches', this.task]);
   }
 
   getAllUserRole() {
-   return  this.taskSerive.getAllUserByRoleUser().subscribe(data => {
-        this.users = data;
-        console.log(data);
-    } , err => {
+    return this.taskSerive.getAllUserByRoleUser().subscribe(data => {
+      this.users = data;
+      console.log(data);
+    }, err => {
       console.log(err);
     });
   }
 
   getAllTasks() {
     return this.taskSerive.getAllTasks().subscribe(data => {
-      this.tasks = data ;
+      this.tasks = data;
       console.log(data);
       this.p = 10;
       this.collection.push(data);
@@ -95,18 +102,19 @@ this.getAllAttachement();
     });
   }
   onDeleteTask(task) {
-    this.taskSerive.deleteTask(task.id).subscribe( data => {
+    this.taskSerive.deleteTask(task.id).subscribe(data => {
       console.log(task.id);
-    } , err => {
+    }, err => {
       console.log(err);
     });
   }
   detailTache(task) {
- this.router.navigate(['/detailTache', task.id] );
+    this.router.navigate(['/detailTache', task.id]);
   }
   saveAttachement() {
-
+    this.attachement.tache = this.task;
     this.attachementService.saveAttachement(this.attachement).subscribe(data => {
+      this.getAllAttachement();
       console.log(data);
     }, err => {
       console.log(err);
@@ -140,9 +148,9 @@ this.getAllAttachement();
     console.log(contentDispositionHeader);
     const parts: string[] = contentDispositionHeader.split(';');
     const filename = parts[1].split('=')[1];
-    const blob = new Blob([response['body']], { type: response.headers.get('Content-Type')});
-  /*   const url = window.URL.createObjectURL(blob);
-    window.open(url); */
+    const blob = new Blob([response['body']], { type: response.headers.get('Content-Type') });
+    /*   const url = window.URL.createObjectURL(blob);
+      window.open(url); */
     saveAs(blob, filename);
   }
   showFiles(enable: boolean) {
@@ -154,17 +162,18 @@ this.getAllAttachement();
   }
   getTacheByLoggedUser() {
     this.auth.getTacheByUsername().subscribe(data => {
-      this.TacheLoggedUser = data ;
+      this.TacheLoggedUser = data;
     });
   }
   onArchivedTask(task) {
     this.taskSerive.archiveTask(task).subscribe(data => {
       console.log(data);
-      this.router.navigateByUrl('/archive');
+      this.getAllTasks();
+
     });
   }
   getAllAttachement() {
-    this.attachementService.getAllAttachement().subscribe( data => {
+    this.attachementService.getAllAttachement().subscribe(data => {
       this.allAttachement = data;
       console.log(data);
     }, err => {
